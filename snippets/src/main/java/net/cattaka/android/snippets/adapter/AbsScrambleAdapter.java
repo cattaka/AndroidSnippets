@@ -3,9 +3,12 @@ package net.cattaka.android.snippets.adapter;
 import android.support.v7.widget.RecyclerView;
 import android.view.ViewGroup;
 
+import net.cattaka.android.snippets.adapter.listener.ForwardingListener;
 import net.cattaka.android.snippets.adapter.listener.IForwardingListener;
 import net.cattaka.android.snippets.adapter.listener.IListenerRelay;
+import net.cattaka.android.snippets.adapter.listener.ListenerRelay;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -38,6 +41,16 @@ public abstract class AbsScrambleAdapter<
     List<IViewHolderFactory<A, VH, FL, ? extends VH, ? extends FL, LR>> mViewHolderFactory;
     List<FL> mForwardingListeners;
     LR mListenerRelay;
+
+    @SafeVarargs
+    public static <VHF extends IViewHolderFactory<A, VH, FL, ?, ?, LR>,
+            A extends AbsScrambleAdapter<A, VH, FL, ?, ?, LR>,
+            VH extends RecyclerView.ViewHolder,
+            FL extends IForwardingListener<A, VH, LR>,
+            LR extends IListenerRelay<? super VH>
+            > List<? extends IViewHolderFactory<A,VH,FL,?,?,LR>> castViewHolderFactories(VHF... viewHolderFactories) {
+        return Arrays.<IViewHolderFactory<A, VH, FL, ?, ?, LR>>asList(viewHolderFactories);
+    }
 
     public AbsScrambleAdapter(LR listenerRelay, List<? extends IViewHolderFactory<A, VH, FL, ?, ?, LR>> viewHolderFactories) {
         mListenerRelay = listenerRelay;

@@ -26,7 +26,6 @@ public class ScrambleAdapter<T> extends AbsScrambleAdapter<
     private List<T> mItems;
     private ListenerRelay<ScrambleAdapter<T>, RecyclerView.ViewHolder> mListenerRelay = new ListenerRelay<>();
 
-
     public static <T> ScrambleAdapter<T> newInstance(Context context, List<T> items, ListenerRelay<ScrambleAdapter<T>, RecyclerView.ViewHolder> listenerRelay, IViewHolderFactory<ScrambleAdapter<T>, RecyclerView.ViewHolder, ForwardingListener<ScrambleAdapter<T>, RecyclerView.ViewHolder>, ?, ?, ListenerRelay<ScrambleAdapter<T>, ? super RecyclerView.ViewHolder>>... viewHolderFactories) {
         return new ScrambleAdapter<T>(context, items, listenerRelay, Arrays.asList(viewHolderFactories));
     }

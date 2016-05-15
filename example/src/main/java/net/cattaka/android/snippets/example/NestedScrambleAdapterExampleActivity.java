@@ -24,7 +24,7 @@ import java.util.List;
  */
 public class NestedScrambleAdapterExampleActivity extends AppCompatActivity {
 
-    ListenerRelay<ScrambleAdapter, RecyclerView.ViewHolder> mListenerRelay = new ListenerRelay<ScrambleAdapter, RecyclerView.ViewHolder>() {
+    ListenerRelay<ScrambleAdapter<Object>, RecyclerView.ViewHolder> mListenerRelay = new ListenerRelay<ScrambleAdapter<Object>, RecyclerView.ViewHolder>() {
     };
 
     RecyclerView mRecyclerView;
@@ -80,7 +80,7 @@ public class NestedScrambleAdapterExampleActivity extends AppCompatActivity {
         }
     }
 
-    class NestedListenerRelay extends ListenerRelay<ScrambleAdapter, RecyclerView.ViewHolder> {
+    class NestedListenerRelay extends ListenerRelay<ScrambleAdapter<Object>, RecyclerView.ViewHolder> {
         NestedScrambleInfo item;
 
         public NestedListenerRelay(NestedScrambleInfo item) {

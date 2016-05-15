@@ -16,7 +16,7 @@ import net.cattaka.android.snippets.example.data.NestedScrambleInfo;
  */
 public class NestedScrambleInfoViewHolderFactory extends ScrambleAdapter.AbsViewHolderFactory<NestedScrambleInfoViewHolderFactory.ViewHolder> {
     @Override
-    public ViewHolder onCreateViewHolder(ScrambleAdapter adapter, ViewGroup parent, ForwardingListener<ScrambleAdapter, RecyclerView.ViewHolder> forwardingListener) {
+    public ViewHolder onCreateViewHolder(ScrambleAdapter<Object> adapter, ViewGroup parent, ForwardingListener<ScrambleAdapter<Object>, RecyclerView.ViewHolder> forwardingListener) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_nested_scramble, parent, false);
 
         {   // Hack height

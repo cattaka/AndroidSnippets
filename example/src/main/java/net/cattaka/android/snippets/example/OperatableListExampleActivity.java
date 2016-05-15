@@ -31,7 +31,7 @@ import java.util.List;
  * Created by cattaka on 16/05/15.
  */
 public class OperatableListExampleActivity extends AppCompatActivity {
-    ListenerRelay<ScrambleAdapter, RecyclerView.ViewHolder> mListenerRelay = new ListenerRelay<ScrambleAdapter, RecyclerView.ViewHolder>() {
+    ListenerRelay<ScrambleAdapter<Object>, RecyclerView.ViewHolder> mListenerRelay = new ListenerRelay<ScrambleAdapter<Object>, RecyclerView.ViewHolder>() {
         @Override
         public void onCheckedChanged(RecyclerView recyclerView, ScrambleAdapter adapter, RecyclerView.ViewHolder viewHolder, CompoundButton buttonView, boolean isChecked) {
             MergeRecyclerAdapter.LocalAdapter la = mMergeRecyclerAdapter.getAdapterOffsetForItem(viewHolder.getAdapterPosition());
@@ -55,7 +55,7 @@ public class OperatableListExampleActivity extends AppCompatActivity {
         }
 
         @Override
-        public void onItemSelected(RecyclerView recyclerView, ScrambleAdapter adapter, RecyclerView.ViewHolder viewHolder, AdapterView<?> parent, View view, int position, long id) {
+        public void onItemSelected(RecyclerView recyclerView, ScrambleAdapter<Object> adapter, RecyclerView.ViewHolder viewHolder, AdapterView<?> parent, View view, int position, long id) {
             MergeRecyclerAdapter.LocalAdapter la = mMergeRecyclerAdapter.getAdapterOffsetForItem(viewHolder.getAdapterPosition());
             if (la.mAdapter == mItemAdapter) {
                 if (viewHolder instanceof MyInfoViewHolderFactory.ViewHolder) {

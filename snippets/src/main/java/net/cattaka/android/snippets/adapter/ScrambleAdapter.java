@@ -15,23 +15,23 @@ import java.util.List;
 /**
  * Created by takao on 2016/05/10.
  */
-public class ScrambleAdapter extends AbsScrambleAdapter<
-        ScrambleAdapter,
+public class ScrambleAdapter<T> extends AbsScrambleAdapter<
+        ScrambleAdapter<T>,
         RecyclerView.ViewHolder,
-        ForwardingListener<ScrambleAdapter, RecyclerView.ViewHolder>,
+        ForwardingListener<ScrambleAdapter<T>, RecyclerView.ViewHolder>,
         RecyclerView.ViewHolder,
-        ForwardingListener<ScrambleAdapter, RecyclerView.ViewHolder>,
-        ListenerRelay<ScrambleAdapter, ? super RecyclerView.ViewHolder>> {
+        ForwardingListener<ScrambleAdapter<T>, RecyclerView.ViewHolder>,
+        ListenerRelay<ScrambleAdapter<T>, ? super RecyclerView.ViewHolder>> {
     private Context mContext;
-    private List<Object> mItems;
-    private ListenerRelay<ScrambleAdapter, RecyclerView.ViewHolder> mListenerRelay = new ListenerRelay<>();
+    private List<T> mItems;
+    private ListenerRelay<ScrambleAdapter<T>, RecyclerView.ViewHolder> mListenerRelay = new ListenerRelay<>();
 
 
-    public static ScrambleAdapter newInstance(Context context, List<Object> items, ListenerRelay<ScrambleAdapter, RecyclerView.ViewHolder> listenerRelay, IViewHolderFactory<ScrambleAdapter, RecyclerView.ViewHolder, ForwardingListener<ScrambleAdapter, RecyclerView.ViewHolder>, ?, ?, ListenerRelay<ScrambleAdapter, ? super RecyclerView.ViewHolder>>... viewHolderFactories) {
-        return new ScrambleAdapter(context, items, listenerRelay, Arrays.asList(viewHolderFactories));
+    public static <T> ScrambleAdapter<T> newInstance(Context context, List<T> items, ListenerRelay<ScrambleAdapter<T>, RecyclerView.ViewHolder> listenerRelay, IViewHolderFactory<ScrambleAdapter<T>, RecyclerView.ViewHolder, ForwardingListener<ScrambleAdapter<T>, RecyclerView.ViewHolder>, ?, ?, ListenerRelay<ScrambleAdapter<T>, ? super RecyclerView.ViewHolder>>... viewHolderFactories) {
+        return new ScrambleAdapter<T>(context, items, listenerRelay, Arrays.asList(viewHolderFactories));
     }
 
-    public ScrambleAdapter(Context context, List<Object> items, ListenerRelay<ScrambleAdapter, RecyclerView.ViewHolder> listenerRelay, List<? extends IViewHolderFactory<ScrambleAdapter, RecyclerView.ViewHolder, ForwardingListener<ScrambleAdapter, RecyclerView.ViewHolder>, ?, ?, ListenerRelay<ScrambleAdapter, ? super RecyclerView.ViewHolder>>> iViewHolderFactories) {
+    public ScrambleAdapter(Context context, List<T> items, ListenerRelay<ScrambleAdapter<T>, RecyclerView.ViewHolder> listenerRelay, List<? extends IViewHolderFactory<ScrambleAdapter<T>, RecyclerView.ViewHolder, ForwardingListener<ScrambleAdapter<T>, RecyclerView.ViewHolder>, ?, ?, ListenerRelay<ScrambleAdapter<T>, ? super RecyclerView.ViewHolder>>> iViewHolderFactories) {
         super(listenerRelay, iViewHolderFactories);
         this.mContext = context;
         this.mItems = items;
@@ -46,22 +46,22 @@ public class ScrambleAdapter extends AbsScrambleAdapter<
     }
 
     @Override
-    public ForwardingListener<ScrambleAdapter, RecyclerView.ViewHolder> createNullForwardingListener() {
+    public ForwardingListener<ScrambleAdapter<T>, RecyclerView.ViewHolder> createNullForwardingListener() {
         return new ForwardingListener<>();
     }
 
     @Override
-    public ScrambleAdapter getSelf() {
+    public ScrambleAdapter<T> getSelf() {
         return this;
     }
 
 
     @Override
-    public Object getItemAt(int position) {
+    public T getItemAt(int position) {
         return mItems.get(position);
     }
 
-    public List<Object> getItems() {
+    public List<T> getItems() {
         return mItems;
     }
 
@@ -70,9 +70,9 @@ public class ScrambleAdapter extends AbsScrambleAdapter<
         return mItems.size();
     }
 
-    public abstract static class AbsViewHolderFactory<VH extends RecyclerView.ViewHolder> implements IViewHolderFactory<ScrambleAdapter, RecyclerView.ViewHolder, ForwardingListener<ScrambleAdapter, RecyclerView.ViewHolder>, VH, ForwardingListener<ScrambleAdapter, RecyclerView.ViewHolder>, ListenerRelay<ScrambleAdapter, ? super RecyclerView.ViewHolder>> {
+    public abstract static class AbsViewHolderFactory<VH extends RecyclerView.ViewHolder> implements IViewHolderFactory<ScrambleAdapter<Object>, RecyclerView.ViewHolder, ForwardingListener<ScrambleAdapter<Object>, RecyclerView.ViewHolder>, VH, ForwardingListener<ScrambleAdapter<Object>, RecyclerView.ViewHolder>, ListenerRelay<ScrambleAdapter<Object>, ? super RecyclerView.ViewHolder>> {
         @Override
-        public ForwardingListener<ScrambleAdapter, RecyclerView.ViewHolder> createForwardingListener() {
+        public ForwardingListener<ScrambleAdapter<Object>, RecyclerView.ViewHolder> createForwardingListener() {
             return new ForwardingListener<>();
         }
     }

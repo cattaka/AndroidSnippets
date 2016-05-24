@@ -3,8 +3,8 @@ package net.cattaka.android.snippets.example.adapter;
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 
-import net.cattaka.android.snippets.adapter.ScrambleAdapter;
-import net.cattaka.android.snippets.adapter.listener.ListenerRelay;
+import net.cattaka.android.adaptertoolbox.adapter.ScrambleAdapter;
+import net.cattaka.android.adaptertoolbox.adapter.listener.ListenerRelay;
 import net.cattaka.android.snippets.example.adapter.factory.SimpleStringViewHolderFactory;
 
 import java.util.List;

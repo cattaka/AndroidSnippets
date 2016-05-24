@@ -5,7 +5,6 @@ import android.os.SystemClock;
 import android.support.annotation.IdRes;
 import android.support.test.InstrumentationRegistry;
 import android.support.test.espresso.ViewAction;
-import android.support.test.espresso.action.ViewActions;
 import android.support.test.espresso.matcher.ViewMatchers;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.Toolbar;
@@ -21,6 +20,8 @@ import java.lang.reflect.Field;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 import static org.hamcrest.CoreMatchers.allOf;
+
+import android.support.test.espresso.action.ViewActions;
 
 /**
  * Created by takao on 2014/12/12.

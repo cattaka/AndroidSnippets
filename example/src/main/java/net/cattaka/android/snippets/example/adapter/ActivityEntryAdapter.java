@@ -10,9 +10,9 @@ import android.view.ViewGroup;
 import android.widget.CompoundButton;
 import android.widget.TextView;
 
-import net.cattaka.android.snippets.adapter.AbsChoosableTreeItemAdapter;
-import net.cattaka.android.snippets.adapter.AbsTreeItemAdapter;
-import net.cattaka.android.snippets.adapter.listener.ForwardingListener;
+import net.cattaka.android.adaptertoolbox.adapter.AbsChoosableTreeItemAdapter;
+import net.cattaka.android.adaptertoolbox.adapter.AbsTreeItemAdapter;
+import net.cattaka.android.adaptertoolbox.adapter.listener.ForwardingListener;
 import net.cattaka.android.snippets.example.R;
 import net.cattaka.android.snippets.example.data.ActivityEntry;
 

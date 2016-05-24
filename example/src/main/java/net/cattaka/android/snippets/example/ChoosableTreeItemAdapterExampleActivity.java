@@ -6,7 +6,6 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
 import net.cattaka.android.snippets.example.adapter.ChoosableMyTreeItemAdapter;
-import net.cattaka.android.snippets.example.adapter.MyTreeItemAdapter;
 import net.cattaka.android.snippets.example.data.MyTreeItem;
 import net.cattaka.android.snippets.example.utils.ExampleDataGenerator;
 

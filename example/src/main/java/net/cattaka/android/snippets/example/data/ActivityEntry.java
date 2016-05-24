@@ -2,8 +2,7 @@ package net.cattaka.android.snippets.example.data;
 
 import android.app.Activity;
 
-import net.cattaka.android.snippets.data.ITreeItem;
-import net.cattaka.android.snippets.example.MainActivity;
+import net.cattaka.android.adaptertoolbox.data.ITreeItem;
 
 import java.util.Arrays;
 import java.util.List;

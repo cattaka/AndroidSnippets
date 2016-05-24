@@ -7,11 +7,11 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
-import net.cattaka.android.snippets.adapter.ScrambleAdapter;
-import net.cattaka.android.snippets.adapter.SingleViewAdapter;
-import net.cattaka.android.snippets.adapter.listener.ListenerRelay;
+import net.cattaka.android.adaptertoolbox.adapter.ScrambleAdapter;
+import net.cattaka.android.adaptertoolbox.adapter.SingleViewAdapter;
+import net.cattaka.android.adaptertoolbox.adapter.listener.ListenerRelay;
+import net.cattaka.android.adaptertoolbox.thirdparty.MergeRecyclerAdapter;
 import net.cattaka.android.snippets.example.adapter.SimpleStringAdapter;
-import net.cattaka.android.snippets.thirdparty.MergeRecyclerAdapter;
 
 import java.util.ArrayList;
 import java.util.List;

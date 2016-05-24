@@ -1,6 +1,5 @@
 package net.cattaka.android.snippets.example;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
@@ -8,9 +7,8 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
-import net.cattaka.android.snippets.adapter.listener.ListenerRelay;
+import net.cattaka.android.adaptertoolbox.adapter.listener.ListenerRelay;
 import net.cattaka.android.snippets.example.adapter.MyTreeItemAdapter;
-import net.cattaka.android.snippets.example.data.ActivityEntry;
 import net.cattaka.android.snippets.example.data.MyTreeItem;
 import net.cattaka.android.snippets.example.utils.ExampleDataGenerator;
 

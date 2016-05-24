@@ -13,15 +13,15 @@ import android.widget.CompoundButton;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
-import net.cattaka.android.snippets.adapter.ScrambleAdapter;
-import net.cattaka.android.snippets.adapter.listener.ListenerRelay;
+import net.cattaka.android.adaptertoolbox.adapter.ScrambleAdapter;
+import net.cattaka.android.adaptertoolbox.adapter.listener.ListenerRelay;
+import net.cattaka.android.adaptertoolbox.thirdparty.MergeRecyclerAdapter;
 import net.cattaka.android.snippets.example.adapter.SimpleStringAdapter;
 import net.cattaka.android.snippets.example.adapter.factory.MyInfoViewHolderFactory;
 import net.cattaka.android.snippets.example.adapter.factory.TextInfoViewHolderFactory;
 import net.cattaka.android.snippets.example.data.MyInfo;
 import net.cattaka.android.snippets.example.data.OrdinalLabel;
 import net.cattaka.android.snippets.example.data.TextInfo;
-import net.cattaka.android.snippets.thirdparty.MergeRecyclerAdapter;
 
 import java.util.ArrayList;
 import java.util.Collections;

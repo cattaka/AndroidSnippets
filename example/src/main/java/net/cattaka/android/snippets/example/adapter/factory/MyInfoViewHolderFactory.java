@@ -8,14 +8,14 @@ import android.widget.SeekBar;
 import android.widget.Spinner;
 import android.widget.Switch;
 
-import net.cattaka.android.snippets.adapter.AdapterConverter;
-import net.cattaka.android.snippets.adapter.CodeLabelAdapter;
-import net.cattaka.android.snippets.adapter.ScrambleAdapter;
-import net.cattaka.android.snippets.adapter.listener.ForwardingListener;
+import net.cattaka.android.adaptertoolbox.adapter.AdapterConverter;
+import net.cattaka.android.adaptertoolbox.adapter.CodeLabelAdapter;
+import net.cattaka.android.adaptertoolbox.adapter.ScrambleAdapter;
+import net.cattaka.android.adaptertoolbox.adapter.listener.ForwardingListener;
+import net.cattaka.android.adaptertoolbox.utils.SpinnerUtils;
 import net.cattaka.android.snippets.example.R;
 import net.cattaka.android.snippets.example.data.MyInfo;
 import net.cattaka.android.snippets.example.data.OrdinalLabel;
-import net.cattaka.android.snippets.utils.SpinnerUtils;
 
 /**
  * Created by cattaka on 16/05/15.

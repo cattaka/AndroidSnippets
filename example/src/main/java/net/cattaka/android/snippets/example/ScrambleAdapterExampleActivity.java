@@ -7,8 +7,8 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
-import net.cattaka.android.snippets.adapter.ScrambleAdapter;
-import net.cattaka.android.snippets.adapter.listener.ListenerRelay;
+import net.cattaka.android.adaptertoolbox.adapter.ScrambleAdapter;
+import net.cattaka.android.adaptertoolbox.adapter.listener.ListenerRelay;
 import net.cattaka.android.snippets.example.adapter.factory.CodeLableViewHolderFactory;
 import net.cattaka.android.snippets.example.adapter.factory.SimpleNumberViewHolderFactory;
 import net.cattaka.android.snippets.example.adapter.factory.SimpleStringViewHolderFactory;

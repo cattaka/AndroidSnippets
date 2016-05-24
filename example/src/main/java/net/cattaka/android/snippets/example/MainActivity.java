@@ -7,9 +7,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
-import net.cattaka.android.snippets.adapter.AbsTreeItemAdapter;
-import net.cattaka.android.snippets.adapter.listener.IListenerRelay;
-import net.cattaka.android.snippets.adapter.listener.ListenerRelay;
+import net.cattaka.android.adaptertoolbox.adapter.listener.ListenerRelay;
 import net.cattaka.android.snippets.example.adapter.ActivityEntryAdapter;
 import net.cattaka.android.snippets.example.data.ActivityEntry;
 

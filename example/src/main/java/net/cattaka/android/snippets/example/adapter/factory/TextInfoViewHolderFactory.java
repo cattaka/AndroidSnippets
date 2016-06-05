@@ -6,7 +6,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 
-import net.cattaka.android.adaptertoolbox.adapter.AdapterConverter;
 import net.cattaka.android.adaptertoolbox.adapter.ScrambleAdapter;
 import net.cattaka.android.adaptertoolbox.adapter.listener.ForwardingListener;
 import net.cattaka.android.snippets.example.R;
@@ -40,7 +39,7 @@ public class TextInfoViewHolderFactory extends ScrambleAdapter.AbsViewHolderFact
         return object instanceof TextInfo;
     }
 
-    public class ViewHolder extends AdapterConverter.ViewHolder {
+    public class ViewHolder extends RecyclerView.ViewHolder {
         public final EditText editText;
         public final View goButton;
 

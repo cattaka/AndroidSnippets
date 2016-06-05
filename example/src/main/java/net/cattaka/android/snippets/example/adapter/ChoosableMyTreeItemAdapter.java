@@ -12,6 +12,7 @@ import android.widget.TextView;
 
 import net.cattaka.android.adaptertoolbox.adapter.AbsChoosableTreeItemAdapter;
 import net.cattaka.android.adaptertoolbox.adapter.AbsTreeItemAdapter;
+import net.cattaka.android.adaptertoolbox.data.ITreeItem;
 import net.cattaka.android.snippets.example.R;
 import net.cattaka.android.snippets.example.data.MyTreeItem;
 
@@ -21,11 +22,12 @@ import java.util.List;
  * Created by cattaka on 16/05/21.
  */
 public class ChoosableMyTreeItemAdapter extends AbsChoosableTreeItemAdapter<
+        ChoosableMyTreeItemAdapter,
         ChoosableMyTreeItemAdapter.ViewHolder,
         MyTreeItem,
         ChoosableMyTreeItemAdapter.WrappedItem
         > {
-    public static ITreeItemAdapterRef<ViewHolder, MyTreeItem, WrappedItem> REF = new ITreeItemAdapterRef<ViewHolder, MyTreeItem, WrappedItem>() {
+    public static ITreeItemAdapterRef<ChoosableMyTreeItemAdapter, ViewHolder, MyTreeItem, WrappedItem> REF = new ITreeItemAdapterRef<ChoosableMyTreeItemAdapter, ViewHolder, MyTreeItem, WrappedItem>() {
         @NonNull
         @Override
         public Class<MyTreeItem> getItemClass() {
@@ -34,10 +36,11 @@ public class ChoosableMyTreeItemAdapter extends AbsChoosableTreeItemAdapter<
 
         @NonNull
         @Override
-        public AbsTreeItemAdapter<ViewHolder, MyTreeItem, WrappedItem> createAdapter(@NonNull Context context, @NonNull List<MyTreeItem> items) {
+        public ChoosableMyTreeItemAdapter createAdapter(@NonNull Context context, @NonNull List items) {
             return new ChoosableMyTreeItemAdapter(context, items);
         }
 
+        @NonNull
         @Override
         public WrappedItem createWrappedItem(int level, MyTreeItem item, WrappedItem parent) {
             return new WrappedItem(level, item, parent);
@@ -53,8 +56,7 @@ public class ChoosableMyTreeItemAdapter extends AbsChoosableTreeItemAdapter<
             WrappedItem item = getItemAt(position);
             switch (view.getId()) {
                 case R.id.check_opened: {
-                    item.opened = !item.opened;
-                    doFold(item, item.opened);
+                    doOpen(item, !item.isOpened());
                     break;
                 }
                 default: {
@@ -87,11 +89,6 @@ public class ChoosableMyTreeItemAdapter extends AbsChoosableTreeItemAdapter<
         MyTreeItem item = wrappedItem.getItem();
 
         {
-            ViewGroup.LayoutParams params = holder.itemView.getLayoutParams();
-            params.height = wrappedItem.fold ? 0 : ViewGroup.LayoutParams.WRAP_CONTENT;
-            holder.itemView.setLayoutParams(params);
-        }
-        {
             ViewGroup.LayoutParams params = holder.levelSpace.getLayoutParams();
             params.width = wrappedItem.level * getContext().getResources().getDimensionPixelSize(R.dimen.element_spacing_large);
             holder.levelSpace.setLayoutParams(params);
@@ -101,8 +98,8 @@ public class ChoosableMyTreeItemAdapter extends AbsChoosableTreeItemAdapter<
             holder.openedCheck.setVisibility(hasChildren ? View.VISIBLE : View.INVISIBLE);
         }
 
-        holder.chosenCheck.setChecked(wrappedItem.chosen);
-        holder.openedCheck.setChecked(wrappedItem.opened);
+        holder.chosenCheck.setChecked(wrappedItem.isChecked());
+        holder.openedCheck.setChecked(wrappedItem.isOpened());
         holder.labelText.setText(item.getText());
     }
 

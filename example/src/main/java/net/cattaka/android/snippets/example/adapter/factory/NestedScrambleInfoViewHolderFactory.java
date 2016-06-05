@@ -6,7 +6,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import net.cattaka.android.adaptertoolbox.adapter.AdapterConverter;
 import net.cattaka.android.adaptertoolbox.adapter.ScrambleAdapter;
 import net.cattaka.android.adaptertoolbox.adapter.listener.ForwardingListener;
 import net.cattaka.android.snippets.example.R;
@@ -42,7 +41,7 @@ public class NestedScrambleInfoViewHolderFactory extends ScrambleAdapter.AbsView
         holder.recyclerView.setAdapter(nextedAdapter);
     }
 
-    public static class ViewHolder extends AdapterConverter.ViewHolder {
+    public static class ViewHolder extends RecyclerView.ViewHolder {
         RecyclerView recyclerView;
 
         public ViewHolder(View itemView) {

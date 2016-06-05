@@ -21,11 +21,12 @@ import java.util.List;
  * Created by cattaka on 16/05/21.
  */
 public class MyTreeItemAdapter extends AbsChoosableTreeItemAdapter<
+        MyTreeItemAdapter,
         MyTreeItemAdapter.ViewHolder,
         MyTreeItem,
         MyTreeItemAdapter.WrappedItem
         > {
-    public static ITreeItemAdapterRef<ViewHolder, MyTreeItem, WrappedItem> REF = new ITreeItemAdapterRef<ViewHolder, MyTreeItem, WrappedItem>() {
+    public static ITreeItemAdapterRef<MyTreeItemAdapter, ViewHolder, MyTreeItem, WrappedItem> REF = new ITreeItemAdapterRef<MyTreeItemAdapter, ViewHolder, MyTreeItem, WrappedItem>() {
         @NonNull
         @Override
         public Class<MyTreeItem> getItemClass() {
@@ -34,7 +35,7 @@ public class MyTreeItemAdapter extends AbsChoosableTreeItemAdapter<
 
         @NonNull
         @Override
-        public AbsTreeItemAdapter<ViewHolder, MyTreeItem, WrappedItem> createAdapter(@NonNull Context context, @NonNull List<MyTreeItem> items) {
+        public MyTreeItemAdapter createAdapter(@NonNull Context context, @NonNull List<MyTreeItem> items) {
             return new MyTreeItemAdapter(context, items);
         }
 
@@ -53,8 +54,7 @@ public class MyTreeItemAdapter extends AbsChoosableTreeItemAdapter<
             WrappedItem item = getItemAt(position);
             switch (view.getId()) {
                 case R.id.check_opened: {
-                    item.opened = !item.opened;
-                    doFold(item, item.opened);
+                    doOpen(item, !item.isOpened());
                     break;
                 }
                 default: {
@@ -89,11 +89,6 @@ public class MyTreeItemAdapter extends AbsChoosableTreeItemAdapter<
         MyTreeItem item = wrappedItem.getItem();
 
         {
-            ViewGroup.LayoutParams params = holder.itemView.getLayoutParams();
-            params.height = wrappedItem.fold ? 0 : ViewGroup.LayoutParams.WRAP_CONTENT;
-            holder.itemView.setLayoutParams(params);
-        }
-        {
             ViewGroup.LayoutParams params = holder.levelSpace.getLayoutParams();
             params.width = wrappedItem.level * getContext().getResources().getDimensionPixelSize(R.dimen.element_spacing_large);
             holder.levelSpace.setLayoutParams(params);
@@ -103,7 +98,7 @@ public class MyTreeItemAdapter extends AbsChoosableTreeItemAdapter<
             holder.openedCheck.setVisibility(hasChildren ? View.VISIBLE : View.INVISIBLE);
         }
 
-        holder.openedCheck.setChecked(wrappedItem.opened);
+        holder.openedCheck.setChecked(wrappedItem.isOpened());
         holder.labelText.setText(item.getText());
     }
 

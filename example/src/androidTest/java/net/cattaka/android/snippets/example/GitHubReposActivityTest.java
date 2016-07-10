@@ -1,0 +1,39 @@
+package net.cattaka.android.snippets.example;
+
+import android.support.test.rule.ActivityTestRule;
+import android.support.test.runner.AndroidJUnit4;
+import net.cattaka.android.snippets.example.test.IsolateEnvRule;
+import okhttp3.mockwebserver.RecordedRequest;
+import org.junit.Rule;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+
+import java.util.concurrent.TimeUnit;
+
+import static org.hamcrest.Matchers.is;
+import static org.hamcrest.Matchers.notNullValue;
+import static org.junit.Assert.assertThat;
+
+/**
+ * Created by cattaka on 16/07/10.
+ */
+@RunWith(AndroidJUnit4.class)
+public class GitHubReposActivityTest {
+    @Rule
+    public IsolateEnvRule mIsolateEnvRule = new IsolateEnvRule();
+
+    @Rule
+    public ActivityTestRule<GitHubReposActivity> mActivityTestRule = new ActivityTestRule<>(GitHubReposActivity.class, false, false);
+
+    @Test
+    public void testCheckRequest() throws Exception {
+        mActivityTestRule.launchActivity(null);
+        do {
+            RecordedRequest recordedRequest = mIsolateEnvRule.mTestMyModule.mMockWebServer.takeRequest(3, TimeUnit.SECONDS);
+            assertThat(recordedRequest, is(notNullValue()));
+            if ("GET".equals(recordedRequest.getMethod()) && "/users/cattaka/repos".equals(recordedRequest.getPath())) {
+                break;
+            }
+        } while (true);
+    }
+}

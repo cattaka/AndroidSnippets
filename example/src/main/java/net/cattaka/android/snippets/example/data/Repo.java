@@ -10,11 +10,11 @@ import java.util.Date;
 public class Repo {
     private long id;
     private String name;
-    private String full_name;
+    private String fullName;
     private Owner owner;
     @SerializedName("private")
     private boolean privateFlag;
-    private String html_url;
+    private String htmlUrl;
     private String description;
     private boolean fork;
     private String url;
@@ -22,8 +22,8 @@ public class Repo {
     private String keysUrl;
     private String collaboratorsUrl;
     private String teamsUrl;
-    private String hooks_Url;
-    private String issue_events_url;
+    private String hooksUrl;
+    private String issueEventsUrl;
     private String eventsUrl;
     private String assigneesUrl;
     private String branchesUrl;
@@ -60,7 +60,7 @@ public class Repo {
     private String gitUrl;
     private String sshUrl;
     private String cloneUrl;
-    private String svn_Url;
+    private String svnUrl;
     private String homepage;
     private long size;
     private int stargazersCount;
@@ -94,12 +94,12 @@ public class Repo {
         this.name = name;
     }
 
-    public String getFull_name() {
-        return full_name;
+    public String getFullName() {
+        return fullName;
     }
 
-    public void setFull_name(String full_name) {
-        this.full_name = full_name;
+    public void setFullName(String fullName) {
+        this.fullName = fullName;
     }
 
     public Owner getOwner() {
@@ -118,12 +118,12 @@ public class Repo {
         this.privateFlag = privateFlag;
     }
 
-    public String getHtml_url() {
-        return html_url;
+    public String getHtmlUrl() {
+        return htmlUrl;
     }
 
-    public void setHtml_url(String html_url) {
-        this.html_url = html_url;
+    public void setHtmlUrl(String htmlUrl) {
+        this.htmlUrl = htmlUrl;
     }
 
     public String getDescription() {
@@ -182,20 +182,20 @@ public class Repo {
         this.teamsUrl = teamsUrl;
     }
 
-    public String getHooks_Url() {
-        return hooks_Url;
+    public String getHooksUrl() {
+        return hooksUrl;
     }
 
-    public void setHooks_Url(String hooks_Url) {
-        this.hooks_Url = hooks_Url;
+    public void setHooksUrl(String hooksUrl) {
+        this.hooksUrl = hooksUrl;
     }
 
-    public String getIssue_events_url() {
-        return issue_events_url;
+    public String getIssueEventsUrl() {
+        return issueEventsUrl;
     }
 
-    public void setIssue_events_url(String issue_events_url) {
-        this.issue_events_url = issue_events_url;
+    public void setIssueEventsUrl(String issueEventsUrl) {
+        this.issueEventsUrl = issueEventsUrl;
     }
 
     public String getEventsUrl() {
@@ -486,12 +486,12 @@ public class Repo {
         this.cloneUrl = cloneUrl;
     }
 
-    public String getSvn_Url() {
-        return svn_Url;
+    public String getSvnUrl() {
+        return svnUrl;
     }
 
-    public void setSvn_Url(String svn_Url) {
-        this.svn_Url = svn_Url;
+    public void setSvnUrl(String svnUrl) {
+        this.svnUrl = svnUrl;
     }
 
     public String getHomepage() {

@@ -6,7 +6,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
-
 import net.cattaka.android.adaptertoolbox.adapter.listener.ListenerRelay;
 import net.cattaka.android.snippets.example.adapter.ActivityEntryAdapter;
 import net.cattaka.android.snippets.example.data.ActivityEntry;
@@ -34,6 +33,9 @@ public class MainActivity extends AppCompatActivity {
             new ActivityEntry("Tree", null,
                     new ActivityEntry("Simple tree", TreeItemAdapterExampleActivity.class),
                     new ActivityEntry("Choosable tree", ChoosableTreeItemAdapterExampleActivity.class)
+            ),
+            new ActivityEntry("GitHub", null,
+                    new ActivityEntry("Repos", GitHubReposActivity.class)
             )
     );
 

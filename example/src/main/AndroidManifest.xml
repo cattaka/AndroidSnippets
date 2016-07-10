@@ -2,8 +2,11 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
           package="net.cattaka.android.snippets.example">
 
+    <uses-permission android:name="android.permission.INTERNET"/>
+
     <application
-        android:allowBackup="true"
+        android:name=".core.MyApplication"
+        android:allowBackup="false"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:supportsRtl="true"
@@ -25,6 +28,7 @@
         <activity android:name=".NestedScrambleAdapterExampleActivity"/>
         <activity android:name=".TreeItemAdapterExampleActivity"/>
         <activity android:name=".ChoosableTreeItemAdapterExampleActivity"/>
+        <activity android:name=".GitHubReposActivity"/>
     </application>
 
 </manifest>

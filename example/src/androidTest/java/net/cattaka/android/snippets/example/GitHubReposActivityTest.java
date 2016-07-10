@@ -2,17 +2,20 @@ package net.cattaka.android.snippets.example;
 
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
+import net.cattaka.android.snippets.example.retrofit.GitHubService;
 import net.cattaka.android.snippets.example.test.IsolateEnvRule;
 import okhttp3.mockwebserver.RecordedRequest;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.internal.stubbing.defaultanswers.ForwardsInvocations;
 
 import java.util.concurrent.TimeUnit;
 
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.notNullValue;
 import static org.junit.Assert.assertThat;
+import static org.mockito.Mockito.*;
 
 /**
  * Created by cattaka on 16/07/10.
@@ -26,7 +29,7 @@ public class GitHubReposActivityTest {
     public ActivityTestRule<GitHubReposActivity> mActivityTestRule = new ActivityTestRule<>(GitHubReposActivity.class, false, false);
 
     @Test
-    public void testCheckRequest() throws Exception {
+    public void testCheckRequest_mMockWebServer() throws Exception {
         mActivityTestRule.launchActivity(null);
         do {
             RecordedRequest recordedRequest = mIsolateEnvRule.mTestMyModule.mMockWebServer.takeRequest(3, TimeUnit.SECONDS);
@@ -35,5 +38,18 @@ public class GitHubReposActivityTest {
                 break;
             }
         } while (true);
+    }
+
+    @Test
+    public void testCheckRequest_mGitHubService() throws Exception {
+        GitHubService service;
+        {
+            service = mIsolateEnvRule.mTestMyModule.mGitHubService;
+            service = mock(GitHubService.class, new ForwardsInvocations(service));
+            mIsolateEnvRule.mTestMyModule.mGitHubService = service;
+        }
+
+        mActivityTestRule.launchActivity(null);
+        verify(service).listRepos(eq("cattaka"));
     }
 }

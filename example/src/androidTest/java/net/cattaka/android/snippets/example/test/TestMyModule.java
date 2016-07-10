@@ -12,6 +12,7 @@ import dagger.Provides;
 import net.cattaka.android.snippets.example.Constants;
 import net.cattaka.android.snippets.example.MySQLiteOpenHelper;
 import net.cattaka.android.snippets.example.core.MyModule;
+import net.cattaka.android.snippets.example.retrofit.GitHubService;
 import okhttp3.mockwebserver.MockWebServer;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
@@ -32,6 +33,7 @@ public class TestMyModule extends MyModule {
     public SharedPreferences mSharedPreferences;
     public MySQLiteOpenHelper mMySQLiteOpenHelper;
     public Retrofit mRetrofit;
+    public GitHubService mGitHubService;
 
     public TestMyModule(@NonNull Context context) {
         super(context);
@@ -49,6 +51,7 @@ public class TestMyModule extends MyModule {
                 .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
                 .addConverterFactory(GsonConverterFactory.create(gson))
                 .baseUrl(mMockWebServer.url("/").toString()).build();
+        mGitHubService = mRetrofit.create(GitHubService.class);
     }
 
     public void reset() {
@@ -74,6 +77,13 @@ public class TestMyModule extends MyModule {
     @Provides
     public Retrofit createRetrofit() {
         return mRetrofit;
+    }
+
+    @Provides
+
+    @Override
+    public GitHubService createGitHubService() {
+        return mGitHubService;
     }
 }
 

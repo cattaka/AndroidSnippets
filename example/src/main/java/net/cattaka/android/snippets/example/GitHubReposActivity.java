@@ -17,7 +17,6 @@ import net.cattaka.android.snippets.example.adapter.factory.RepoViewHolderFactor
 import net.cattaka.android.snippets.example.core.MyApplication;
 import net.cattaka.android.snippets.example.data.Repo;
 import net.cattaka.android.snippets.example.retrofit.GitHubService;
-import retrofit2.Retrofit;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
 import rx.schedulers.Schedulers;
@@ -49,10 +48,9 @@ public class GitHubReposActivity extends RxAppCompatActivity implements SwipeRef
     @Inject
     MySQLiteOpenHelper mMySQLiteOpenHelper;
     @Inject
-    Retrofit mRetrofit;
+    GitHubService mGitHubService;
 
     RxAppCompatActivity me = this;
-    GitHubService mGitHubService;
     SwipeRefreshLayout mSwipeRefreshLayout;
     RecyclerView mRecyclerView;
 
@@ -64,7 +62,6 @@ public class GitHubReposActivity extends RxAppCompatActivity implements SwipeRef
         setContentView(R.layout.activity_git_hub_repos);
         {   // inject components
             ((MyApplication) getApplication()).getAppComponent().inject(this);
-            mGitHubService = mRetrofit.create(GitHubService.class);
         }
         {   // find views
             mSwipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.layout_swipe_refresh);

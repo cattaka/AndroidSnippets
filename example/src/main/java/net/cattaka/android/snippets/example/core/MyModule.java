@@ -10,6 +10,7 @@ import dagger.Module;
 import dagger.Provides;
 import net.cattaka.android.snippets.example.Constants;
 import net.cattaka.android.snippets.example.MySQLiteOpenHelper;
+import net.cattaka.android.snippets.example.retrofit.GitHubService;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
@@ -44,5 +45,10 @@ public class MyModule {
                 .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
                 .addConverterFactory(GsonConverterFactory.create(gson))
                 .baseUrl("https://api.github.com/").build();
+    }
+
+    @Provides
+    public GitHubService createGitHubService() {
+        return createRetrofit().create(GitHubService.class);
     }
 }

@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+
 import net.cattaka.android.adaptertoolbox.adapter.listener.ListenerRelay;
 import net.cattaka.android.snippets.example.adapter.ActivityEntryAdapter;
 import net.cattaka.android.snippets.example.data.ActivityEntry;
@@ -15,6 +16,9 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
     private static final List<ActivityEntry> ACTIVITY_ENTRIES = Arrays.asList(
+            new ActivityEntry("ViewSnapper", null,
+                    new ActivityEntry("Snap rect to button", ViewSnapperExampleActivity.class)
+            ),
             new ActivityEntry("Spinner", null,
                     new ActivityEntry("CodeLabelAdapter", CodeLabelExampleActivity.class)
             ),

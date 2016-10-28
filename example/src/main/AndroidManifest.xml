@@ -30,6 +30,7 @@
         <activity android:name=".ChoosableTreeItemAdapterExampleActivity"/>
         <activity android:name=".GitHubReposActivity"/>
         <activity android:name=".ViewSnapperExampleActivity"/>
+        <activity android:name=".AnimateConstraintLayoutActivity"/>
     </application>
 
 </manifest>

@@ -1,6 +1,7 @@
 package net.cattaka.android.snippets.animator;
 
 import android.support.annotation.Keep;
+import android.util.Property;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -11,6 +12,13 @@ import android.view.ViewGroup;
  */
 @Keep
 public class LayoutAnimatorHelper {
+    public static final Property<LayoutAnimatorHelper, Integer> TOP_MARGIN = Property.of(LayoutAnimatorHelper.class, int.class, "topMargin");
+    public static final Property<LayoutAnimatorHelper, Integer> RIGHT_MARGIN = Property.of(LayoutAnimatorHelper.class, int.class, "rightMargin");
+    public static final Property<LayoutAnimatorHelper, Integer> BOTTOM_MARGIN = Property.of(LayoutAnimatorHelper.class, int.class, "bottomMargin");
+    public static final Property<LayoutAnimatorHelper, Integer> LEFT_MARGIN = Property.of(LayoutAnimatorHelper.class, int.class, "leftMargin");
+    public static final Property<LayoutAnimatorHelper, Integer> WIDTH = Property.of(LayoutAnimatorHelper.class, int.class, "width");
+    public static final Property<LayoutAnimatorHelper, Integer> HEIGHT = Property.of(LayoutAnimatorHelper.class, int.class, "height");
+
     private View mView;
 
     public LayoutAnimatorHelper(View view) {

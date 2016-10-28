@@ -1,24 +1,30 @@
 package net.cattaka.android.snippets.animator;
 
 import android.support.annotation.Keep;
+import android.util.Property;
 import android.view.View;
 import android.view.ViewGroup;
 
 /**
+ * These codes are licensed under CC0.
+ * <p>
  * Save all methods from proguard!!
  * <p/>
  * Created by cattaka on 2016/04/15.
  */
 @Keep
 public class LayoutAnimatorHelper {
-    private View mView;
+    public static final Property<LayoutAnimatorHelper, Integer> TOP_MARGIN = Property.of(LayoutAnimatorHelper.class, int.class, "topMargin");
+    public static final Property<LayoutAnimatorHelper, Integer> RIGHT_MARGIN = Property.of(LayoutAnimatorHelper.class, int.class, "rightMargin");
+    public static final Property<LayoutAnimatorHelper, Integer> BOTTOM_MARGIN = Property.of(LayoutAnimatorHelper.class, int.class, "bottomMargin");
+    public static final Property<LayoutAnimatorHelper, Integer> LEFT_MARGIN = Property.of(LayoutAnimatorHelper.class, int.class, "leftMargin");
+    public static final Property<LayoutAnimatorHelper, Integer> WIDTH = Property.of(LayoutAnimatorHelper.class, int.class, "width");
+    public static final Property<LayoutAnimatorHelper, Integer> HEIGHT = Property.of(LayoutAnimatorHelper.class, int.class, "height");
+
+    View mView;
 
     public LayoutAnimatorHelper(View view) {
         mView = view;
-    }
-
-    public View getView() {
-        return mView;
     }
 
     public int getTopMargin() {

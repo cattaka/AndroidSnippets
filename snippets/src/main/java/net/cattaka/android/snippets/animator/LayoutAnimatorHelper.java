@@ -6,8 +6,6 @@ import android.view.View;
 import android.view.ViewGroup;
 
 /**
- * These codes are licensed under CC0.
- * <p>
  * Save all methods from proguard!!
  * <p/>
  * Created by cattaka on 2016/04/15.
@@ -21,10 +19,14 @@ public class LayoutAnimatorHelper {
     public static final Property<LayoutAnimatorHelper, Integer> WIDTH = Property.of(LayoutAnimatorHelper.class, int.class, "width");
     public static final Property<LayoutAnimatorHelper, Integer> HEIGHT = Property.of(LayoutAnimatorHelper.class, int.class, "height");
 
-    View mView;
+    private View mView;
 
     public LayoutAnimatorHelper(View view) {
         mView = view;
+    }
+
+    public View getView() {
+        return mView;
     }
 
     public int getTopMargin() {

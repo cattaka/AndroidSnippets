@@ -16,6 +16,9 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
     private static final List<ActivityEntry> ACTIVITY_ENTRIES = Arrays.asList(
+            new ActivityEntry("ConstraintLayout", null,
+                    new ActivityEntry("Animate ConstraintLayout", AnimateConstraintLayoutActivity.class)
+            ),
             new ActivityEntry("ViewSnapper", null,
                     new ActivityEntry("Snap rect to button", ViewSnapperExampleActivity.class)
             ),

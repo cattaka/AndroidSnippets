@@ -10,7 +10,7 @@ import java.util.List;
 /**
  * Created by cattaka on 16/11/15.
  */
-public class CaptureTarget {
+public class CaptureDescription {
     public static final int CHOOSE_SIZE_MODE_SMALLEST = 1;
     public static final int CHOOSE_SIZE_MODE_BIGGEST = 2;
 
@@ -86,8 +86,8 @@ public class CaptureTarget {
         public Builder() {
         }
 
-        public CaptureTarget build() {
-            CaptureTarget target = new CaptureTarget();
+        public CaptureDescription build() {
+            CaptureDescription target = new CaptureDescription();
             target.setSupportedImageFormats(supportedImageFormats);
             target.setMinWidth(minWidth);
             target.setMaxWidth(maxWidth);

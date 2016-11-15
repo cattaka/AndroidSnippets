@@ -164,6 +164,7 @@ public class ImageReaderDescription {
         public Builder() {
         }
 
+        @NonNull
         public ImageReaderDescription build() {
             ImageReaderDescription target = new ImageReaderDescription();
             target.setImageFormats(imageFormats);

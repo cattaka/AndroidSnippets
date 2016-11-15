@@ -24,7 +24,7 @@ public class ImageReaderSurfaceHolder implements ISurfaceHolder<ImageReader> {
 
     @Override
     public Surface getSurface() {
-        return null;
+        return (mImageReader != null) ? mImageReader.getSurface() : null;
     }
 
     @Override
@@ -36,7 +36,7 @@ public class ImageReaderSurfaceHolder implements ISurfaceHolder<ImageReader> {
 
     @Override
     public ImageReader getTarget() {
-        return null;
+        return mImageReader;
     }
 
     @Override

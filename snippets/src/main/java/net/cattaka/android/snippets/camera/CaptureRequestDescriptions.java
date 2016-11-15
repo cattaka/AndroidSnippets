@@ -9,6 +9,7 @@ import android.os.Build;
 import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.util.Pair;
 
 /**
  * Created by cattaka on 16/11/15.
@@ -34,7 +35,7 @@ public class CaptureRequestDescriptions {
         }
 
         @Override
-        public CaptureRequest setupCaptureRequest(@NonNull CameraDevice cameraDevice, @NonNull CameraCaptureSession cameraCaptureSession, @Nullable CameraCaptureSession.CaptureCallback captureCallback, @Nullable Handler handler) throws CameraAccessException {
+        public Pair<Integer, CaptureRequest> setupCaptureRequest(@NonNull CameraDevice cameraDevice, @NonNull CameraCaptureSession cameraCaptureSession, @Nullable CameraCaptureSession.CaptureCallback captureCallback, @Nullable Handler handler) throws CameraAccessException {
             CaptureRequest.Builder builder = cameraDevice.createCaptureRequest(CameraDevice.TEMPLATE_PREVIEW);
             builder.set(CaptureRequest.CONTROL_AF_MODE, CaptureRequest.CONTROL_AF_MODE_CONTINUOUS_PICTURE);
             builder.set(CaptureRequest.CONTROL_AE_MODE, CaptureRequest.CONTROL_AE_MODE_ON_AUTO_FLASH);
@@ -42,8 +43,13 @@ public class CaptureRequestDescriptions {
                 builder.addTarget(surfaceHolder.getSurface());
             }
             CaptureRequest captureRequest = builder.build();
-            cameraCaptureSession.setRepeatingRequest(captureRequest, captureCallback, handler);
-            return captureRequest;
+            int id = cameraCaptureSession.setRepeatingRequest(captureRequest, captureCallback, handler);
+            return new Pair<>(id, captureRequest);
+        }
+
+        @Override
+        public boolean isOneShot() {
+            return false;
         }
     }
 
@@ -56,14 +62,19 @@ public class CaptureRequestDescriptions {
         }
 
         @Override
-        public CaptureRequest setupCaptureRequest(@NonNull CameraDevice cameraDevice, @NonNull CameraCaptureSession cameraCaptureSession, @Nullable CameraCaptureSession.CaptureCallback captureCallback, @Nullable Handler handler) throws CameraAccessException {
+        public Pair<Integer, CaptureRequest> setupCaptureRequest(@NonNull CameraDevice cameraDevice, @NonNull CameraCaptureSession cameraCaptureSession, @Nullable CameraCaptureSession.CaptureCallback captureCallback, @Nullable Handler handler) throws CameraAccessException {
             CaptureRequest.Builder builder = cameraDevice.createCaptureRequest(CameraDevice.TEMPLATE_ZERO_SHUTTER_LAG);
             for (ISurfaceHolder surfaceHolder : mSurfaceHolderss) {
                 builder.addTarget(surfaceHolder.getSurface());
             }
             CaptureRequest captureRequest = builder.build();
-            cameraCaptureSession.capture(captureRequest, captureCallback, handler);
-            return captureRequest;
+            int id = cameraCaptureSession.capture(captureRequest, captureCallback, handler);
+            return new Pair<>(id, captureRequest);
+        }
+
+        @Override
+        public boolean isOneShot() {
+            return true;
         }
     }
 }

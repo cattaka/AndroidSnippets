@@ -15,6 +15,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -64,7 +65,7 @@ public class TextureViewSurfaceHolder implements ISurfaceHolder<TextureView> {
     @Override
     public boolean prepare(@NonNull CameraDevice device, @NonNull CameraCharacteristics characteristics) {
         StreamConfigurationMap scMap = characteristics.get(CameraCharacteristics.SCALER_STREAM_CONFIGURATION_MAP);
-        Size size = (scMap != null) ? findBestPreviewSize(scMap) : null;
+        Size size = (scMap != null) ? findBestPreviewSize(scMap, mTextureView.getWidth(), mTextureView.getHeight()) : null;
         if (size != null) {
             SurfaceTexture texture = mTextureView.getSurfaceTexture();
             texture.setDefaultBufferSize(size.getWidth(), size.getHeight());
@@ -90,14 +91,23 @@ public class TextureViewSurfaceHolder implements ISurfaceHolder<TextureView> {
         mListener = listener;
     }
 
-    private static Size findBestPreviewSize(@NonNull StreamConfigurationMap scMap) {
-        List<Size> size = new ArrayList<>(Arrays.asList(scMap.getOutputSizes(SurfaceTexture.class)));
-        Collections.sort(size, new Comparator<Size>() {
+    private static Size findBestPreviewSize(@NonNull StreamConfigurationMap scMap, int width, int height) {
+        List<Size> sizes = new ArrayList<>(Arrays.asList(scMap.getOutputSizes(SurfaceTexture.class)));
+        for (Iterator<Size> itr = sizes.iterator(); itr.hasNext(); ) {
+            Size size = itr.next();
+            if (size.getWidth() < width || size.getHeight() < height) {
+                itr.remove();
+            }
+        }
+        if (sizes.size() == 0) {
+            sizes = new ArrayList<>(Arrays.asList(scMap.getOutputSizes(SurfaceTexture.class)));
+        }
+        Collections.sort(sizes, new Comparator<Size>() {
             @Override
             public int compare(Size s1, Size s2) {
                 return s2.getWidth() * s2.getHeight() - s1.getWidth() * s1.getHeight();
             }
         });
-        return (size.size() > 0) ? size.get(0) : null;
+        return (sizes.size() > 0) ? sizes.get(sizes.size() - 1) : null;
     }
 }

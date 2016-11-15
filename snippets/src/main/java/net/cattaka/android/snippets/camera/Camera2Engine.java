@@ -16,10 +16,13 @@ import android.os.Build;
 import android.os.Handler;
 import android.os.Looper;
 import android.support.annotation.NonNull;
+import android.util.Pair;
 import android.view.Surface;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by cattaka on 16/11/15.
@@ -63,7 +66,6 @@ public class Camera2Engine {
         @Override
         public void onCaptureCompleted(@NonNull CameraCaptureSession session, @NonNull CaptureRequest request, @NonNull TotalCaptureResult result) {
             super.onCaptureCompleted(session, request, result);
-            popCaptureRequestDescription();
         }
 
         @Override
@@ -79,6 +81,7 @@ public class Camera2Engine {
         @Override
         public void onCaptureSequenceCompleted(@NonNull CameraCaptureSession session, int sequenceId, long frameNumber) {
             super.onCaptureSequenceCompleted(session, sequenceId, frameNumber);
+            popCaptureRequestDescription(sequenceId);
         }
 
         @Override
@@ -96,11 +99,12 @@ public class Camera2Engine {
             super.onCaptureStarted(session, request, timestamp, frameNumber);
         }
 
-        private void popCaptureRequestDescription() {
-            mCaptureRequest = null;
-            if (mCaptureRequestDescriptions.size() > 0) {
-                mCaptureRequestDescriptions.remove(mCaptureRequestDescriptions.size() - 1);
+        private void popCaptureRequestDescription(int sequenceId) {
+            ICaptureRequestDescription description = mCaptureRequestDescriptionMap.get(sequenceId);
+            if (description != null && description.isOneShot()) {
+                mCaptureRequestDescriptions.remove(description);
             }
+            mCaptureRequest = null;
             goNext();
         }
     };
@@ -133,6 +137,7 @@ public class Camera2Engine {
     private CameraCaptureSession mCameraCaptureSession;
     private CaptureRequest mCaptureRequest;
     private boolean mRequireRecreateCaptureRequest;
+    private Map<Integer, ICaptureRequestDescription> mCaptureRequestDescriptionMap = new HashMap<>();
 
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     public Camera2Engine(CameraManager cameraManager) {
@@ -185,6 +190,7 @@ public class Camera2Engine {
                 return;
             }
             if (mRequireRecreateCaptureRequest && mCaptureRequest != null) {
+                mCaptureRequest = null;
                 try {
                     mCameraCaptureSession.abortCaptures();
                 } catch (CameraAccessException e) {
@@ -197,7 +203,9 @@ public class Camera2Engine {
                 mRequireRecreateCaptureRequest = true;
                 ICaptureRequestDescription description = mCaptureRequestDescriptions.get(mCaptureRequestDescriptions.size() - 1);
                 try {
-                    mCaptureRequest = description.setupCaptureRequest(mCameraDevice, mCameraCaptureSession, mCaptureCallback, sHandler);
+                    Pair<Integer, CaptureRequest> pair = description.setupCaptureRequest(mCameraDevice, mCameraCaptureSession, mCaptureCallback, sHandler);
+                    mCaptureRequest = pair.second;
+                    mCaptureRequestDescriptionMap.put(pair.first, description);
                 } catch (CameraAccessException e) {
                     if (mCamera2EngineListener != null) {
                         mCamera2EngineListener.onCameraAccessException(e);
@@ -206,6 +214,7 @@ public class Camera2Engine {
                 return;
             }
         } else {
+            mCaptureRequest = null;
             if (mCameraCaptureSession != null) {
                 mCameraCaptureSession.close();
                 mCameraCaptureSession = null;

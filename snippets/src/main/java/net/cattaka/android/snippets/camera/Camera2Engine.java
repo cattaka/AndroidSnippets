@@ -1,7 +1,6 @@
 package net.cattaka.android.snippets.camera;
 
 import android.annotation.TargetApi;
-import android.graphics.SurfaceTexture;
 import android.hardware.camera2.CameraAccessException;
 import android.hardware.camera2.CameraCaptureSession;
 import android.hardware.camera2.CameraCharacteristics;
@@ -64,6 +63,7 @@ public class Camera2Engine {
         @Override
         public void onCaptureCompleted(@NonNull CameraCaptureSession session, @NonNull CaptureRequest request, @NonNull TotalCaptureResult result) {
             super.onCaptureCompleted(session, request, result);
+            popCaptureRequestDescription();
         }
 
         @Override
@@ -94,7 +94,14 @@ public class Camera2Engine {
         @Override
         public void onCaptureStarted(@NonNull CameraCaptureSession session, @NonNull CaptureRequest request, long timestamp, long frameNumber) {
             super.onCaptureStarted(session, request, timestamp, frameNumber);
-            mCaptureRequest = request;
+        }
+
+        private void popCaptureRequestDescription() {
+            mCaptureRequest = null;
+            if (mCaptureRequestDescriptions.size() > 0) {
+                mCaptureRequestDescriptions.remove(mCaptureRequestDescriptions.size() - 1);
+            }
+            goNext();
         }
     };
 
@@ -117,6 +124,7 @@ public class Camera2Engine {
     private List<ISurfaceHolder<?>> mSurfaceHolders = new ArrayList<>();
     private List<ISurfaceHolder<?>> mPreparedSurfaceHolders = new ArrayList<>();
     private ICamera2EngineListener mCamera2EngineListener;
+    private List<ICaptureRequestDescription> mCaptureRequestDescriptions;
 
     private boolean mRunning;
 
@@ -146,7 +154,9 @@ public class Camera2Engine {
                 //noinspection MissingPermission
                 mCameraManager.openCamera(cameraId, mStateCallback, sHandler);
             } catch (CameraAccessException e) {
-                throw new RuntimeException(e);
+                if (mCamera2EngineListener != null) {
+                    mCamera2EngineListener.onCameraAccessException(e);
+                }
             }
             return;
         }
@@ -166,22 +176,20 @@ public class Camera2Engine {
             try {
                 mCameraDevice.createCaptureSession(surfaces, mSessionStateCallback, sHandler);
             } catch (CameraAccessException e) {
-                throw new RuntimeException(e);
+                if (mCamera2EngineListener != null) {
+                    mCamera2EngineListener.onCameraAccessException(e);
+                }
             }
             return;
         }
-        if (mCaptureRequest == null) {
-            SurfaceTexture texture = mTextureView.getSurfaceTexture();
-            texture.setDefaultBufferSize(mPreviewSize.getWidth(), mPreviewSize.getHeight());
-            Surface surface = new Surface(texture);
+        if (mCaptureRequest == null && mCaptureRequestDescriptions.size() > 0) {
+            ICaptureRequestDescription description = mCaptureRequestDescriptions.get(mCaptureRequestDescriptions.size() - 1);
             try {
-                CaptureRequest.Builder builder = mCameraDevice.createCaptureRequest(CameraDevice.TEMPLATE_PREVIEW);
-                builder.set(CaptureRequest.CONTROL_AF_MODE, CaptureRequest.CONTROL_AF_MODE_CONTINUOUS_PICTURE);
-                builder.set(CaptureRequest.CONTROL_AE_MODE, CaptureRequest.CONTROL_AE_MODE_ON_AUTO_FLASH);
-                builder.addTarget(surface);
-                mCameraCaptureSession.setRepeatingRequest(builder.build(), mCaptureCallback, sHandler);
+                mCaptureRequest = description.setupCaptureRequest(mCameraDevice, mCameraCaptureSession, mCaptureCallback, sHandler);
             } catch (CameraAccessException e) {
-                throw new RuntimeException(e);
+                if (mCamera2EngineListener != null) {
+                    mCamera2EngineListener.onCameraAccessException(e);
+                }
             }
             return;
         }
@@ -242,5 +250,7 @@ public class Camera2Engine {
 
     public interface ICamera2EngineListener {
         void onSurfaceHolderPrepared(ISurfaceHolder<?> surfaceHolder, boolean success);
+
+        void onCameraAccessException(CameraAccessException e);
     }
 }

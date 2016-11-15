@@ -124,7 +124,7 @@ public class Camera2Engine {
     private List<ISurfaceHolder<?>> mSurfaceHolders = new ArrayList<>();
     private List<ISurfaceHolder<?>> mPreparedSurfaceHolders = new ArrayList<>();
     private ICamera2EngineListener mCamera2EngineListener;
-    private List<ICaptureRequestDescription> mCaptureRequestDescriptions;
+    private List<ICaptureRequestDescription> mCaptureRequestDescriptions = new ArrayList<>();
 
     private boolean mRunning;
 
@@ -132,6 +132,7 @@ public class Camera2Engine {
     private CameraCharacteristics mCharacteristics;
     private CameraCaptureSession mCameraCaptureSession;
     private CaptureRequest mCaptureRequest;
+    private boolean mRequireRecreateCaptureRequest;
 
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     public Camera2Engine(CameraManager cameraManager) {
@@ -139,59 +140,80 @@ public class Camera2Engine {
     }
 
     private void goNext() {
-        for (ISurfaceHolder surfaceHolder : mSurfaceHolders) {
-            if (!surfaceHolder.isReadyForPrepare()) {
-                return;
-            }
-        }
-        if (mCameraDevice == null) {
-            try {
-                String cameraId = findCameraId(mCameraManager, mFacing);
-                if (cameraId == null) {
+        if (mRunning) {
+            for (ISurfaceHolder surfaceHolder : mSurfaceHolders) {
+                if (!surfaceHolder.isReadyForPrepare()) {
                     return;
                 }
-                mCharacteristics = mCameraManager.getCameraCharacteristics(cameraId);
-                //noinspection MissingPermission
-                mCameraManager.openCamera(cameraId, mStateCallback, sHandler);
-            } catch (CameraAccessException e) {
-                if (mCamera2EngineListener != null) {
-                    mCamera2EngineListener.onCameraAccessException(e);
+            }
+            if (mCameraDevice == null) {
+                try {
+                    String cameraId = findCameraId(mCameraManager, mFacing);
+                    if (cameraId == null) {
+                        return;
+                    }
+                    mCharacteristics = mCameraManager.getCameraCharacteristics(cameraId);
+                    //noinspection MissingPermission
+                    mCameraManager.openCamera(cameraId, mStateCallback, sHandler);
+                } catch (CameraAccessException e) {
+                    if (mCamera2EngineListener != null) {
+                        mCamera2EngineListener.onCameraAccessException(e);
+                    }
+                }
+                return;
+            }
+            if (mCameraCaptureSession == null) {
+                mPreparedSurfaceHolders.clear();
+                List<Surface> surfaces = new ArrayList<>();
+                for (ISurfaceHolder surfaceHolder : mSurfaceHolders) {
+                    boolean success = surfaceHolder.prepare(mCameraDevice, mCharacteristics);
+                    if (success) {
+                        mPreparedSurfaceHolders.add(surfaceHolder);
+                        surfaces.add(surfaceHolder.getSurface());
+                    }
+                    if (mCamera2EngineListener != null) {
+                        mCamera2EngineListener.onSurfaceHolderPrepared(surfaceHolder, success);
+                    }
+                }
+                try {
+                    mCameraDevice.createCaptureSession(surfaces, mSessionStateCallback, sHandler);
+                } catch (CameraAccessException e) {
+                    if (mCamera2EngineListener != null) {
+                        mCamera2EngineListener.onCameraAccessException(e);
+                    }
+                }
+                return;
+            }
+            if (mRequireRecreateCaptureRequest && mCaptureRequest != null) {
+                try {
+                    mCameraCaptureSession.abortCaptures();
+                } catch (CameraAccessException e) {
+                    if (mCamera2EngineListener != null) {
+                        mCamera2EngineListener.onCameraAccessException(e);
+                    }
                 }
             }
-            return;
-        }
-        if (mCameraCaptureSession == null) {
-            mPreparedSurfaceHolders.clear();
-            List<Surface> surfaces = new ArrayList<>();
-            for (ISurfaceHolder surfaceHolder : mSurfaceHolders) {
-                boolean success = surfaceHolder.prepare(mCameraDevice, mCharacteristics);
-                if (success) {
-                    mPreparedSurfaceHolders.add(surfaceHolder);
-                    surfaces.add(surfaceHolder.getSurface());
+            if (mCaptureRequest == null && mCaptureRequestDescriptions.size() > 0) {
+                mRequireRecreateCaptureRequest = true;
+                ICaptureRequestDescription description = mCaptureRequestDescriptions.get(mCaptureRequestDescriptions.size() - 1);
+                try {
+                    mCaptureRequest = description.setupCaptureRequest(mCameraDevice, mCameraCaptureSession, mCaptureCallback, sHandler);
+                } catch (CameraAccessException e) {
+                    if (mCamera2EngineListener != null) {
+                        mCamera2EngineListener.onCameraAccessException(e);
+                    }
                 }
-                if (mCamera2EngineListener != null) {
-                    mCamera2EngineListener.onSurfaceHolderPrepared(surfaceHolder, success);
-                }
+                return;
             }
-            try {
-                mCameraDevice.createCaptureSession(surfaces, mSessionStateCallback, sHandler);
-            } catch (CameraAccessException e) {
-                if (mCamera2EngineListener != null) {
-                    mCamera2EngineListener.onCameraAccessException(e);
-                }
+        } else {
+            if (mCameraCaptureSession != null) {
+                mCameraCaptureSession.close();
+                mCameraCaptureSession = null;
             }
-            return;
-        }
-        if (mCaptureRequest == null && mCaptureRequestDescriptions.size() > 0) {
-            ICaptureRequestDescription description = mCaptureRequestDescriptions.get(mCaptureRequestDescriptions.size() - 1);
-            try {
-                mCaptureRequest = description.setupCaptureRequest(mCameraDevice, mCameraCaptureSession, mCaptureCallback, sHandler);
-            } catch (CameraAccessException e) {
-                if (mCamera2EngineListener != null) {
-                    mCamera2EngineListener.onCameraAccessException(e);
-                }
+            if (mCameraDevice != null) {
+                mCameraDevice.close();
+                mCameraDevice = null;
             }
-            return;
         }
     }
 
@@ -214,18 +236,15 @@ public class Camera2Engine {
 
     public void release() {
         mRunning = false;
-        if (mCameraCaptureSession != null) {
-            mCameraCaptureSession.close();
-            mCameraCaptureSession = null;
-        }
-        if (mCameraDevice != null) {
-            mCameraDevice.close();
-            mCameraDevice = null;
-        }
+        goNext();
     }
 
     public boolean isRunning() {
         return mRunning;
+    }
+
+    public int getFacing() {
+        return mFacing;
     }
 
     public void setFacing(int facing) {
@@ -242,6 +261,12 @@ public class Camera2Engine {
     public void addSurfaceHolder(ISurfaceHolder<?> surfaceHolder) {
         mSurfaceHolders.add(surfaceHolder);
         surfaceHolder.setSurfaceHolderListener(mSurfaceHolderListener);
+    }
+
+    public void startCaptureRequest(ICaptureRequestDescription description) {
+        mRequireRecreateCaptureRequest = true;
+        mCaptureRequestDescriptions.add(description);
+        goNext();
     }
 
     public void setCamera2EngineListener(ICamera2EngineListener camera2EngineListener) {

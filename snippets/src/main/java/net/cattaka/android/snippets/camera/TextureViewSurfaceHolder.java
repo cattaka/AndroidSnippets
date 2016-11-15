@@ -24,9 +24,36 @@ import java.util.List;
 public class TextureViewSurfaceHolder implements ISurfaceHolder<TextureView> {
     private TextureView mTextureView;
     private Surface mSurface;
+    private ISurfaceHolderListener mListener;
+
+    TextureView.SurfaceTextureListener mSurfaceTextureListener = new TextureView.SurfaceTextureListener() {
+        @Override
+        public void onSurfaceTextureAvailable(SurfaceTexture surfaceTexture, int i, int i1) {
+            if (mListener != null) {
+                mListener.onChangeReadyForPrepare(TextureViewSurfaceHolder.this);
+            }
+        }
+
+        @Override
+        public void onSurfaceTextureSizeChanged(SurfaceTexture surfaceTexture, int i, int i1) {
+        }
+
+        @Override
+        public boolean onSurfaceTextureDestroyed(SurfaceTexture surfaceTexture) {
+            if (mListener != null) {
+                mListener.onChangeReadyForPrepare(TextureViewSurfaceHolder.this);
+            }
+            return false;
+        }
+
+        @Override
+        public void onSurfaceTextureUpdated(SurfaceTexture surfaceTexture) {
+        }
+    };
 
     public TextureViewSurfaceHolder(@NonNull TextureView textureView) {
         this.mTextureView = textureView;
+        mTextureView.setSurfaceTextureListener(mSurfaceTextureListener);
     }
 
     @Override
@@ -51,6 +78,16 @@ public class TextureViewSurfaceHolder implements ISurfaceHolder<TextureView> {
     @Override
     public TextureView getTarget() {
         return mTextureView;
+    }
+
+    @Override
+    public boolean isReadyForPrepare() {
+        return mTextureView.isAvailable();
+    }
+
+    @Override
+    public void setSurfaceHolderListener(ISurfaceHolderListener listener) {
+        mListener = listener;
     }
 
     private static Size findBestPreviewSize(@NonNull StreamConfigurationMap scMap) {

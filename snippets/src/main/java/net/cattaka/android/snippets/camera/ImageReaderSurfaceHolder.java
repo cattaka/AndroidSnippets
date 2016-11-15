@@ -16,6 +16,7 @@ import android.view.Surface;
 public class ImageReaderSurfaceHolder implements ISurfaceHolder<ImageReader> {
     private ImageReaderDescription mImageReaderDescription;
     private ImageReader mImageReader;
+    private ISurfaceHolderListener mListener;
 
     public ImageReaderSurfaceHolder(@NonNull ImageReaderDescription imageReaderDescription) {
         mImageReaderDescription = imageReaderDescription;
@@ -36,5 +37,15 @@ public class ImageReaderSurfaceHolder implements ISurfaceHolder<ImageReader> {
     @Override
     public ImageReader getTarget() {
         return null;
+    }
+
+    @Override
+    public boolean isReadyForPrepare() {
+        return true;
+    }
+
+    @Override
+    public void setSurfaceHolderListener(ISurfaceHolderListener listener) {
+        mListener = listener;
     }
 }

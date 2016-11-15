@@ -5,5 +5,4 @@ package net.cattaka.android.snippets.camera;
  */
 
 public interface ICameraEngine {
-    void addSurfaceHolder(ISurfaceHolder<?> surfaceHolder);
 }

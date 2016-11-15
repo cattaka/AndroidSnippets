@@ -14,4 +14,12 @@ public interface ISurfaceHolder<T> {
     boolean prepare(@NonNull CameraDevice device, @NonNull CameraCharacteristics characteristics);
 
     T getTarget();
+
+    boolean isReadyForPrepare();
+
+    void setSurfaceHolderListener(ISurfaceHolderListener listener);
+
+    public interface ISurfaceHolderListener {
+        void onChangeReadyForPrepare(ISurfaceHolder<?> target);
+    }
 }

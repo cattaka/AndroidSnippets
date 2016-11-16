@@ -1,16 +1,22 @@
 package net.cattaka.android.snippets.camera;
 
 import android.annotation.TargetApi;
+import android.content.Context;
+import android.graphics.Matrix;
 import android.graphics.SurfaceTexture;
 import android.hardware.camera2.CameraCharacteristics;
 import android.hardware.camera2.CameraDevice;
 import android.hardware.camera2.params.StreamConfigurationMap;
 import android.os.Build;
+import android.support.annotation.IntDef;
 import android.support.annotation.NonNull;
 import android.util.Size;
 import android.view.Surface;
 import android.view.TextureView;
+import android.view.WindowManager;
 
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -23,9 +29,18 @@ import java.util.List;
  */
 @TargetApi(Build.VERSION_CODES.LOLLIPOP)
 public class TextureViewSurfaceHolder implements ISurfaceHolder<TextureView> {
+    public static final int CENTER_CROP = 6;
+    public static final int CENTER_INSIDE = 7;
+
+    @Retention(RetentionPolicy.SOURCE)
+    @IntDef({CENTER_CROP, CENTER_INSIDE})
+    public @interface ScaleType {
+    }
+
     private TextureView mTextureView;
     private Surface mSurface;
     private ISurfaceHolderListener mListener;
+    private int mScaleType = CENTER_CROP;
 
     TextureView.SurfaceTextureListener mSurfaceTextureListener = new TextureView.SurfaceTextureListener() {
         @Override
@@ -57,6 +72,12 @@ public class TextureViewSurfaceHolder implements ISurfaceHolder<TextureView> {
         mTextureView.setSurfaceTextureListener(mSurfaceTextureListener);
     }
 
+    public TextureViewSurfaceHolder(@NonNull TextureView textureView, @ScaleType int scaleType) {
+        this.mTextureView = textureView;
+        mTextureView.setSurfaceTextureListener(mSurfaceTextureListener);
+        mScaleType = scaleType;
+    }
+
     @Override
     public Surface getSurface() {
         return mSurface;
@@ -70,6 +91,7 @@ public class TextureViewSurfaceHolder implements ISurfaceHolder<TextureView> {
             SurfaceTexture texture = mTextureView.getSurfaceTexture();
             texture.setDefaultBufferSize(size.getWidth(), size.getHeight());
             mSurface = new Surface(texture);
+            adjustViewMatrix(mTextureView, size, mScaleType);
             return true;
         } else {
             return false;
@@ -89,6 +111,48 @@ public class TextureViewSurfaceHolder implements ISurfaceHolder<TextureView> {
     @Override
     public void setSurfaceHolderListener(ISurfaceHolderListener listener) {
         mListener = listener;
+    }
+
+    private static void adjustViewMatrix(TextureView textureView, Size previewSize, @ScaleType int scaleType) {
+        WindowManager windowManager = (WindowManager) textureView.getContext().getSystemService(Context.WINDOW_SERVICE);
+        int rotation = windowManager.getDefaultDisplay().getRotation();
+
+        int viewWidth = textureView.getWidth();
+        int viewHeight = textureView.getHeight();
+        Matrix matrix = new Matrix();
+        matrix.postScale(1.0f / (float) viewWidth, 1.0f / (float) viewHeight);
+        if (Surface.ROTATION_90 == rotation) {
+            matrix.postRotate(-90, 0.5f, 0.5f);
+        } else if (Surface.ROTATION_180 == rotation) {
+            matrix.postRotate(-180, 0.5f, 0.5f);
+        } else if (Surface.ROTATION_270 == rotation) {
+            matrix.postRotate(-270, 0.5f, 0.5f);
+        }
+
+        int previewWidth;
+        int previewHeight;
+        if (Surface.ROTATION_90 == rotation) {
+            previewWidth = previewSize.getWidth();
+            previewHeight = previewSize.getHeight();
+        } else if (Surface.ROTATION_180 == rotation) {
+            previewWidth = previewSize.getHeight();
+            previewHeight = previewSize.getWidth();
+        } else if (Surface.ROTATION_270 == rotation) {
+            previewWidth = previewSize.getWidth();
+            previewHeight = previewSize.getHeight();
+        } else {
+            previewWidth = previewSize.getHeight();
+            previewHeight = previewSize.getWidth();
+        }
+        float scaleX = (float) viewWidth / previewWidth;
+        float scaleY = (float) viewHeight / previewHeight;
+        float scale = (scaleType == CENTER_CROP) ? Math.max(scaleX, scaleY) : Math.min(scaleX, scaleY);
+        int correctWidth = (int) (previewWidth * scale);
+        int correctHeight = (int) (previewHeight * scale);
+        matrix.postScale(correctWidth, correctHeight);
+        matrix.postTranslate((viewWidth - correctWidth) / 2, (viewHeight - correctHeight) / 2);
+
+        textureView.setTransform(matrix);
     }
 
     private static Size findBestPreviewSize(@NonNull StreamConfigurationMap scMap, int width, int height) {

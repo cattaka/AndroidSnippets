@@ -91,8 +91,8 @@ public class CameraApi2ExampleActivity extends AppCompatActivity implements View
         findViewById(R.id.button_front).setOnClickListener(this);
         findViewById(R.id.button_back).setOnClickListener(this);
 
-        mTexture1SurfaceHolder = new TextureViewSurfaceHolder(mTexture1View);
-        mTexture2SurfaceHolder = new TextureViewSurfaceHolder(mTexture2View);
+        mTexture1SurfaceHolder = new TextureViewSurfaceHolder(mTexture1View, TextureViewSurfaceHolder.CENTER_CROP);
+        mTexture2SurfaceHolder = new TextureViewSurfaceHolder(mTexture2View, TextureViewSurfaceHolder.CENTER_INSIDE);
 
         ImageReaderDescription imageReaderDescription = new ImageReaderDescription.Builder()
                 .addImageFormats(ImageFormat.JPEG)

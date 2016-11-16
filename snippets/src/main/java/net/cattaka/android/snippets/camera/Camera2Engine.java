@@ -103,8 +103,8 @@ public class Camera2Engine {
             ICaptureRequestDescription description = mCaptureRequestDescriptionMap.get(sequenceId);
             if (description != null && description.isOneShot()) {
                 mCaptureRequestDescriptions.remove(description);
+                mCaptureRequest = null;
             }
-            mCaptureRequest = null;
             goNext();
         }
     };
@@ -200,7 +200,7 @@ public class Camera2Engine {
                 }
             }
             if (mCaptureRequest == null && mCaptureRequestDescriptions.size() > 0) {
-                mRequireRecreateCaptureRequest = true;
+                mRequireRecreateCaptureRequest = false;
                 ICaptureRequestDescription description = mCaptureRequestDescriptions.get(mCaptureRequestDescriptions.size() - 1);
                 try {
                     Pair<Integer, CaptureRequest> pair = description.setupCaptureRequest(mCameraDevice, mCameraCaptureSession, mCaptureCallback, sHandler);

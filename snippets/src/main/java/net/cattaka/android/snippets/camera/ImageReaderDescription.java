@@ -71,7 +71,7 @@ public class ImageReaderDescription {
             Collections.sort(sizes, new Comparator<Size>() {
                 @Override
                 public int compare(Size s1, Size s2) {
-                    return s2.getWidth() * s2.getHeight() - s1.getWidth() * s1.getHeight();
+                    return s1.getWidth() * s1.getHeight() - s2.getWidth() * s2.getHeight();
                 }
             });
             Size size;

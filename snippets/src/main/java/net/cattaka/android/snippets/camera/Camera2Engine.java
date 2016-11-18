@@ -52,8 +52,10 @@ public class Camera2Engine {
     private CameraCaptureSession.StateCallback mSessionStateCallback = new CameraCaptureSession.StateCallback() {
         @Override
         public void onConfigured(@NonNull CameraCaptureSession cameraCaptureSession) {
-            mCameraCaptureSession = cameraCaptureSession;
-            goNext();
+            if (mCameraDevice != null) {
+                mCameraCaptureSession = cameraCaptureSession;
+                goNext();
+            }
         }
 
         @Override

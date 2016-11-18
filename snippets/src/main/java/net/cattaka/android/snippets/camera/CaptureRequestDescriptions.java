@@ -63,7 +63,7 @@ public class CaptureRequestDescriptions {
 
         @Override
         public Pair<Integer, CaptureRequest> setupCaptureRequest(@NonNull CameraDevice cameraDevice, @NonNull CameraCaptureSession cameraCaptureSession, @Nullable CameraCaptureSession.CaptureCallback captureCallback, @Nullable Handler handler) throws CameraAccessException {
-            CaptureRequest.Builder builder = cameraDevice.createCaptureRequest(CameraDevice.TEMPLATE_ZERO_SHUTTER_LAG);
+            CaptureRequest.Builder builder = cameraDevice.createCaptureRequest(CameraDevice.TEMPLATE_PREVIEW);
             for (ISurfaceHolder surfaceHolder : mSurfaceHolderss) {
                 builder.addTarget(surfaceHolder.getSurface());
             }

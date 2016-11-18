@@ -11,7 +11,6 @@ import android.hardware.camera2.CaptureFailure;
 import android.hardware.camera2.CaptureRequest;
 import android.hardware.camera2.CaptureResult;
 import android.hardware.camera2.TotalCaptureResult;
-import android.media.ImageReader;
 import android.os.Build;
 import android.os.Handler;
 import android.os.Looper;
@@ -118,13 +117,6 @@ public class Camera2Engine {
         }
     };
 
-    private ImageReader.OnImageAvailableListener mOnImageAvailableListener = new ImageReader.OnImageAvailableListener() {
-        @Override
-        public void onImageAvailable(ImageReader imageReader) {
-            // TODO
-        }
-    };
-
     private CameraManager mCameraManager;
     private int mFacing = CameraMetadata.LENS_FACING_BACK;
     private List<ISurfaceHolder<?>> mSurfaceHolders = new ArrayList<>();
@@ -140,6 +132,7 @@ public class Camera2Engine {
     private CaptureRequest mCaptureRequest;
     private boolean mRequireRecreateCaptureRequest;
     private Map<Integer, ICaptureRequestDescription> mCaptureRequestDescriptionMap = new HashMap<>();
+    private int mSensorOrientation;
 
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     public Camera2Engine(CameraManager cameraManager) {
@@ -160,6 +153,10 @@ public class Camera2Engine {
                         return;
                     }
                     mCharacteristics = mCameraManager.getCameraCharacteristics(cameraId);
+                    Integer sensorOrientation = mCharacteristics.get(CameraCharacteristics.SENSOR_ORIENTATION);
+                    if (sensorOrientation != null) {
+                        mSensorOrientation = sensorOrientation;
+                    }
                     //noinspection MissingPermission
                     mCameraManager.openCamera(cameraId, mStateCallback, sHandler);
                 } catch (CameraAccessException e) {
@@ -267,6 +264,10 @@ public class Camera2Engine {
                 start();
             }
         }
+    }
+
+    public int getSensorOrientation() {
+        return mSensorOrientation;
     }
 
     public void addSurfaceHolder(ISurfaceHolder<?> surfaceHolder) {

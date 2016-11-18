@@ -1,5 +1,6 @@
 package net.cattaka.android.snippets.example;
 
+import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.ImageFormat;
@@ -17,6 +18,7 @@ import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
 import android.view.TextureView;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.ImageView;
 
 import net.cattaka.android.snippets.camera.Camera2Engine;
@@ -25,6 +27,7 @@ import net.cattaka.android.snippets.camera.ISurfaceHolder;
 import net.cattaka.android.snippets.camera.ImageReaderDescription;
 import net.cattaka.android.snippets.camera.ImageReaderSurfaceHolder;
 import net.cattaka.android.snippets.camera.TextureViewSurfaceHolder;
+import net.cattaka.android.snippets.util.ImageUtils;
 
 import java.nio.ByteBuffer;
 
@@ -61,7 +64,11 @@ public class CameraApi2ExampleActivity extends AppCompatActivity implements View
                     byte[] data = new byte[buffer.remaining()];
                     buffer.get(data);
                     Bitmap bitmap = BitmapFactory.decodeByteArray(data, 0, data.length);
-                    mImageView.setImageBitmap(bitmap);
+
+                    WindowManager windowManager = (WindowManager) getSystemService(Context.WINDOW_SERVICE);
+                    int rotation = windowManager.getDefaultDisplay().getRotation();
+                    Bitmap rotated = ImageUtils.rotateBitmap(bitmap, rotation, mCamera2Engine.getSensorOrientation());
+                    mImageView.setImageBitmap(rotated);
                 }
             } finally {
                 image.close();

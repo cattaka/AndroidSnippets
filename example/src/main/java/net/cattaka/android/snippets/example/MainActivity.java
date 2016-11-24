@@ -1,11 +1,13 @@
 package net.cattaka.android.snippets.example;
 
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.Toast;
 
 import net.cattaka.android.adaptertoolbox.adapter.listener.ListenerRelay;
 import net.cattaka.android.snippets.example.adapter.ActivityEntryAdapter;
@@ -16,6 +18,9 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
     private static final List<ActivityEntry> ACTIVITY_ENTRIES = Arrays.asList(
+            new ActivityEntry("Camera API 2", null,
+                    new ActivityEntry("Multiple surface", CameraApi2ExampleActivity.class, Build.VERSION_CODES.LOLLIPOP)
+            ),
             new ActivityEntry("ConstraintLayout", null,
                     new ActivityEntry("Animate ConstraintLayout", AnimateConstraintLayoutActivity.class)
             ),
@@ -52,8 +57,12 @@ public class MainActivity extends AppCompatActivity {
             if (recyclerView.getId() == R.id.recycler) {
                 ActivityEntry entry = adapter.getItemAt(viewHolder.getAdapterPosition()).getItem();
                 if (entry != null && entry.getClazz() != null) {
-                    Intent intent = new Intent(MainActivity.this, entry.getClazz());
-                    startActivity(intent);
+                    if (entry.getApiLevel() > Build.VERSION.SDK_INT) {
+                        Toast.makeText(MainActivity.this, "This is for over api level " + entry.getApiLevel(), Toast.LENGTH_SHORT).show();
+                    } else {
+                        Intent intent = new Intent(MainActivity.this, entry.getClazz());
+                        startActivity(intent);
+                    }
                 }
             }
         }

@@ -18,6 +18,9 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
     private static final List<ActivityEntry> ACTIVITY_ENTRIES = Arrays.asList(
+            new ActivityEntry("CoordinatorLayout", null,
+                    new ActivityEntry("AppBarLayout", AppBarLayoutExample1Activity.class, Build.VERSION_CODES.LOLLIPOP)
+            ),
             new ActivityEntry("Camera API 2", null,
                     new ActivityEntry("Multiple surface", CameraApi2ExampleActivity.class, Build.VERSION_CODES.LOLLIPOP)
             ),

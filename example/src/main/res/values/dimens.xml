@@ -12,4 +12,6 @@
     <dimen name="element_spacing_xsmall">1dp</dimen>
 
     <dimen name="image_small">72dp</dimen>
+
+    <dimen name="control_diff">72dp</dimen>
 </resources>

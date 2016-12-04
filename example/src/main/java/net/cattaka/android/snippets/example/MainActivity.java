@@ -18,6 +18,13 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
     private static final List<ActivityEntry> ACTIVITY_ENTRIES = Arrays.asList(
+            new ActivityEntry("CoordinatorLayout", null,
+                    new ActivityEntry("AppBarLayout", null,
+                            new ActivityEntry("With simple view", AppBarLayoutExample1Activity.class, Build.VERSION_CODES.LOLLIPOP),
+                            new ActivityEntry("With RecyclerView", AppBarLayoutExample2Activity.class, Build.VERSION_CODES.LOLLIPOP)
+                    )
+            ),
+
             new ActivityEntry("Camera API 2", null,
                     new ActivityEntry("Multiple surface", CameraApi2ExampleActivity.class, Build.VERSION_CODES.LOLLIPOP)
             ),

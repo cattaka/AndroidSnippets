@@ -24,7 +24,9 @@ public class MainActivity extends AppCompatActivity {
                             new ActivityEntry("With RecyclerView", AppBarLayoutExample2Activity.class, Build.VERSION_CODES.LOLLIPOP)
                     )
             ),
-
+            new ActivityEntry("Status Bar", null,
+                    new ActivityEntry("Control color", ControlStatusBarColorActivity.class, Build.VERSION_CODES.LOLLIPOP)
+            ),
             new ActivityEntry("Camera API 2", null,
                     new ActivityEntry("Multiple surface", CameraApi2ExampleActivity.class, Build.VERSION_CODES.LOLLIPOP)
             ),

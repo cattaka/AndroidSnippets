@@ -35,6 +35,9 @@
         <activity android:name=".CameraApi2ExampleActivity" />
         <activity android:name=".AppBarLayoutExample1Activity" />
         <activity android:name=".AppBarLayoutExample2Activity" />
+        <activity
+            android:name=".ControlStatusBarColorActivity"
+            android:theme="@style/NoActionBarAppTheme" />
     </application>
 
 </manifest>

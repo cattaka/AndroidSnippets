@@ -21,12 +21,12 @@
         android:id="@+id/check_translucent_status"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="TRANSLUCENT STATUS" />
+        android:text="TRANSLUCENT STATUS(API 19)" />
 
     <CheckBox
         android:id="@+id/check_draws_system_bar_backgrounds"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="DRAWS_SYSTEM_BAR_BACKGROUNDS STATUS" />
+        android:text="DRAWS_SYSTEM_BAR_BACKGROUNDS STATUS(API 21)" />
 
 </LinearLayout>

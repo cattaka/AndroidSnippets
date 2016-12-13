@@ -88,8 +88,10 @@ public class AppBarLayoutExample2Activity extends AppCompatActivity implements V
             mAdapter.getItems().add("Item : " + mAdapter.getItems().size());
             mAdapter.notifyItemInserted(mAdapter.getItems().size());
         } else if (v.getId() == R.id.button_subtract_contents) {
-            mAdapter.getItems().remove(mAdapter.getItems().size() - 1);
-            mAdapter.notifyItemRemoved(mAdapter.getItems().size());
+            if (mAdapter.getItems().size() > 0) {
+                mAdapter.getItems().remove(mAdapter.getItems().size() - 1);
+                mAdapter.notifyItemRemoved(mAdapter.getItems().size());
+            }
         } else if (v.getId() == R.id.button_add_overlap_top) {
             AppBarLayout.ScrollingViewBehavior behavior = CoordinatorLayoutUtils.pickBehavior(mRecyclerView, AppBarLayout.ScrollingViewBehavior.class);
             if (behavior != null) {

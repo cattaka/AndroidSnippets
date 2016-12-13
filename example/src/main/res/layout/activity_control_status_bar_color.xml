@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:paddingBottom="48dp"
+    tools:context=".ControlStatusBarColorActivity">
+
+    <ListView
+        android:id="@+id/view_list"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:clipToPadding="false"
+        android:paddingTop="24dp" />
+
+    <CheckBox
+        android:id="@+id/check_translucent_status"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="TRANSLUCENT STATUS(API 19)" />
+
+    <CheckBox
+        android:id="@+id/check_draws_system_bar_backgrounds"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="DRAWS_SYSTEM_BAR_BACKGROUNDS STATUS(API 21)" />
+
+</LinearLayout>

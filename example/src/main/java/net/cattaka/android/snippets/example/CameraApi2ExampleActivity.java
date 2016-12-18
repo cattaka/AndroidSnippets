@@ -42,8 +42,10 @@ public class CameraApi2ExampleActivity extends AppCompatActivity implements View
     Camera2Engine.ICamera2EngineListener mCamera2EngineListener = new Camera2Engine.ICamera2EngineListener() {
         @Override
         public void onSurfaceHolderPrepared(ISurfaceHolder<?> surfaceHolder, boolean success) {
-            if (surfaceHolder == mImageReaderSurfaceHolder) {
-                mImageReaderSurfaceHolder.getTarget().setOnImageAvailableListener(mOnImageAvailableListener, sHandler);
+            if (surfaceHolder == mJpegImageReaderSurfaceHolder) {
+                mJpegImageReaderSurfaceHolder.getTarget().setOnImageAvailableListener(mOnImageAvailableListener, sHandler);
+            } else if (surfaceHolder == mYuv420ImageReaderSurfaceHolder) {
+                mYuv420ImageReaderSurfaceHolder.getTarget().setOnImageAvailableListener(mOnImageAvailableListener, sHandler);
             }
         }
 
@@ -69,6 +71,13 @@ public class CameraApi2ExampleActivity extends AppCompatActivity implements View
                     int rotation = windowManager.getDefaultDisplay().getRotation();
                     Bitmap rotated = ImageUtils.rotateBitmap(bitmap, rotation, mCamera2Engine.getSensorOrientation());
                     mImageView.setImageBitmap(rotated);
+                } else if (image.getFormat() == ImageFormat.YUV_420_888) {
+                    Bitmap bitmap = ImageUtils.decodeYuv420(image);
+
+                    WindowManager windowManager = (WindowManager) getSystemService(Context.WINDOW_SERVICE);
+                    int rotation = windowManager.getDefaultDisplay().getRotation();
+                    Bitmap rotated = ImageUtils.rotateBitmap(bitmap, rotation, mCamera2Engine.getSensorOrientation());
+                    mImageView.setImageBitmap(rotated);
                 }
             } finally {
                 image.close();
@@ -83,7 +92,8 @@ public class CameraApi2ExampleActivity extends AppCompatActivity implements View
 
     TextureViewSurfaceHolder mTexture1SurfaceHolder;
     TextureViewSurfaceHolder mTexture2SurfaceHolder;
-    ImageReaderSurfaceHolder mImageReaderSurfaceHolder;
+    ImageReaderSurfaceHolder mJpegImageReaderSurfaceHolder;
+    ImageReaderSurfaceHolder mYuv420ImageReaderSurfaceHolder;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -94,25 +104,30 @@ public class CameraApi2ExampleActivity extends AppCompatActivity implements View
         mTexture2View = (TextureView) findViewById(R.id.texture2);
         mImageView = (ImageView) findViewById(R.id.image);
 
-        findViewById(R.id.button_shutter).setOnClickListener(this);
+        findViewById(R.id.button_shutter_jpeg).setOnClickListener(this);
+        findViewById(R.id.button_shutter_yuv420).setOnClickListener(this);
         findViewById(R.id.button_front).setOnClickListener(this);
         findViewById(R.id.button_back).setOnClickListener(this);
 
         mTexture1SurfaceHolder = new TextureViewSurfaceHolder(mTexture1View, TextureViewSurfaceHolder.CENTER_CROP);
         mTexture2SurfaceHolder = new TextureViewSurfaceHolder(mTexture2View, TextureViewSurfaceHolder.CENTER_INSIDE);
 
-        ImageReaderDescription imageReaderDescription = new ImageReaderDescription.Builder()
+        mJpegImageReaderSurfaceHolder = new ImageReaderSurfaceHolder(new ImageReaderDescription.Builder()
                 .addImageFormats(ImageFormat.JPEG)
                 .setChooseSizeMode(ImageReaderDescription.CHOOSE_SIZE_MODE_SMALLEST)
-                .build();
-        mImageReaderSurfaceHolder = new ImageReaderSurfaceHolder(imageReaderDescription);
+                .build());
+        mYuv420ImageReaderSurfaceHolder = new ImageReaderSurfaceHolder(new ImageReaderDescription.Builder()
+                .addImageFormats(ImageFormat.YUV_420_888)
+                .setChooseSizeMode(ImageReaderDescription.CHOOSE_SIZE_MODE_SMALLEST)
+                .build());
 
         CameraManager cameraManager = (CameraManager) getSystemService(CAMERA_SERVICE);
         mCamera2Engine = new Camera2Engine(cameraManager);
         mCamera2Engine.setCamera2EngineListener(mCamera2EngineListener);
         mCamera2Engine.addSurfaceHolder(mTexture1SurfaceHolder);
         mCamera2Engine.addSurfaceHolder(mTexture2SurfaceHolder);
-        mCamera2Engine.addSurfaceHolder(mImageReaderSurfaceHolder);
+        mCamera2Engine.addSurfaceHolder(mJpegImageReaderSurfaceHolder);
+        mCamera2Engine.addSurfaceHolder(mYuv420ImageReaderSurfaceHolder);
         mCamera2Engine.startCaptureRequest(CaptureRequestDescriptions.preview(mTexture1SurfaceHolder, mTexture2SurfaceHolder));
     }
 
@@ -130,8 +145,10 @@ public class CameraApi2ExampleActivity extends AppCompatActivity implements View
 
     @Override
     public void onClick(View v) {
-        if (v.getId() == R.id.button_shutter) {
-            mCamera2Engine.startCaptureRequest(CaptureRequestDescriptions.zeroShutterLag(mImageReaderSurfaceHolder));
+        if (v.getId() == R.id.button_shutter_jpeg) {
+            mCamera2Engine.startCaptureRequest(CaptureRequestDescriptions.zeroShutterLag(mJpegImageReaderSurfaceHolder));
+        } else if (v.getId() == R.id.button_shutter_yuv420) {
+            mCamera2Engine.startCaptureRequest(CaptureRequestDescriptions.zeroShutterLag(mYuv420ImageReaderSurfaceHolder));
         } else if (v.getId() == R.id.button_front) {
             mCamera2Engine.setFacing(CameraMetadata.LENS_FACING_FRONT);
         } else if (v.getId() == R.id.button_back) {

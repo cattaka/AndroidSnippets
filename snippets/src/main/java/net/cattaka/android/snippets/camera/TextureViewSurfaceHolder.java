@@ -41,6 +41,7 @@ public class TextureViewSurfaceHolder implements ISurfaceHolder<TextureView> {
     private Surface mSurface;
     private ISurfaceHolderListener mListener;
     private int mScaleType = CENTER_CROP;
+    private CameraCharacteristics mCharacteristics;
 
     TextureView.SurfaceTextureListener mSurfaceTextureListener = new TextureView.SurfaceTextureListener() {
         @Override
@@ -52,6 +53,7 @@ public class TextureViewSurfaceHolder implements ISurfaceHolder<TextureView> {
 
         @Override
         public void onSurfaceTextureSizeChanged(SurfaceTexture surfaceTexture, int i, int i1) {
+            configureTransform();
         }
 
         @Override
@@ -85,17 +87,8 @@ public class TextureViewSurfaceHolder implements ISurfaceHolder<TextureView> {
 
     @Override
     public boolean prepare(@NonNull CameraDevice device, @NonNull CameraCharacteristics characteristics) {
-        StreamConfigurationMap scMap = characteristics.get(CameraCharacteristics.SCALER_STREAM_CONFIGURATION_MAP);
-        Size size = (scMap != null) ? findBestPreviewSize(scMap, mTextureView.getWidth(), mTextureView.getHeight()) : null;
-        if (size != null) {
-            SurfaceTexture texture = mTextureView.getSurfaceTexture();
-            texture.setDefaultBufferSize(size.getWidth(), size.getHeight());
-            mSurface = new Surface(texture);
-            configureTransform(mTextureView, size, mScaleType);
-            return true;
-        } else {
-            return false;
-        }
+        mCharacteristics = characteristics;
+        return configureTransform();
     }
 
     @Override
@@ -113,12 +106,22 @@ public class TextureViewSurfaceHolder implements ISurfaceHolder<TextureView> {
         mListener = listener;
     }
 
-    private static void configureTransform(TextureView textureView, Size previewSize, @ScaleType int scaleType) {
-        WindowManager windowManager = (WindowManager) textureView.getContext().getSystemService(Context.WINDOW_SERVICE);
+    private boolean configureTransform() {
+        StreamConfigurationMap scMap = (mCharacteristics != null) ? mCharacteristics.get(CameraCharacteristics.SCALER_STREAM_CONFIGURATION_MAP) : null;
+        Size previewSize = (scMap != null) ? findBestPreviewSize(scMap, mTextureView.getWidth(), mTextureView.getHeight()) : null;
+        if (previewSize == null) {
+            return false;
+        }
+
+        SurfaceTexture texture = mTextureView.getSurfaceTexture();
+        texture.setDefaultBufferSize(previewSize.getWidth(), previewSize.getHeight());
+        mSurface = new Surface(texture);
+
+        WindowManager windowManager = (WindowManager) mTextureView.getContext().getSystemService(Context.WINDOW_SERVICE);
         int rotation = windowManager.getDefaultDisplay().getRotation();
 
-        int viewWidth = textureView.getWidth();
-        int viewHeight = textureView.getHeight();
+        int viewWidth = mTextureView.getWidth();
+        int viewHeight = mTextureView.getHeight();
         Matrix matrix = new Matrix();
         matrix.postScale(1.0f / (float) viewWidth, 1.0f / (float) viewHeight);
         if (Surface.ROTATION_90 == rotation) {
@@ -146,13 +149,14 @@ public class TextureViewSurfaceHolder implements ISurfaceHolder<TextureView> {
         }
         float scaleX = (float) viewWidth / previewWidth;
         float scaleY = (float) viewHeight / previewHeight;
-        float scale = (scaleType == CENTER_CROP) ? Math.max(scaleX, scaleY) : Math.min(scaleX, scaleY);
+        float scale = (mScaleType == CENTER_CROP) ? Math.max(scaleX, scaleY) : Math.min(scaleX, scaleY);
         int correctWidth = (int) (previewWidth * scale);
         int correctHeight = (int) (previewHeight * scale);
         matrix.postScale(correctWidth, correctHeight);
         matrix.postTranslate((viewWidth - correctWidth) / 2, (viewHeight - correctHeight) / 2);
+        mTextureView.setTransform(matrix);
 
-        textureView.setTransform(matrix);
+        return true;
     }
 
     private static Size findBestPreviewSize(@NonNull StreamConfigurationMap scMap, int width, int height) {

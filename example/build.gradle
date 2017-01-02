@@ -9,7 +9,7 @@ android {
         applicationId "net.cattaka.android.snippets.example"
         minSdkVersion 15
         targetSdkVersion 22
-        versionCode 4
+        versionCode 5
         versionName "0.1.0"
 
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"

@@ -91,7 +91,7 @@ public class TextureViewSurfaceHolder implements ISurfaceHolder<TextureView> {
             SurfaceTexture texture = mTextureView.getSurfaceTexture();
             texture.setDefaultBufferSize(size.getWidth(), size.getHeight());
             mSurface = new Surface(texture);
-            adjustViewMatrix(mTextureView, size, mScaleType);
+            configureTransform(mTextureView, size, mScaleType);
             return true;
         } else {
             return false;
@@ -113,7 +113,7 @@ public class TextureViewSurfaceHolder implements ISurfaceHolder<TextureView> {
         mListener = listener;
     }
 
-    private static void adjustViewMatrix(TextureView textureView, Size previewSize, @ScaleType int scaleType) {
+    private static void configureTransform(TextureView textureView, Size previewSize, @ScaleType int scaleType) {
         WindowManager windowManager = (WindowManager) textureView.getContext().getSystemService(Context.WINDOW_SERVICE);
         int rotation = windowManager.getDefaultDisplay().getRotation();
 

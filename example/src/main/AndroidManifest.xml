@@ -38,6 +38,7 @@
         <activity
             android:name=".ControlStatusBarColorActivity"
             android:theme="@style/NoActionBarAppTheme" />
+        <activity android:name=".CheckCameraOrientationActivity" />
     </application>
 
 </manifest>

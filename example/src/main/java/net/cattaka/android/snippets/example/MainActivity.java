@@ -27,9 +27,11 @@ public class MainActivity extends AppCompatActivity {
             new ActivityEntry("Status Bar", null,
                     new ActivityEntry("Control color", ControlStatusBarColorActivity.class, Build.VERSION_CODES.LOLLIPOP)
             ),
-            new ActivityEntry("Camera API 2", null,
-                    new ActivityEntry("Multiple surface", CameraApi2ExampleActivity.class, Build.VERSION_CODES.LOLLIPOP)
+            new ActivityEntry("Camera API", null,
+                    new ActivityEntry("Multiple surface(Camera 2)", CameraApi2ExampleActivity.class, Build.VERSION_CODES.LOLLIPOP),
+                    new ActivityEntry("Check camera orientation", CheckCameraOrientationActivity.class)
             ),
+
             new ActivityEntry("ConstraintLayout", null,
                     new ActivityEntry("Animate ConstraintLayout", AnimateConstraintLayoutActivity.class)
             ),

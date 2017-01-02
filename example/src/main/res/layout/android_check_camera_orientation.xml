@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+
+        <variable
+            name="activityOrientation"
+            type="java.lang.String" />
+
+        <variable
+            name="displayOrientation"
+            type="java.lang.String" />
+
+        <variable
+            name="cameraOrientation"
+            type="java.lang.String" />
+    </data>
+
+    <TableLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/element_spacing_normal"
+                android:text="ActivityOrientation"
+                android:textAppearance="?android:textAppearanceLarge" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/element_spacing_normal"
+                android:layout_weight="1"
+                android:text="@{activityOrientation}"
+                android:textAppearance="?android:textAppearanceMedium"
+                />
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/element_spacing_normal"
+                android:text="DisplayOrientation"
+                android:textAppearance="?android:textAppearanceLarge" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/element_spacing_normal"
+                android:layout_weight="1"
+                android:text="@{displayOrientation}"
+                android:textAppearance="?android:textAppearanceMedium"
+                />
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/element_spacing_normal"
+                android:text="CameraOrientation"
+                android:textAppearance="?android:textAppearanceLarge" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/element_spacing_normal"
+                android:layout_weight="1"
+                android:text="@{cameraOrientation}"
+                android:textAppearance="?android:textAppearanceMedium"
+                />
+        </TableRow>
+    </TableLayout>
+</layout>

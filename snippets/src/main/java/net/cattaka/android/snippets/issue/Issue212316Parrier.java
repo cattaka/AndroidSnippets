@@ -1,9 +1,7 @@
 package net.cattaka.android.snippets.issue;
 
-import android.content.ContentValues;
 import android.content.Context;
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
+import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Parcel;
@@ -11,7 +9,15 @@ import android.os.Parcelable;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.util.zip.GZIPInputStream;
+import java.util.zip.GZIPOutputStream;
 
 /**
  * To parry BUG of Android N. https://code.google.com/p/android/issues/detail?id=212316
@@ -19,65 +25,53 @@ import java.io.File;
  * Created by cattaka on 2017/01/12.
  */
 public class Issue212316Parrier {
-    public static final String DEFAULT_DB_NAME = "Issue212316Parrier.db";
+    public static final String DEFAULT_NAME = "Issue212316Parrier";
     private static final String KEY_STORED_BUNDLE_ID = "net.cattaka.android.snippets.issue.Issue212316Parrier.KEY_STORED_BUNDLE_ID";
 
-    private String mDbName;
+    private String mName;
     private Context mContext;
-    private SQLiteDatabase mDatabase;
     private String mAppVersionName;
     private int mAppVersionCode;
+    private SharedPreferences mPreferences;
+    private File mDirForStoredBundle;
 
     public Issue212316Parrier(Context context, String appVersionName, int appVersionCode) {
-        this(context, appVersionName, appVersionCode, DEFAULT_DB_NAME);
+        this(context, appVersionName, appVersionCode, DEFAULT_NAME);
     }
 
-    public Issue212316Parrier(Context context, String appVersionName, int appVersionCode, String dbName) {
-        mDbName = dbName;
+    public Issue212316Parrier(Context context, String appVersionName, int appVersionCode, String name) {
+        mName = name;
         mContext = context;
         mAppVersionName = appVersionName;
         mAppVersionCode = appVersionCode;
     }
 
     public void initialize() {
-        File cacheDir = mContext.getCacheDir();
-        File dbFile = new File(cacheDir, mDbName);
+        mPreferences = mContext.getSharedPreferences(mName, Context.MODE_PRIVATE);
 
-        mDatabase = SQLiteDatabase.openOrCreateDatabase(dbFile, null);
-        mDatabase.execSQL("CREATE TABLE IF NOT EXISTS installation(id INTEGER PRIMARY KEY AUTOINCREMENT,deviceFingerprint TEXT,appVersionName TEXT,appVersionCode INTEGER,lastStoredBundleId INTEGER)");
-        mDatabase.execSQL("CREATE TABLE IF NOT EXISTS storedBundle(id INTEGER PRIMARY KEY AUTOINCREMENT,blob BLOB)");
+        File cacheDir = mContext.getCacheDir();
+        mDirForStoredBundle = new File(cacheDir, mName);
+        if (!mDirForStoredBundle.exists()) {
+            mDirForStoredBundle.mkdirs();
+        }
 
         long lastStoredBundleId = 1;
         boolean needReset = true;
-        Cursor cursor = mDatabase.query("installation", new String[]{"id", "deviceFingerprint", "appVersionName", "appVersionCode", "lastStoredBundleId"}, "id=1", null, null, null, null);
-        try {
-            if (cursor.moveToNext()) {
-                needReset = !Build.FINGERPRINT.equals(cursor.getString(1))
-                        || !mAppVersionName.equals(cursor.getString(2))
-                        || (mAppVersionCode != cursor.getInt(3));
-                lastStoredBundleId = cursor.getLong(4);
-            }
-        } finally {
-            cursor.close();
-        }
+        String fingerPrint = (Build.FINGERPRINT != null) ? Build.FINGERPRINT : "";
+        needReset = !fingerPrint.equals(mPreferences.getString("deviceFingerprint", null))
+                || !mAppVersionName.equals(mPreferences.getString("appVersionName", null))
+                || (mAppVersionCode != mPreferences.getInt("appVersionCode", 0));
+        lastStoredBundleId = mPreferences.getLong("lastStoredBundleId", 1);
+
         if (needReset) {
-            mDatabase.delete("installation", null, null);
-            mDatabase.delete("storedBundle", null, null);
+            clearDirForStoredBundle();
 
-            ContentValues values = new ContentValues();
-            values.put("id", 1);
-            values.put("deviceFingerprint", Build.FINGERPRINT);
-            values.put("appVersionName", mAppVersionName);
-            values.put("appVersionCode", mAppVersionCode);
-            values.put("lastStoredBundleId", lastStoredBundleId);
-            mDatabase.insert("installation", null, values);
-        }
-    }
-
-    public void dispose() {
-        if (mDatabase != null) {
-            mDatabase.close();
-            mDatabase = null;
+            mPreferences.edit()
+                    .putString("deviceFingerprint", Build.FINGERPRINT)
+                    .putString("appVersionName", mAppVersionName)
+                    .putInt("appVersionCode", mAppVersionCode)
+                    .putLong("lastStoredBundleId", lastStoredBundleId)
+                    .apply();
         }
     }
 
@@ -87,10 +81,14 @@ public class Issue212316Parrier {
     public void restoreSaveInstanceState(@Nullable Bundle savedInstanceState, boolean deleteStoredBundle) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
             if (savedInstanceState != null && savedInstanceState.containsKey(KEY_STORED_BUNDLE_ID)) {
-                long id = savedInstanceState.getLong(KEY_STORED_BUNDLE_ID);
-                Bundle storedBundle = loadBundle(id, deleteStoredBundle);
+                long storedBundleId = savedInstanceState.getLong(KEY_STORED_BUNDLE_ID);
+                File storedBundleFile = new File(mDirForStoredBundle, storedBundleId + ".bin");
+                Bundle storedBundle = loadBundle(storedBundleFile);
                 if (storedBundle != null) {
                     savedInstanceState.putAll(storedBundle);
+                }
+                if (deleteStoredBundle && storedBundleFile.exists()) {
+                    storedBundleFile.delete();
                 }
             }
         }
@@ -102,64 +100,61 @@ public class Issue212316Parrier {
     public void saveInstanceState(Bundle outState) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
             if (outState != null) {
-                long id = saveBundle(outState);
+                long nextStoredBundleId = mPreferences.getLong("lastStoredBundleId", 1) + 1;
+                mPreferences.edit().putLong("lastStoredBundleId", nextStoredBundleId).apply();
+                File storedBundleFile = new File(mDirForStoredBundle, nextStoredBundleId + ".bin");
+                saveBundle(outState, storedBundleFile);
                 outState.clear();
-                outState.putLong(KEY_STORED_BUNDLE_ID, id);
+                outState.putLong(KEY_STORED_BUNDLE_ID, nextStoredBundleId);
             }
         }
     }
 
-    private long saveBundle(@NonNull Bundle bundle) {
+    private void saveBundle(@NonNull Bundle bundle, @NonNull File storedBundleFile) {
         byte[] blob = marshall(bundle);
-        mDatabase.beginTransaction();
-        long nextStoredBundleId = 1;
+        OutputStream out = null;
         try {
-            {   // get nextStoredBundleId
-                Cursor cursor = mDatabase.query("installation", new String[]{"lastStoredBundleId"}, "id=1", null, null, null, null);
-                try {
-                    if (cursor.moveToNext()) {
-                        nextStoredBundleId = cursor.getLong(0) + 1;
-                    }
-                } finally {
-                    cursor.close();
-                }
-                ContentValues values = new ContentValues();
-                values.put("id", 1);
-                values.put("lastStoredBundleId", nextStoredBundleId);
-                mDatabase.update("installation", values, "id=1", null);
-            }
-            {   // insert storedBundle
-                ContentValues values = new ContentValues();
-                values.put("id", nextStoredBundleId);
-                values.put("blob", blob);
-                mDatabase.insert("storedBundle", null, values);
-            }
-            mDatabase.setTransactionSuccessful();
+            out = new GZIPOutputStream(new FileOutputStream(storedBundleFile));
+            out.write(blob);
+            out.flush();
+            out.close();
+        } catch (IOException e) {
+            // ignore
         } finally {
-            mDatabase.endTransaction();
+            if (out != null) {
+                try {
+                    out.close();
+                } catch (IOException e) {
+                    // ignore
+                }
+            }
         }
-        return nextStoredBundleId;
     }
 
     @Nullable
-    private Bundle loadBundle(long storedBundleId, boolean deleteStoredBundle) {
+    private Bundle loadBundle(File storedBundleFile) {
         byte[] blob = null;
-        mDatabase.beginTransaction();
+        InputStream in = null;
         try {
-            Cursor cursor = mDatabase.query("storedBundle", new String[]{"id", "blob"}, "id=?", new String[]{String.valueOf(storedBundleId)}, null, null, null);
-            try {
-                if (cursor.moveToNext()) {
-                    blob = cursor.getBlob(1);
-                }
-            } finally {
-                cursor.close();
+            in = new GZIPInputStream(new FileInputStream(storedBundleFile));
+            ByteArrayOutputStream bout = new ByteArrayOutputStream();
+            int n;
+            byte[] buffer = new byte[1024];
+            while ((n = in.read(buffer)) > -1) {
+                bout.write(buffer, 0, n);   // Don't allow any extra bytes to creep in, final write
             }
-            if (deleteStoredBundle) {
-                mDatabase.delete("storedBundle", "id=?", new String[]{String.valueOf(storedBundleId)});
-            }
-            mDatabase.setTransactionSuccessful();
+            bout.close();
+            blob = bout.toByteArray();
+        } catch (IOException e) {
+            // ignore
         } finally {
-            mDatabase.endTransaction();
+            if (in != null) {
+                try {
+                    in.close();
+                } catch (IOException e) {
+                    // ignore
+                }
+            }
         }
 
         try {
@@ -168,6 +163,15 @@ public class Issue212316Parrier {
             return null;
         }
     }
+
+    private void clearDirForStoredBundle() {
+        for (File file : mDirForStoredBundle.listFiles()) {
+            if (file.isFile() && file.getName().endsWith(".bin")) {
+                file.delete();
+            }
+        }
+    }
+
 
     @NonNull
     private static <T extends Parcelable> byte[] marshall(@NonNull final T object) {

@@ -19,10 +19,10 @@ public class Issue212316ParrierExampleActvity extends AppCompatActivity {
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
+        ((MyApplication) getApplication()).getIssue212316Parrier().restoreSaveInstanceState(savedInstanceState, true);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.actvity_issue_212316_parrier_example);
         if (savedInstanceState != null) {
-            ((MyApplication) getApplication()).getIssue212316Parrier().restoreSaveInstanceState(savedInstanceState, true);
             mOnStartCount = savedInstanceState.getInt("onStartCount");
             mBlob = savedInstanceState.getByteArray("blob");
         } else {

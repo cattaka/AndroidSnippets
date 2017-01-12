@@ -1,6 +1,7 @@
 package net.cattaka.android.snippets.example;
 
 import android.content.Context;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.ImageFormat;
@@ -13,8 +14,10 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.annotation.RequiresApi;
+import android.support.v4.content.PermissionChecker;
 import android.support.v7.app.AppCompatActivity;
 import android.view.TextureView;
 import android.view.View;
@@ -37,6 +40,10 @@ import java.nio.ByteBuffer;
 
 @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
 public class CameraApi2ExampleActivity extends AppCompatActivity implements View.OnClickListener {
+    private static final int REQUEST_ALLOWCAMERA = 2;
+    private static final String PERMISSION_ALLOWCAMERA = "android.permission.CAMERA";
+
+
     static Handler sHandler = new Handler(Looper.getMainLooper());
 
     Camera2Engine.ICamera2EngineListener mCamera2EngineListener = new Camera2Engine.ICamera2EngineListener() {
@@ -119,13 +126,37 @@ public class CameraApi2ExampleActivity extends AppCompatActivity implements View
     @Override
     protected void onStart() {
         super.onStart();
-        mCamera2Engine.start();
+        boolean allowCamera = true;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            int permission = checkSelfPermission(PERMISSION_ALLOWCAMERA);
+            allowCamera = (permission == PackageManager.PERMISSION_GRANTED);
+            if (!allowCamera) {
+                requestPermissions(new String[]{PERMISSION_ALLOWCAMERA}, REQUEST_ALLOWCAMERA);
+            }
+        }
+        if (allowCamera) {
+            mCamera2Engine.start();
+        }
     }
 
     @Override
     protected void onStop() {
         super.onStop();
         mCamera2Engine.release();
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        switch (requestCode) {
+            case REQUEST_ALLOWCAMERA:
+                if (grantResults[0] == PermissionChecker.PERMISSION_GRANTED) {
+                    mCamera2Engine.start();
+                }
+                break;
+            default:
+                break;
+        }
     }
 
     @Override

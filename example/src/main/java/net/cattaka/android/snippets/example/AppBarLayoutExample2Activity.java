@@ -15,6 +15,7 @@ import android.widget.CompoundButton;
 import net.cattaka.android.adaptertoolbox.adapter.ScrambleAdapter;
 import net.cattaka.android.snippets.CoordinatorLayoutUtils;
 import net.cattaka.android.snippets.example.adapter.factory.SimpleStringViewHolderFactory;
+import net.cattaka.android.snippets.example.utils.RelayForEnterAlwaysCollapsed;
 
 import java.util.ArrayList;
 
@@ -74,6 +75,8 @@ public class AppBarLayoutExample2Activity extends AppCompatActivity implements V
                 mAdapter.getItems().add("Item : " + mAdapter.getItems().size());
             }
         }
+
+        RelayForEnterAlwaysCollapsed.apply(mRecyclerView, mCoordinatorLayout, mAppBarLayout);
     }
 
     @Override

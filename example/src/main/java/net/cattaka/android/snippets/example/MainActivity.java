@@ -18,6 +18,9 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
     private static final List<ActivityEntry> ACTIVITY_ENTRIES = Arrays.asList(
+            new ActivityEntry("Workaround of issues", null,
+                    new ActivityEntry("AOSP Issue 212316", Issue212316ParrierExampleActvity.class)
+            ),
             new ActivityEntry("CoordinatorLayout", null,
                     new ActivityEntry("AppBarLayout", null,
                             new ActivityEntry("With simple view", AppBarLayoutExample1Activity.class, Build.VERSION_CODES.LOLLIPOP),

@@ -1,62 +1,73 @@
 package net.cattaka.android.snippets.view;
 
 import android.content.Context;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.v4.view.NestedScrollingChildHelper;
 import android.util.AttributeSet;
 import android.view.View;
 
 /**
- * Created by cattaka on 2016/04/27.
+ * Created by cattaka on 2017/06/28.
+ * <p>
+ * Only for support-library over 26.0.0
  */
-public class NestedScrollingCoordinatorLayout extends CoordinatorLayout {
+public class NestedCoordinatorLayout extends CoordinatorLayout {
     private final NestedScrollingChildHelper mScrollingChildHelper;
     private final int[] mParentOffsetInWindow = new int[2];
 
-    public NestedScrollingCoordinatorLayout(Context context) {
+    public NestedCoordinatorLayout(Context context) {
         super(context);
         mScrollingChildHelper = new NestedScrollingChildHelper(this);
         mScrollingChildHelper.setNestedScrollingEnabled(true);
     }
 
-    public NestedScrollingCoordinatorLayout(Context context, AttributeSet attrs) {
+    public NestedCoordinatorLayout(Context context, AttributeSet attrs) {
         super(context, attrs);
         mScrollingChildHelper = new NestedScrollingChildHelper(this);
         mScrollingChildHelper.setNestedScrollingEnabled(true);
     }
 
-    public NestedScrollingCoordinatorLayout(Context context, AttributeSet attrs, int defStyleAttr) {
+    public NestedCoordinatorLayout(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         mScrollingChildHelper = new NestedScrollingChildHelper(this);
         mScrollingChildHelper.setNestedScrollingEnabled(true);
     }
 
     // NestedScrollingParent
-
     @Override
-    public boolean onStartNestedScroll(View child, View target, int nestedScrollAxes) {
-        boolean handled = super.onStartNestedScroll(child, target, nestedScrollAxes);
-        handled |= mScrollingChildHelper.startNestedScroll(nestedScrollAxes);
+    public void onNestedPreScroll(@NonNull View target, int dx, int dy, @Nullable int[] consumed, int type) {
+        if (!mScrollingChildHelper.dispatchNestedPreScroll(dx, dy, consumed, mParentOffsetInWindow, type)) {
+            super.onNestedPreScroll(target, dx, dy, consumed, type);
+        }
+    }
+
+    // NestedScrollingParent
+    @Override
+    public boolean onStartNestedScroll(@NonNull View child, @NonNull View target, int axes, int type) {
+        boolean handled = super.onStartNestedScroll(child, target, axes, type);
+        handled |= mScrollingChildHelper.startNestedScroll(axes, type);
         return handled;
     }
 
     @Override
-    public void onStopNestedScroll(View target) {
-        super.onStopNestedScroll(target);
+    public void onStopNestedScroll(@NonNull View target, int type) {
+        super.onStopNestedScroll(target, type);
         mScrollingChildHelper.stopNestedScroll();
     }
 
     @Override
-    public void onNestedScrollAccepted(View child, View target, int nestedScrollAxes) {
-        if (!mScrollingChildHelper.startNestedScroll(nestedScrollAxes)) {
-            super.onNestedScrollAccepted(child, target, nestedScrollAxes);
+    public void onNestedScrollAccepted(@NonNull View child, @NonNull View target, int axes, int type) {
+        if (!mScrollingChildHelper.startNestedScroll(axes, type)) {
+            super.onNestedScrollAccepted(child, target, axes, type);
         }
     }
 
     @Override
-    public void onNestedScroll(View target, int dxConsumed, int dyConsumed, int dxUnconsumed, int dyUnconsumed) {
-        if (!mScrollingChildHelper.dispatchNestedScroll(dxConsumed, dyConsumed, dxUnconsumed, dyUnconsumed, mParentOffsetInWindow)) {
-            super.onNestedScroll(target, dxConsumed, dyConsumed, dxUnconsumed, dyUnconsumed);
+    public void onNestedScroll(@NonNull View target, int dxConsumed, int dyConsumed, int dxUnconsumed, int dyUnconsumed, int type) {
+        if (!mScrollingChildHelper.dispatchNestedScroll(dxConsumed, dyConsumed, dxUnconsumed, dyUnconsumed, mParentOffsetInWindow, type)) {
+            super.onNestedScroll(target, dxConsumed, dyConsumed, dxUnconsumed, dyUnconsumed, type);
         }
     }
 

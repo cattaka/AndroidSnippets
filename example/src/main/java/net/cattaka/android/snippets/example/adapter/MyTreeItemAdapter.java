@@ -11,7 +11,6 @@ import android.widget.CompoundButton;
 import android.widget.TextView;
 
 import net.cattaka.android.adaptertoolbox.adapter.AbsChoosableTreeItemAdapter;
-import net.cattaka.android.adaptertoolbox.adapter.AbsTreeItemAdapter;
 import net.cattaka.android.snippets.example.R;
 import net.cattaka.android.snippets.example.data.MyTreeItem;
 
@@ -45,26 +44,6 @@ public class MyTreeItemAdapter extends AbsChoosableTreeItemAdapter<
         }
     };
 
-    private View.OnClickListener mOnClickListener = new View.OnClickListener() {
-        @Override
-        public void onClick(View view) {
-            RecyclerView recyclerView = getAttachedRecyclerView();
-            ViewHolder vh = (ViewHolder) recyclerView.findContainingViewHolder(view);
-            int position = vh.getAdapterPosition();
-            WrappedItem item = getItemAt(position);
-            switch (view.getId()) {
-                case R.id.check_opened: {
-                    doOpen(item, !item.isOpened());
-                    break;
-                }
-                default: {
-                    toggleCheck(item);
-                    break;
-                }
-            }
-        }
-    };
-
     public MyTreeItemAdapter(Context context, List<MyTreeItem> items) {
         super(context, items, REF);
     }
@@ -73,12 +52,12 @@ public class MyTreeItemAdapter extends AbsChoosableTreeItemAdapter<
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(getContext()).inflate(R.layout.item_my_tree_item, parent, false);
-        ViewHolder holder = new ViewHolder(view);
+        ViewHolder holder = new ViewHolder(view, this);
 
-        holder.openedCheck.setOnClickListener(mOnClickListener);
+        holder.openedCheck.setOnClickListener(holder);
 
-        holder.itemView.setOnClickListener(getForwardingListener());
-        holder.itemView.setOnLongClickListener(getForwardingListener());
+        holder.itemView.setOnClickListener(getForwardingListener(parent));
+        holder.itemView.setOnLongClickListener(getForwardingListener(parent));
 
         return holder;
     }
@@ -108,16 +87,34 @@ public class MyTreeItemAdapter extends AbsChoosableTreeItemAdapter<
         }
     }
 
-    public static class ViewHolder extends RecyclerView.ViewHolder {
+    public static class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+        MyTreeItemAdapter adapter;
         Space levelSpace;
         CompoundButton openedCheck;
         TextView labelText;
 
-        public ViewHolder(View itemView) {
+        public ViewHolder(View itemView, MyTreeItemAdapter adapter) {
             super(itemView);
+            this.adapter = adapter;
             levelSpace = (Space) itemView.findViewById(R.id.space_level);
             openedCheck = (CompoundButton) itemView.findViewById(R.id.check_opened);
             labelText = (TextView) itemView.findViewById(R.id.text_label);
+        }
+
+        @Override
+        public void onClick(View view) {
+            int position = getAdapterPosition();
+            WrappedItem item = adapter.getItemAt(position);
+            switch (view.getId()) {
+                case R.id.check_opened: {
+                    adapter.doOpen(item, !item.isOpened());
+                    break;
+                }
+                default: {
+                    adapter.toggleCheck(item);
+                    break;
+                }
+            }
         }
     }
 }

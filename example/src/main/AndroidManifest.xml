@@ -40,6 +40,9 @@
             android:theme="@style/NoActionBarAppTheme" />
         <activity android:name=".CheckCameraOrientationActivity" />
         <activity android:name=".Issue212316ParrierExampleActvity" />
+        <activity
+            android:name=".OverScrollRecyclerViewActivity"
+            android:theme="@style/AppTheme.Transparent" />
     </application>
 
 </manifest>

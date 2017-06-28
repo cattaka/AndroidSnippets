@@ -18,6 +18,9 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
     private static final List<ActivityEntry> ACTIVITY_ENTRIES = Arrays.asList(
+            new ActivityEntry("Over Scroll", null,
+                    new ActivityEntry("With RecyclerView", OverScrollRecyclerViewActivity.class)
+            ),
             new ActivityEntry("Workaround of issues", null,
                     new ActivityEntry("AOSP Issue 212316", Issue212316ParrierExampleActvity.class)
             ),

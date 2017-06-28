@@ -32,7 +32,7 @@ public class OverScrollRecyclerViewActivity extends AppCompatActivity {
             mAdapter = new ScrambleAdapter<>(this, new ArrayList<String>(), null, new SimpleStringViewHolderFactory());
             mRecyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
             mRecyclerView.setAdapter(mAdapter);
-            for (int i = 0; i < 100; i++) {
+            for (int i = 0; i < 30; i++) {
                 mAdapter.getItems().add("Item : " + mAdapter.getItems().size());
             }
         }

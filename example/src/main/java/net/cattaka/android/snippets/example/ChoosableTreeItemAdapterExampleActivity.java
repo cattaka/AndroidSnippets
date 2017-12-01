@@ -26,12 +26,12 @@ public class ChoosableTreeItemAdapterExampleActivity extends AppCompatActivity i
     ChoosableMyTreeItemAdapter.IChoosableMyTreeItemAdapterListener mChoosableMyTreeItemAdapterListener = new ChoosableMyTreeItemAdapter.IChoosableMyTreeItemAdapterListener() {
         @Override
         public void onItemOpenChanged(@NonNull MyTreeItem item, boolean open) {
-            Tracker.getInstance().recordAction(me, TrackAction.ACTION_CLICK, toParamsMap(TrackKey.ITEM_ID, item.getText(), TrackKey.VIEW_NAME, "open", TrackKey.VALUE, String.valueOf(open)));
+            Tracker.getInstance().recordAction(me, TrackAction.ACTION_CLICK, toParamsMap(TrackKey.ITEM_NAME, item.getText(), TrackKey.VIEW_NAME, "open", TrackKey.VALUE, String.valueOf(open)));
         }
 
         @Override
         public void onItemCheckChanged(@NonNull MyTreeItem item, boolean checked) {
-            Tracker.getInstance().recordAction(me, TrackAction.ACTION_CLICK, toParamsMap(TrackKey.ITEM_ID, item.getText(), TrackKey.VIEW_NAME, "check", TrackKey.VALUE, String.valueOf(checked)));
+            Tracker.getInstance().recordAction(me, TrackAction.ACTION_CLICK, toParamsMap(TrackKey.ITEM_NAME, item.getText(), TrackKey.VIEW_NAME, "check", TrackKey.VALUE, String.valueOf(checked)));
         }
     };
 

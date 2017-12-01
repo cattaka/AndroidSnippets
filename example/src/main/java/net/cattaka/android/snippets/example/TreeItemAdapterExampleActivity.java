@@ -31,7 +31,7 @@ public class TreeItemAdapterExampleActivity extends AppCompatActivity implements
         public void onClick(RecyclerView recyclerView, MyTreeItemAdapter adapter, MyTreeItemAdapter.ViewHolder viewHolder, View view) {
             if (recyclerView.getId() == R.id.recycler) {
                 MyTreeItem item = adapter.getItemAt(viewHolder.getAdapterPosition()).getItem();
-                Tracker.getInstance().recordAction(me, TrackAction.ACTION_CLICK, toParamsMap(TrackKey.ITEM_ID, item.getText(), TrackKey.VIEW_NAME, "body"));
+                Tracker.getInstance().recordAction(me, TrackAction.ACTION_CLICK, toParamsMap(TrackKey.ITEM_NAME, item.getText(), TrackKey.VIEW_NAME, "body"));
                 Snackbar.make(view, "Clicked: " + item.getText(), Snackbar.LENGTH_SHORT).show();
             }
         }
@@ -40,7 +40,7 @@ public class TreeItemAdapterExampleActivity extends AppCompatActivity implements
         public boolean onLongClick(RecyclerView recyclerView, MyTreeItemAdapter adapter, MyTreeItemAdapter.ViewHolder viewHolder, View view) {
             if (recyclerView.getId() == R.id.recycler) {
                 MyTreeItem item = adapter.getItemAt(viewHolder.getAdapterPosition()).getItem();
-                Tracker.getInstance().recordAction(me, TrackAction.ACTION_LONG_CLICK, toParamsMap(TrackKey.ITEM_ID, item.getText(), TrackKey.VIEW_NAME, "body"));
+                Tracker.getInstance().recordAction(me, TrackAction.ACTION_LONG_CLICK, toParamsMap(TrackKey.ITEM_NAME, item.getText(), TrackKey.VIEW_NAME, "body"));
                 Snackbar.make(view, "Long clicked: " + item.getText(), Snackbar.LENGTH_SHORT).show();
                 return true;
             }
@@ -51,7 +51,7 @@ public class TreeItemAdapterExampleActivity extends AppCompatActivity implements
     MyTreeItemAdapter.IMyTreeItemAdapterListener mMyTreeItemAdapterListener = new MyTreeItemAdapter.IMyTreeItemAdapterListener() {
         @Override
         public void onItemOpenChanged(@NonNull MyTreeItem item, boolean open) {
-            Tracker.getInstance().recordAction(me, TrackAction.ACTION_CLICK, toParamsMap(TrackKey.ITEM_ID, item.getText(), TrackKey.VIEW_NAME, "open", TrackKey.VALUE, String.valueOf(open)));
+            Tracker.getInstance().recordAction(me, TrackAction.ACTION_CLICK, toParamsMap(TrackKey.ITEM_NAME, item.getText(), TrackKey.VIEW_NAME, "open", TrackKey.VALUE, String.valueOf(open)));
         }
     };
 

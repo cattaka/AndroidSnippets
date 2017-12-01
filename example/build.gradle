@@ -1,6 +1,6 @@
 apply plugin: 'com.android.application'
 
-def enable_google_services = new File("./google-services.json").exists()
+def enable_google_services = project.file("./google-services.json").exists()
 if (enable_google_services) {
     apply plugin: 'com.google.gms.google-services'
 }

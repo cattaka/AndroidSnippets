@@ -128,6 +128,7 @@ public class TrackKey<T extends Serializable> implements Serializable {
         }
     };
     public static final TrackKey<String> VIEW_NAME = new TrackKey<>(STR, "view_name");
+    public static final TrackKey<Boolean> HAS_ERROR = new TrackKey<>(BOOL, "has_error");
 
     // NOTE: From FirebaseAnalytics
     public static final TrackKey<String> ACHIEVEMENT_ID = new TrackKey<>(STR, FirebaseAnalytics.Param.ACHIEVEMENT_ID);

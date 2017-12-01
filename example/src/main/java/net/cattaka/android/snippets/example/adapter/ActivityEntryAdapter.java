@@ -44,6 +44,8 @@ public class ActivityEntryAdapter extends AbsChoosableTreeItemAdapter<
         }
     };
 
+    private IActivityEntryAdapterListener mListener;
+
     public ActivityEntryAdapter(Context context, List<ActivityEntry> items) {
         super(context, items, REF);
     }
@@ -80,6 +82,16 @@ public class ActivityEntryAdapter extends AbsChoosableTreeItemAdapter<
         holder.labelText.setText(item.getLabel());
     }
 
+    public void setListener(IActivityEntryAdapterListener mListener) {
+        this.mListener = mListener;
+    }
+
+    private void onItemOpenChanged(@NonNull ActivityEntry item, boolean open) {
+        if (mListener != null) {
+            mListener.onItemOpenChanged(item, open);
+        }
+    }
+
     public static class WrappedItem extends AbsChoosableTreeItemAdapter.WrappedItem<WrappedItem, ActivityEntry> {
         public WrappedItem(int level, ActivityEntry item, WrappedItem parent) {
             super(level, item, parent);
@@ -107,6 +119,7 @@ public class ActivityEntryAdapter extends AbsChoosableTreeItemAdapter<
             switch (view.getId()) {
                 case R.id.check_opened: {
                     adapter.doOpen(item, !item.isOpened());
+                    adapter.onItemOpenChanged(item.item, item.isOpened());
                     break;
                 }
                 default: {
@@ -115,5 +128,9 @@ public class ActivityEntryAdapter extends AbsChoosableTreeItemAdapter<
                 }
             }
         }
+    }
+
+    public interface IActivityEntryAdapterListener {
+        void onItemOpenChanged(@NonNull ActivityEntry item, boolean open);
     }
 }

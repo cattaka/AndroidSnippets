@@ -1,6 +1,7 @@
 package net.cattaka.android.snippets.example;
 
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -10,20 +11,27 @@ import android.view.View;
 import net.cattaka.android.adaptertoolbox.adapter.listener.ListenerRelay;
 import net.cattaka.android.snippets.example.adapter.MyTreeItemAdapter;
 import net.cattaka.android.snippets.example.data.MyTreeItem;
+import net.cattaka.android.snippets.example.tracker.IScreen;
+import net.cattaka.android.snippets.example.tracker.TrackAction;
+import net.cattaka.android.snippets.example.tracker.TrackKey;
+import net.cattaka.android.snippets.example.tracker.Tracker;
 import net.cattaka.android.snippets.example.utils.ExampleDataGenerator;
 
 import java.util.Arrays;
 import java.util.List;
 
+import static net.cattaka.android.snippets.example.tracker.TrackParams.toParamsMap;
+
 /**
  * Created by cattaka on 16/05/21.
  */
-public class TreeItemAdapterExampleActivity extends AppCompatActivity {
+public class TreeItemAdapterExampleActivity extends AppCompatActivity implements IScreen {
     private ListenerRelay<MyTreeItemAdapter, MyTreeItemAdapter.ViewHolder> mListenerRelay = new ListenerRelay<MyTreeItemAdapter, MyTreeItemAdapter.ViewHolder>() {
         @Override
         public void onClick(RecyclerView recyclerView, MyTreeItemAdapter adapter, MyTreeItemAdapter.ViewHolder viewHolder, View view) {
             if (recyclerView.getId() == R.id.recycler) {
                 MyTreeItem item = adapter.getItemAt(viewHolder.getAdapterPosition()).getItem();
+                Tracker.getInstance().recordAction(me, TrackAction.ACTION_CLICK, toParamsMap(TrackKey.ITEM_ID, item.getText(), TrackKey.VIEW_NAME, "body"));
                 Snackbar.make(view, "Clicked: " + item.getText(), Snackbar.LENGTH_SHORT).show();
             }
         }
@@ -32,6 +40,7 @@ public class TreeItemAdapterExampleActivity extends AppCompatActivity {
         public boolean onLongClick(RecyclerView recyclerView, MyTreeItemAdapter adapter, MyTreeItemAdapter.ViewHolder viewHolder, View view) {
             if (recyclerView.getId() == R.id.recycler) {
                 MyTreeItem item = adapter.getItemAt(viewHolder.getAdapterPosition()).getItem();
+                Tracker.getInstance().recordAction(me, TrackAction.ACTION_LONG_CLICK, toParamsMap(TrackKey.ITEM_ID, item.getText(), TrackKey.VIEW_NAME, "body"));
                 Snackbar.make(view, "Long clicked: " + item.getText(), Snackbar.LENGTH_SHORT).show();
                 return true;
             }
@@ -39,7 +48,14 @@ public class TreeItemAdapterExampleActivity extends AppCompatActivity {
         }
     };
 
+    MyTreeItemAdapter.IMyTreeItemAdapterListener mMyTreeItemAdapterListener = new MyTreeItemAdapter.IMyTreeItemAdapterListener() {
+        @Override
+        public void onItemOpenChanged(@NonNull MyTreeItem item, boolean open) {
+            Tracker.getInstance().recordAction(me, TrackAction.ACTION_CLICK, toParamsMap(TrackKey.ITEM_ID, item.getText(), TrackKey.VIEW_NAME, "open", TrackKey.VALUE, String.valueOf(open)));
+        }
+    };
 
+    TreeItemAdapterExampleActivity me = this;
     RecyclerView mRecyclerView;
 
     @Override
@@ -53,6 +69,7 @@ public class TreeItemAdapterExampleActivity extends AppCompatActivity {
         { // set adapter
             List<MyTreeItem> items = ExampleDataGenerator.generateMyTreeItem(Arrays.asList(5, 3, 2), 0);
             MyTreeItemAdapter adapter = new MyTreeItemAdapter(this, items);
+            adapter.setListener(mMyTreeItemAdapterListener);
             adapter.setListenerRelay(mListenerRelay);
             mRecyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
             mRecyclerView.setAdapter(adapter);

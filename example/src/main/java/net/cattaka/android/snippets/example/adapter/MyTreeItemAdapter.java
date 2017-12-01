@@ -44,6 +44,8 @@ public class MyTreeItemAdapter extends AbsChoosableTreeItemAdapter<
         }
     };
 
+    private IMyTreeItemAdapterListener mListener;
+
     public MyTreeItemAdapter(Context context, List<MyTreeItem> items) {
         super(context, items, REF);
     }
@@ -81,6 +83,17 @@ public class MyTreeItemAdapter extends AbsChoosableTreeItemAdapter<
         holder.labelText.setText(item.getText());
     }
 
+
+    public void setListener(IMyTreeItemAdapterListener mListener) {
+        this.mListener = mListener;
+    }
+
+    private void onItemOpenChanged(@NonNull MyTreeItem item, boolean open) {
+        if (mListener != null) {
+            mListener.onItemOpenChanged(item, open);
+        }
+    }
+
     public static class WrappedItem extends AbsChoosableTreeItemAdapter.WrappedItem<WrappedItem, MyTreeItem> {
         public WrappedItem(int level, MyTreeItem item, WrappedItem parent) {
             super(level, item, parent);
@@ -108,13 +121,18 @@ public class MyTreeItemAdapter extends AbsChoosableTreeItemAdapter<
             switch (view.getId()) {
                 case R.id.check_opened: {
                     adapter.doOpen(item, !item.isOpened());
+                    adapter.onItemOpenChanged(item.item, item.isOpened());
                     break;
                 }
                 default: {
-                    adapter.toggleCheck(item);
+                    // no-op
                     break;
                 }
             }
         }
+    }
+
+    public interface IMyTreeItemAdapterListener {
+        void onItemOpenChanged(@NonNull MyTreeItem item, boolean open);
     }
 }

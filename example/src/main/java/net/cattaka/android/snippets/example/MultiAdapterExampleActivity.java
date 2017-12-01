@@ -84,8 +84,10 @@ public class MultiAdapterExampleActivity extends AppCompatActivity implements IS
             if (recyclerView.getId() == R.id.recycler) {
                 MergeRecyclerAdapter.LocalAdapter la = mMergeRecyclerAdapter.getAdapterOffsetForItem(viewHolder.getAdapterPosition());
                 if (la.mAdapter == mStringsHeaderAdapter) {
+                    Tracker.getInstance().recordAction(me, TrackAction.ACTION_LONG_CLICK, toParamsMap(TrackKey.ITEM_NAME, "string", TrackKey.ITEM_CATEGORY, "header"));
                     Snackbar.make(view, "Strings Header is long clicked.", Snackbar.LENGTH_SHORT).show();
                 } else if (la.mAdapter == mNumbersHeaderAdapter) {
+                    Tracker.getInstance().recordAction(me, TrackAction.ACTION_LONG_CLICK, toParamsMap(TrackKey.ITEM_NAME, "number", TrackKey.ITEM_CATEGORY, "header"));
                     Snackbar.make(view, "Numbers Header is long clicked.", Snackbar.LENGTH_SHORT).show();
                 }
                 return true;

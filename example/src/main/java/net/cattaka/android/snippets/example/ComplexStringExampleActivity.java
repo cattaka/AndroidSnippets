@@ -10,14 +10,20 @@ import android.view.View;
 import net.cattaka.android.adaptertoolbox.adapter.ScrambleAdapter;
 import net.cattaka.android.adaptertoolbox.adapter.listener.ListenerRelay;
 import net.cattaka.android.snippets.example.adapter.ComplexStringAdapter;
+import net.cattaka.android.snippets.example.tracker.IScreen;
+import net.cattaka.android.snippets.example.tracker.TrackAction;
+import net.cattaka.android.snippets.example.tracker.TrackKey;
+import net.cattaka.android.snippets.example.tracker.Tracker;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import static net.cattaka.android.snippets.example.tracker.TrackParams.toParamsMap;
+
 /**
  * Created by cattaka on 16/05/02.
  */
-public class ComplexStringExampleActivity extends AppCompatActivity {
+public class ComplexStringExampleActivity extends AppCompatActivity implements IScreen {
 
     ListenerRelay<ScrambleAdapter<?>, RecyclerView.ViewHolder> mListenerRelay = new ListenerRelay<ScrambleAdapter<?>, RecyclerView.ViewHolder>() {
         @Override
@@ -26,14 +32,17 @@ public class ComplexStringExampleActivity extends AppCompatActivity {
                 String item = (String) adapter.getItemAt(viewHolder.getAdapterPosition());
                 switch (view.getId()) {
                     case R.id.text: {
+                        Tracker.getInstance().recordAction(me, TrackAction.ACTION_CLICK, toParamsMap(TrackKey.ITEM_NAME, item, TrackKey.VIEW_NAME, "text"));
                         Snackbar.make(view, item + " is clicked.(Text)", Snackbar.LENGTH_SHORT).show();
                         break;
                     }
                     case R.id.button_a: {
+                        Tracker.getInstance().recordAction(me, TrackAction.ACTION_CLICK, toParamsMap(TrackKey.ITEM_NAME, item, TrackKey.VIEW_NAME, "button_a"));
                         Snackbar.make(view, item + " is clicked.(A)", Snackbar.LENGTH_SHORT).show();
                         break;
                     }
                     case R.id.button_b: {
+                        Tracker.getInstance().recordAction(me, TrackAction.ACTION_CLICK, toParamsMap(TrackKey.ITEM_NAME, item, TrackKey.VIEW_NAME, "button_b"));
                         Snackbar.make(view, item + " is clicked.(B)", Snackbar.LENGTH_SHORT).show();
                         break;
                     }
@@ -47,14 +56,17 @@ public class ComplexStringExampleActivity extends AppCompatActivity {
                 String item = (String) adapter.getItemAt(viewHolder.getAdapterPosition());
                 switch (view.getId()) {
                     case R.id.text: {
+                        Tracker.getInstance().recordAction(me, TrackAction.ACTION_LONG_CLICK, toParamsMap(TrackKey.ITEM_NAME, item, TrackKey.VIEW_NAME, "text"));
                         Snackbar.make(view, item + " is long clicked.(Text)", Snackbar.LENGTH_SHORT).show();
                         break;
                     }
                     case R.id.button_a: {
+                        Tracker.getInstance().recordAction(me, TrackAction.ACTION_LONG_CLICK, toParamsMap(TrackKey.ITEM_NAME, item, TrackKey.VIEW_NAME, "button_a"));
                         Snackbar.make(view, item + " is long clicked.(A)", Snackbar.LENGTH_SHORT).show();
                         break;
                     }
                     case R.id.button_b: {
+                        Tracker.getInstance().recordAction(me, TrackAction.ACTION_LONG_CLICK, toParamsMap(TrackKey.ITEM_NAME, item, TrackKey.VIEW_NAME, "button_b"));
                         Snackbar.make(view, item + " is long clicked.(B)", Snackbar.LENGTH_SHORT).show();
                         break;
                     }
@@ -65,6 +77,7 @@ public class ComplexStringExampleActivity extends AppCompatActivity {
         }
     };
 
+    ComplexStringExampleActivity me = this;
     RecyclerView mRecyclerView;
 
     @Override

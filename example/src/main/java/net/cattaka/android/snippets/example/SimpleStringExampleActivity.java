@@ -10,19 +10,26 @@ import android.view.View;
 import net.cattaka.android.adaptertoolbox.adapter.ScrambleAdapter;
 import net.cattaka.android.adaptertoolbox.adapter.listener.ListenerRelay;
 import net.cattaka.android.snippets.example.adapter.SimpleStringAdapter;
+import net.cattaka.android.snippets.example.tracker.IScreen;
+import net.cattaka.android.snippets.example.tracker.TrackAction;
+import net.cattaka.android.snippets.example.tracker.TrackKey;
+import net.cattaka.android.snippets.example.tracker.Tracker;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import static net.cattaka.android.snippets.example.tracker.TrackParams.toParamsMap;
+
 /**
  * Created by cattaka on 16/05/02.
  */
-public class SimpleStringExampleActivity extends AppCompatActivity {
+public class SimpleStringExampleActivity extends AppCompatActivity implements IScreen {
     ListenerRelay<ScrambleAdapter<?>, RecyclerView.ViewHolder> mListenerRelay = new ListenerRelay<ScrambleAdapter<?>, RecyclerView.ViewHolder>() {
         @Override
         public void onClick(RecyclerView recyclerView, ScrambleAdapter<?> adapter, RecyclerView.ViewHolder viewHolder, View view) {
             if (recyclerView.getId() == R.id.recycler) {
                 String item = (String) adapter.getItemAt(viewHolder.getAdapterPosition());
+                Tracker.getInstance().recordAction(me, TrackAction.ACTION_CLICK, toParamsMap(TrackKey.ITEM_NAME, item));
                 Snackbar.make(view, item + " is clicked.", Snackbar.LENGTH_SHORT).show();
             }
         }
@@ -31,6 +38,7 @@ public class SimpleStringExampleActivity extends AppCompatActivity {
         public boolean onLongClick(RecyclerView recyclerView, ScrambleAdapter<?> adapter, RecyclerView.ViewHolder viewHolder, View view) {
             if (recyclerView.getId() == R.id.recycler) {
                 String item = (String) adapter.getItemAt(viewHolder.getAdapterPosition());
+                Tracker.getInstance().recordAction(me, TrackAction.ACTION_LONG_CLICK, toParamsMap(TrackKey.ITEM_NAME, item));
                 Snackbar.make(view, item + " is long clicked.", Snackbar.LENGTH_SHORT).show();
                 return true;
             }
@@ -38,6 +46,7 @@ public class SimpleStringExampleActivity extends AppCompatActivity {
         }
     };
 
+    SimpleStringExampleActivity me = this;
     RecyclerView mRecyclerView;
 
     @Override

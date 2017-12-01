@@ -1,5 +1,10 @@
 apply plugin: 'com.android.application'
 
+def enable_google_services = new File("./google-services.json").exists()
+if (enable_google_services) {
+    apply plugin: 'com.google.gms.google-services'
+}
+
 android {
     compileSdkVersion Integer.parseInt(project.ANDROID_BUILD_SDK_VERSION)
     buildToolsVersion project.ANDROID_BUILD_TOOLS_VERSION
@@ -13,6 +18,8 @@ android {
         versionName project.APP_VERSION_NAME
 
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+
+        buildConfigField "boolean", "ENABLE_GOOGLE_SERVICES", String.valueOf(enable_google_services)
     }
     buildTypes {
         release {
@@ -32,6 +39,7 @@ repositories {
     }
 }
 
+def play_services = '11.4.2'
 def support_library = project.SUPPORT_LIBRARY_VERSION
 
 dependencies {
@@ -41,6 +49,8 @@ dependencies {
     implementation "com.android.support:cardview-v7:$support_library"
     implementation "com.android.support:recyclerview-v7:$support_library"
     implementation "com.android.support:design:$support_library"
+
+    implementation "com.google.firebase:firebase-core:$play_services"
 
     implementation 'net.cattaka:adapter-toolbox:0.5.2@aar'
     implementation 'net.cattaka:cathandsgendroid-core:0.5.1'

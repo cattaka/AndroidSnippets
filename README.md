@@ -1,6 +1,16 @@
-## License
+## AndroidSnippets
 
-### MergeRecyclerAdapeter.java
+These are snippets written by @cattaka.
+
+
+### To enable Google Play Services and Firebase on example application
+Put google-services.json under example directory,
+then example/build.gradle detects it and enable them.
+
+
+### License
+
+#### MergeRecyclerAdapeter.java
 forked from https://gist.github.com/athornz/008edacd1d3b2f1e1836
 
 ```

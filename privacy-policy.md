@@ -18,4 +18,4 @@ We use collected information only for study meeting and conference of technology
   - This application contains example implementation of Camera API
 
 ### Contact
-If you have questions about our Privacy Policy, please write to cataka@mail.cattaka.net
+If you have questions about our Privacy Policy, please write to cattaka@mail.cattaka.net

@@ -6,6 +6,8 @@ package net.cattaka.android.snippets.example.tracker;
 public enum TrackAction {
     ACTION_CLICK("action_click"),
     ACTION_LONG_CLICK("action_long_click"),
+    CHECK_CHANGE("check_change"),
+    SELECTED("selected"),
     //
     ;
     public final String code;

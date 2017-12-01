@@ -9,9 +9,13 @@ import android.support.annotation.NonNull;
 
 public interface IScreen {
     @NonNull
-    String getScreenName();
+    default String getScreenName() {
+        return this.getClass().getSimpleName();
+    }
 
-    boolean useAutoTrack();
+    default boolean useAutoTrack() {
+        return true;
+    }
 
     static IScreen ofScreen(@NonNull Activity o) {
         return new IScreen() {
@@ -19,11 +23,6 @@ public interface IScreen {
             @Override
             public String getScreenName() {
                 return o.getClass().getSimpleName();
-            }
-
-            @Override
-            public boolean useAutoTrack() {
-                return true;
             }
         };
     }

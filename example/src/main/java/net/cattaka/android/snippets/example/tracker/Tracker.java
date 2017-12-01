@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.Application;
 import android.app.Fragment;
 import android.content.Context;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.util.Log;
@@ -59,6 +60,25 @@ public class Tracker {
         if (BuildConfig.DEBUG) {
             String screenName = (screen != null) ? screen.getScreenName() : null;
             Log.d(TAG_SCREEN, String.format(Locale.ROOT, "screen=%s", screenName));
+        }
+    }
+
+    public void recordAction(@Nullable IScreen screen, @NonNull TrackAction action, @Nullable TrackParams params) {
+        String screenName = (screen != null) ? screen.getScreenName() : null;
+        if (BuildConfig.ENABLE_GOOGLE_SERVICES) {
+            Bundle event = (params != null) ? params.toFirebaseBundle() : new Bundle();
+            event.putString("screen", screenName);
+            event.putString("app_version", BuildConfig.VERSION_NAME);
+            mFirebaseAnalytics.logEvent(action.code, event);
+        }
+        if (BuildConfig.DEBUG) {
+            StringBuilder sb = new StringBuilder();
+            sb.append(screenName != null ? screenName : "?");
+            sb.append(" / ");
+            sb.append(action.code);
+            sb.append(" / ");
+            sb.append(params);
+            Log.d(TAG_ACTION, sb.toString());
         }
     }
 }

@@ -15,15 +15,22 @@ import android.widget.CompoundButton;
 import net.cattaka.android.adaptertoolbox.adapter.ScrambleAdapter;
 import net.cattaka.android.snippets.CoordinatorLayoutUtils;
 import net.cattaka.android.snippets.example.adapter.factory.SimpleStringViewHolderFactory;
+import net.cattaka.android.snippets.example.tracker.IScreen;
+import net.cattaka.android.snippets.example.tracker.Tracker;
 import net.cattaka.android.snippets.example.utils.RelayForEnterAlwaysCollapsed;
 
 import java.util.ArrayList;
+
+import static net.cattaka.android.snippets.example.tracker.TrackAction.ACTION_CLICK;
+import static net.cattaka.android.snippets.example.tracker.TrackKey.VALUE;
+import static net.cattaka.android.snippets.example.tracker.TrackKey.VIEW_NAME;
+import static net.cattaka.android.snippets.example.tracker.TrackParams.toParamsMap;
 
 /**
  * Created by cattaka on 16/12/03.
  */
 
-public class AppBarLayoutExample2Activity extends AppCompatActivity implements View.OnClickListener, CompoundButton.OnCheckedChangeListener {
+public class AppBarLayoutExample2Activity extends AppCompatActivity implements View.OnClickListener, CompoundButton.OnCheckedChangeListener, IScreen {
     CoordinatorLayout mCoordinatorLayout;
     AppBarLayout mAppBarLayout;
     View mExpandedView;
@@ -88,14 +95,17 @@ public class AppBarLayoutExample2Activity extends AppCompatActivity implements V
     @Override
     public void onClick(View v) {
         if (v.getId() == R.id.button_add_contents) {
+            Tracker.getInstance().recordAction(this, ACTION_CLICK, toParamsMap(VIEW_NAME, "button_add_contents"));
             mAdapter.getItems().add("Item : " + mAdapter.getItems().size());
             mAdapter.notifyItemInserted(mAdapter.getItems().size());
         } else if (v.getId() == R.id.button_subtract_contents) {
+            Tracker.getInstance().recordAction(this, ACTION_CLICK, toParamsMap(VIEW_NAME, "button_subtract_contents"));
             if (mAdapter.getItems().size() > 0) {
                 mAdapter.getItems().remove(mAdapter.getItems().size() - 1);
                 mAdapter.notifyItemRemoved(mAdapter.getItems().size());
             }
         } else if (v.getId() == R.id.button_add_overlap_top) {
+            Tracker.getInstance().recordAction(this, ACTION_CLICK, toParamsMap(VIEW_NAME, "button_add_overlap_top"));
             AppBarLayout.ScrollingViewBehavior behavior = CoordinatorLayoutUtils.pickBehavior(mRecyclerView, AppBarLayout.ScrollingViewBehavior.class);
             if (behavior != null) {
                 int ot = Math.max(0, behavior.getOverlayTop() + getResources().getDimensionPixelSize(R.dimen.control_diff));
@@ -103,6 +113,7 @@ public class AppBarLayoutExample2Activity extends AppCompatActivity implements V
                 mCoordinatorLayout.requestLayout();
             }
         } else if (v.getId() == R.id.button_subtract_overlap_top) {
+            Tracker.getInstance().recordAction(this, ACTION_CLICK, toParamsMap(VIEW_NAME, "button_subtract_overlap_top"));
             AppBarLayout.ScrollingViewBehavior behavior = CoordinatorLayoutUtils.pickBehavior(mRecyclerView, AppBarLayout.ScrollingViewBehavior.class);
             if (behavior != null) {
                 int ot = Math.max(0, behavior.getOverlayTop() - getResources().getDimensionPixelSize(R.dimen.control_diff));
@@ -115,16 +126,22 @@ public class AppBarLayoutExample2Activity extends AppCompatActivity implements V
     @Override
     public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
         if (buttonView.getId() == R.id.check_scroll) {
+            Tracker.getInstance().recordAction(this, ACTION_CLICK, toParamsMap(VIEW_NAME, "check_scroll", VALUE, isChecked));
             applyScrollFlags();
         } else if (buttonView.getId() == R.id.check_enter_always) {
+            Tracker.getInstance().recordAction(this, ACTION_CLICK, toParamsMap(VIEW_NAME, "check_enter_always", VALUE, isChecked));
             applyScrollFlags();
         } else if (buttonView.getId() == R.id.check_enter_always_collapsed) {
+            Tracker.getInstance().recordAction(this, ACTION_CLICK, toParamsMap(VIEW_NAME, "check_enter_always_collapsed", VALUE, isChecked));
             applyScrollFlags();
         } else if (buttonView.getId() == R.id.check_exit_until_collapsed) {
+            Tracker.getInstance().recordAction(this, ACTION_CLICK, toParamsMap(VIEW_NAME, "check_exit_until_collapsed", VALUE, isChecked));
             applyScrollFlags();
         } else if (buttonView.getId() == R.id.check_snap) {
+            Tracker.getInstance().recordAction(this, ACTION_CLICK, toParamsMap(VIEW_NAME, "check_snap", VALUE, isChecked));
             applyScrollFlags();
         } else if (buttonView.getId() == R.id.check_scroll_view_match_parent) {
+            Tracker.getInstance().recordAction(this, ACTION_CLICK, toParamsMap(VIEW_NAME, "check_scroll_view_match_parent", VALUE, isChecked));
             ViewGroup.LayoutParams lp = mRecyclerView.getLayoutParams();
             lp.height = isChecked ? ViewGroup.LayoutParams.MATCH_PARENT : ViewGroup.LayoutParams.WRAP_CONTENT;
             mRecyclerView.setLayoutParams(lp);

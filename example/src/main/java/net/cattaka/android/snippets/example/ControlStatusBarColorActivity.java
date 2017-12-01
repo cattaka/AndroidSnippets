@@ -14,12 +14,20 @@ import android.widget.CheckBox;
 import android.widget.ListView;
 
 import net.cattaka.android.snippets.example.data.ColorItem;
+import net.cattaka.android.snippets.example.tracker.IScreen;
+import net.cattaka.android.snippets.example.tracker.Tracker;
 import net.cattaka.android.snippets.util.StatusBarUtils;
 
 import java.util.ArrayList;
 import java.util.Random;
 
-public class ControlStatusBarColorActivity extends AppCompatActivity implements View.OnClickListener, AdapterView.OnItemClickListener {
+import static net.cattaka.android.snippets.example.tracker.TrackAction.ACTION_CLICK;
+import static net.cattaka.android.snippets.example.tracker.TrackKey.INDEX;
+import static net.cattaka.android.snippets.example.tracker.TrackKey.VALUE;
+import static net.cattaka.android.snippets.example.tracker.TrackKey.VIEW_NAME;
+import static net.cattaka.android.snippets.example.tracker.TrackParams.toParamsMap;
+
+public class ControlStatusBarColorActivity extends AppCompatActivity implements View.OnClickListener, AdapterView.OnItemClickListener, IScreen {
     private ListView mListView;
     private CheckBox mCheckTranslucentStatus;
     private CheckBox mCheckDrawsSystemBarBackgrounds;
@@ -63,8 +71,10 @@ public class ControlStatusBarColorActivity extends AppCompatActivity implements 
     @Override
     public void onClick(View view) {
         if (view.getId() == R.id.check_translucent_status) {
+            Tracker.getInstance().recordAction(this, ACTION_CLICK, toParamsMap(VIEW_NAME, "check_translucent_status", VALUE, String.valueOf(mCheckTranslucentStatus.isChecked())));
             refreshWindowFlags();
         } else if (view.getId() == R.id.check_draws_system_bar_backgrounds) {
+            Tracker.getInstance().recordAction(this, ACTION_CLICK, toParamsMap(VIEW_NAME, "check_draws_system_bar_backgrounds", VALUE, String.valueOf(mCheckDrawsSystemBarBackgrounds.isChecked())));
             refreshWindowFlags();
         }
     }
@@ -89,6 +99,7 @@ public class ControlStatusBarColorActivity extends AppCompatActivity implements 
     @Override
     public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
         if (adapterView.getId() == R.id.view_list) {
+            Tracker.getInstance().recordAction(this, ACTION_CLICK, toParamsMap(INDEX, position, VIEW_NAME, "view_list"));
             ColorItem item = (ColorItem) adapterView.getItemAtPosition(position);
             StatusBarUtils.setStatusBarColor(this, item.getColor());
         }

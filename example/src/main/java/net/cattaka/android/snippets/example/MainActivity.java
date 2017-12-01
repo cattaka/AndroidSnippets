@@ -3,6 +3,7 @@ package net.cattaka.android.snippets.example;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -12,11 +13,17 @@ import android.widget.Toast;
 import net.cattaka.android.adaptertoolbox.adapter.listener.ListenerRelay;
 import net.cattaka.android.snippets.example.adapter.ActivityEntryAdapter;
 import net.cattaka.android.snippets.example.data.ActivityEntry;
+import net.cattaka.android.snippets.example.tracker.IScreen;
+import net.cattaka.android.snippets.example.tracker.TrackKey;
+import net.cattaka.android.snippets.example.tracker.Tracker;
 
 import java.util.Arrays;
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity {
+import static net.cattaka.android.snippets.example.tracker.TrackAction.ACTION_CLICK;
+import static net.cattaka.android.snippets.example.tracker.TrackParams.toParamsMap;
+
+public class MainActivity extends AppCompatActivity implements IScreen {
     private static final List<ActivityEntry> ACTIVITY_ENTRIES = Arrays.asList(
             new ActivityEntry("Workaround of issues", null,
                     new ActivityEntry("AOSP Issue 212316", Issue212316ParrierExampleActvity.class)
@@ -72,8 +79,10 @@ public class MainActivity extends AppCompatActivity {
                 ActivityEntry entry = adapter.getItemAt(viewHolder.getAdapterPosition()).getItem();
                 if (entry != null && entry.getClazz() != null) {
                     if (entry.getApiLevel() > Build.VERSION.SDK_INT) {
+                        Tracker.getInstance().recordAction(me, ACTION_CLICK, toParamsMap(TrackKey.ITEM_NAME, entry.getLabel(), TrackKey.HAS_ERROR, true));
                         Toast.makeText(MainActivity.this, "This is for over api level " + entry.getApiLevel(), Toast.LENGTH_SHORT).show();
                     } else {
+                        Tracker.getInstance().recordAction(me, ACTION_CLICK, toParamsMap(TrackKey.ITEM_NAME, entry.getLabel(), TrackKey.HAS_ERROR, false));
                         Intent intent = new Intent(MainActivity.this, entry.getClazz());
                         startActivity(intent);
                     }
@@ -82,6 +91,14 @@ public class MainActivity extends AppCompatActivity {
         }
     };
 
+    ActivityEntryAdapter.IActivityEntryAdapterListener mActivityEntryAdapterListener = new ActivityEntryAdapter.IActivityEntryAdapterListener() {
+        @Override
+        public void onItemOpenChanged(@NonNull ActivityEntry item, boolean open) {
+            Tracker.getInstance().recordAction(me, ACTION_CLICK, toParamsMap(TrackKey.VALUE, open));
+        }
+    };
+
+    MainActivity me = this;
     RecyclerView mRecyclerView;
 
     @Override
@@ -93,6 +110,7 @@ public class MainActivity extends AppCompatActivity {
         mRecyclerView = (RecyclerView) findViewById(R.id.recycler);
 
         ActivityEntryAdapter adapter = new ActivityEntryAdapter(this, ACTIVITY_ENTRIES);
+        adapter.setListener(mActivityEntryAdapterListener);
         adapter.setListenerRelay(mListenerRelay);
 
         mRecyclerView.setAdapter(adapter);

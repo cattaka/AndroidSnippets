@@ -7,12 +7,19 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import net.cattaka.android.snippets.animator.LayoutAnimatorHelper;
+import net.cattaka.android.snippets.example.tracker.IScreen;
+import net.cattaka.android.snippets.example.tracker.TrackAction;
+import net.cattaka.android.snippets.example.tracker.TrackKey;
+import net.cattaka.android.snippets.example.tracker.Tracker;
+
+import static net.cattaka.android.snippets.example.tracker.TrackParams.toParamsMap;
 
 /**
  * Created by takao on 2016/10/28.
  */
 
-public class AnimateConstraintLayoutActivity extends AppCompatActivity implements View.OnClickListener {
+public class AnimateConstraintLayoutActivity extends AppCompatActivity implements View.OnClickListener, IScreen {
+    private AnimateConstraintLayoutActivity me = this;
     private View mSpaceBase;
     private View mBlueView;
 
@@ -34,6 +41,7 @@ public class AnimateConstraintLayoutActivity extends AppCompatActivity implement
     @Override
     public void onClick(View view) {
         if (view.getId() == R.id.button_normal) {
+            Tracker.getInstance().recordAction(me, TrackAction.SELECTED, toParamsMap(TrackKey.VIEW_NAME, "button_normal"));
             int goalWidth = getResources().getDimensionPixelSize(R.dimen.image_small);
             int goalHeight = goalWidth;
             int goalTop = 0;
@@ -42,6 +50,7 @@ public class AnimateConstraintLayoutActivity extends AppCompatActivity implement
             ObjectAnimator.ofInt(helper, LayoutAnimatorHelper.HEIGHT, helper.getHeight(), goalHeight).start();
             ObjectAnimator.ofInt(helper, LayoutAnimatorHelper.TOP_MARGIN, helper.getTopMargin(), goalTop).start();
         } else if (view.getId() == R.id.button_vertical) {
+            Tracker.getInstance().recordAction(me, TrackAction.SELECTED, toParamsMap(TrackKey.VIEW_NAME, "button_vertical"));
             int goalWidth = ((ViewGroup) mBlueView.getParent()).getWidth() - mSpaceBase.getWidth();
             int goalHeight = goalWidth * 2;
             int goalTop = 0;
@@ -50,6 +59,7 @@ public class AnimateConstraintLayoutActivity extends AppCompatActivity implement
             ObjectAnimator.ofInt(helper, LayoutAnimatorHelper.HEIGHT, helper.getHeight(), goalHeight).start();
             ObjectAnimator.ofInt(helper, LayoutAnimatorHelper.TOP_MARGIN, helper.getTopMargin(), goalTop).start();
         } else if (view.getId() == R.id.button_horizontal) {
+            Tracker.getInstance().recordAction(me, TrackAction.SELECTED, toParamsMap(TrackKey.VIEW_NAME, "button_horizontal"));
             int goalWidth = ((ViewGroup) mBlueView.getParent()).getWidth();
             int goalHeight = goalWidth / 2;
             int goalTop = mSpaceBase.getHeight();

@@ -22,15 +22,21 @@ import net.cattaka.android.snippets.example.adapter.factory.TextInfoViewHolderFa
 import net.cattaka.android.snippets.example.data.MyInfo;
 import net.cattaka.android.snippets.example.data.OrdinalLabel;
 import net.cattaka.android.snippets.example.data.TextInfo;
+import net.cattaka.android.snippets.example.tracker.IScreen;
+import net.cattaka.android.snippets.example.tracker.TrackAction;
+import net.cattaka.android.snippets.example.tracker.TrackKey;
+import net.cattaka.android.snippets.example.tracker.Tracker;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import static net.cattaka.android.snippets.example.tracker.TrackParams.toParamsMap;
+
 /**
  * Created by cattaka on 16/05/15.
  */
-public class OperatableListExampleActivity extends AppCompatActivity {
+public class OperatableListExampleActivity extends AppCompatActivity implements IScreen {
     ListenerRelay<ScrambleAdapter<?>, RecyclerView.ViewHolder> mListenerRelay = new ListenerRelay<ScrambleAdapter<?>, RecyclerView.ViewHolder>() {
         @Override
         public void onCheckedChanged(RecyclerView recyclerView, ScrambleAdapter<?> adapter, RecyclerView.ViewHolder viewHolder, CompoundButton buttonView, boolean isChecked) {
@@ -39,6 +45,7 @@ public class OperatableListExampleActivity extends AppCompatActivity {
                 if (viewHolder instanceof MyInfoViewHolderFactory.ViewHolder) {
                     MyInfo item = (MyInfo) mItemAdapter.getItemAt(la.mLocalPosition);
                     item.setChecked(isChecked);
+                    Tracker.getInstance().recordAction(me, TrackAction.CHECK_CHANGE, toParamsMap(TrackKey.INDEX, la.mLocalPosition, TrackKey.ITEM_CATEGORY, "MyInfo", TrackKey.VALUE, String.valueOf(isChecked)));
                 }
             }
         }
@@ -61,6 +68,7 @@ public class OperatableListExampleActivity extends AppCompatActivity {
                 if (viewHolder instanceof MyInfoViewHolderFactory.ViewHolder) {
                     MyInfo item = (MyInfo) mItemAdapter.getItemAt(la.mLocalPosition);
                     item.setOrdinalLabel((OrdinalLabel) parent.getItemAtPosition(position));
+                    Tracker.getInstance().recordAction(me, TrackAction.SELECTED, toParamsMap(TrackKey.INDEX, la.mLocalPosition, TrackKey.ITEM_CATEGORY, "MyInfo", TrackKey.VALUE, item.getOrdinalLabel()));
                 }
             }
         }
@@ -95,11 +103,13 @@ public class OperatableListExampleActivity extends AppCompatActivity {
                 if (viewHolder instanceof TextInfoViewHolderFactory.ViewHolder) {
                     TextInfoViewHolderFactory.ViewHolder vh = (TextInfoViewHolderFactory.ViewHolder) viewHolder;
                     Snackbar.make(view, "Action button pressed : " + vh.editText.getText(), Snackbar.LENGTH_SHORT).show();
+                    Tracker.getInstance().recordAction(me, TrackAction.ACTION_CLICK, toParamsMap(TrackKey.INDEX, la.mLocalPosition, TrackKey.ITEM_CATEGORY, "MyInfo"));
                 }
             }
         }
     };
 
+    OperatableListExampleActivity me = this;
     RecyclerView mRecyclerView;
     MergeRecyclerAdapter<RecyclerView.Adapter> mMergeRecyclerAdapter;
     SimpleStringAdapter mSimpleStringAdapter;

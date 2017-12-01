@@ -9,11 +9,18 @@ import android.widget.Toast;
 
 import net.cattaka.android.adaptertoolbox.adapter.CodeLabelAdapter;
 import net.cattaka.android.snippets.example.data.OrdinalLabel;
+import net.cattaka.android.snippets.example.tracker.IScreen;
+import net.cattaka.android.snippets.example.tracker.TrackAction;
+import net.cattaka.android.snippets.example.tracker.TrackKey;
+import net.cattaka.android.snippets.example.tracker.Tracker;
+
+import static net.cattaka.android.snippets.example.tracker.TrackParams.toParamsMap;
 
 /**
  * Created by cattaka on 16/05/02.
  */
-public class CodeLabelExampleActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
+public class CodeLabelExampleActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener, IScreen {
+    CodeLabelExampleActivity me = this;
     Spinner mSpinner;
 
     @Override
@@ -35,6 +42,7 @@ public class CodeLabelExampleActivity extends AppCompatActivity implements Adapt
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
         if (parent.getId() == R.id.spinner) {
             OrdinalLabel item = (OrdinalLabel) parent.getItemAtPosition(position);
+            Tracker.getInstance().recordAction(me, TrackAction.SELECTED, toParamsMap(TrackKey.ITEM_NAME, (item != null) ? item.getCode() : null));
             String text = (item != null) ? item.getLabel(getResources()) : "null";
             Toast.makeText(this, text + " is selected.", Toast.LENGTH_SHORT).show();
         }

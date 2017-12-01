@@ -30,16 +30,22 @@ import net.cattaka.android.snippets.camera.ISurfaceHolder;
 import net.cattaka.android.snippets.camera.ImageReaderDescription;
 import net.cattaka.android.snippets.camera.ImageReaderSurfaceHolder;
 import net.cattaka.android.snippets.camera.TextureViewSurfaceHolder;
+import net.cattaka.android.snippets.example.tracker.IScreen;
+import net.cattaka.android.snippets.example.tracker.TrackAction;
+import net.cattaka.android.snippets.example.tracker.TrackKey;
+import net.cattaka.android.snippets.example.tracker.Tracker;
 import net.cattaka.android.snippets.util.ImageUtils;
 
 import java.nio.ByteBuffer;
+
+import static net.cattaka.android.snippets.example.tracker.TrackParams.toParamsMap;
 
 /**
  * Created by cattaka on 16/11/16.
  */
 
 @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
-public class CameraApi2ExampleActivity extends AppCompatActivity implements View.OnClickListener {
+public class CameraApi2ExampleActivity extends AppCompatActivity implements View.OnClickListener, IScreen {
     private static final int REQUEST_ALLOWCAMERA = 2;
     private static final String PERMISSION_ALLOWCAMERA = "android.permission.CAMERA";
 
@@ -83,6 +89,7 @@ public class CameraApi2ExampleActivity extends AppCompatActivity implements View
         }
     };
 
+    CameraApi2ExampleActivity me = this;
     Camera2Engine mCamera2Engine;
     TextureView mTexture1View;
     TextureView mTexture2View;
@@ -162,10 +169,13 @@ public class CameraApi2ExampleActivity extends AppCompatActivity implements View
     @Override
     public void onClick(View v) {
         if (v.getId() == R.id.button_shutter) {
+            Tracker.getInstance().recordAction(me, TrackAction.SELECTED, toParamsMap(TrackKey.VIEW_NAME, "button_shutter"));
             mCamera2Engine.startCaptureRequest(CaptureRequestDescriptions.zeroShutterLag(mImageReaderSurfaceHolder));
         } else if (v.getId() == R.id.button_front) {
+            Tracker.getInstance().recordAction(me, TrackAction.SELECTED, toParamsMap(TrackKey.VIEW_NAME, "button_front"));
             mCamera2Engine.setFacing(CameraMetadata.LENS_FACING_FRONT);
         } else if (v.getId() == R.id.button_back) {
+            Tracker.getInstance().recordAction(me, TrackAction.SELECTED, toParamsMap(TrackKey.VIEW_NAME, "button_back"));
             mCamera2Engine.setFacing(CameraMetadata.LENS_FACING_BACK);
         }
     }

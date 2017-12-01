@@ -13,12 +13,19 @@ import android.widget.CompoundButton;
 import android.widget.TextView;
 
 import net.cattaka.android.snippets.CoordinatorLayoutUtils;
+import net.cattaka.android.snippets.example.tracker.IScreen;
+import net.cattaka.android.snippets.example.tracker.Tracker;
+
+import static net.cattaka.android.snippets.example.tracker.TrackAction.ACTION_CLICK;
+import static net.cattaka.android.snippets.example.tracker.TrackKey.VALUE;
+import static net.cattaka.android.snippets.example.tracker.TrackKey.VIEW_NAME;
+import static net.cattaka.android.snippets.example.tracker.TrackParams.toParamsMap;
 
 /**
  * Created by cattaka on 16/12/03.
  */
 
-public class AppBarLayoutExample1Activity extends AppCompatActivity implements View.OnClickListener, CompoundButton.OnCheckedChangeListener {
+public class AppBarLayoutExample1Activity extends AppCompatActivity implements View.OnClickListener, CompoundButton.OnCheckedChangeListener, IScreen {
     CoordinatorLayout mCoordinatorLayout;
     AppBarLayout mAppBarLayout;
     View mExpandedView;
@@ -71,12 +78,15 @@ public class AppBarLayoutExample1Activity extends AppCompatActivity implements V
     @Override
     public void onClick(View v) {
         if (v.getId() == R.id.button_add_contents) {
+            Tracker.getInstance().recordAction(this, ACTION_CLICK, toParamsMap(VIEW_NAME, "button_add_contents"));
             int h = mContentsView.getHeight() + getResources().getDimensionPixelSize(R.dimen.control_diff);
             mContentsView.setHeight(h);
         } else if (v.getId() == R.id.button_subtract_contents) {
+            Tracker.getInstance().recordAction(this, ACTION_CLICK, toParamsMap(VIEW_NAME, "button_subtract_contents"));
             int h = Math.max(0, mContentsView.getHeight() - getResources().getDimensionPixelSize(R.dimen.control_diff));
             mContentsView.setHeight(h);
         } else if (v.getId() == R.id.button_add_overlap_top) {
+            Tracker.getInstance().recordAction(this, ACTION_CLICK, toParamsMap(VIEW_NAME, "button_add_overlap_top"));
             AppBarLayout.ScrollingViewBehavior behavior = CoordinatorLayoutUtils.pickBehavior(mScrollView, AppBarLayout.ScrollingViewBehavior.class);
             if (behavior != null) {
                 int ot = Math.max(0, behavior.getOverlayTop() + getResources().getDimensionPixelSize(R.dimen.control_diff));
@@ -84,6 +94,7 @@ public class AppBarLayoutExample1Activity extends AppCompatActivity implements V
                 mCoordinatorLayout.requestLayout();
             }
         } else if (v.getId() == R.id.button_subtract_overlap_top) {
+            Tracker.getInstance().recordAction(this, ACTION_CLICK, toParamsMap(VIEW_NAME, "button_subtract_overlap_top"));
             AppBarLayout.ScrollingViewBehavior behavior = CoordinatorLayoutUtils.pickBehavior(mScrollView, AppBarLayout.ScrollingViewBehavior.class);
             if (behavior != null) {
                 int ot = Math.max(0, behavior.getOverlayTop() - getResources().getDimensionPixelSize(R.dimen.control_diff));
@@ -96,16 +107,22 @@ public class AppBarLayoutExample1Activity extends AppCompatActivity implements V
     @Override
     public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
         if (buttonView.getId() == R.id.check_scroll) {
+            Tracker.getInstance().recordAction(this, ACTION_CLICK, toParamsMap(VIEW_NAME, "check_scroll", VALUE, isChecked));
             applyScrollFlags();
         } else if (buttonView.getId() == R.id.check_enter_always) {
+            Tracker.getInstance().recordAction(this, ACTION_CLICK, toParamsMap(VIEW_NAME, "check_enter_always", VALUE, isChecked));
             applyScrollFlags();
         } else if (buttonView.getId() == R.id.check_enter_always_collapsed) {
+            Tracker.getInstance().recordAction(this, ACTION_CLICK, toParamsMap(VIEW_NAME, "check_enter_always_collapsed", VALUE, isChecked));
             applyScrollFlags();
         } else if (buttonView.getId() == R.id.check_exit_until_collapsed) {
+            Tracker.getInstance().recordAction(this, ACTION_CLICK, toParamsMap(VIEW_NAME, "check_exit_until_collapsed", VALUE, isChecked));
             applyScrollFlags();
         } else if (buttonView.getId() == R.id.check_snap) {
+            Tracker.getInstance().recordAction(this, ACTION_CLICK, toParamsMap(VIEW_NAME, "check_snap", VALUE, isChecked));
             applyScrollFlags();
         } else if (buttonView.getId() == R.id.check_scroll_view_match_parent) {
+            Tracker.getInstance().recordAction(this, ACTION_CLICK, toParamsMap(VIEW_NAME, "check_scroll_view_match_parent", VALUE, isChecked));
             ViewGroup.LayoutParams lp = mScrollView.getLayoutParams();
             lp.height = isChecked ? ViewGroup.LayoutParams.MATCH_PARENT : ViewGroup.LayoutParams.WRAP_CONTENT;
             mScrollView.setLayoutParams(lp);

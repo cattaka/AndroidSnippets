@@ -45,7 +45,9 @@ public class ChoosableMyTreeItemAdapter extends AbsChoosableTreeItemAdapter<
         }
     };
 
-    public ChoosableMyTreeItemAdapter(Context context, List<MyTreeItem> items) {
+    private IChoosableMyTreeItemAdapterListener mListener;
+
+    public ChoosableMyTreeItemAdapter(@NonNull Context context, @NonNull List<MyTreeItem> items) {
         super(context, items, REF);
     }
 
@@ -81,6 +83,22 @@ public class ChoosableMyTreeItemAdapter extends AbsChoosableTreeItemAdapter<
         holder.labelText.setText(item.getText());
     }
 
+    public void setListener(IChoosableMyTreeItemAdapterListener mListener) {
+        this.mListener = mListener;
+    }
+
+    private void onItemOpenChanged(@NonNull MyTreeItem item, boolean open) {
+        if (mListener != null) {
+            mListener.onItemOpenChanged(item, open);
+        }
+    }
+
+    private void onItemCheckChanged(@NonNull MyTreeItem item, boolean checked) {
+        if (mListener != null) {
+            mListener.onItemCheckChanged(item, checked);
+        }
+    }
+
     public static class WrappedItem extends AbsChoosableTreeItemAdapter.WrappedItem<WrappedItem, MyTreeItem> {
         public WrappedItem(int level, MyTreeItem item, WrappedItem parent) {
             super(level, item, parent);
@@ -110,13 +128,21 @@ public class ChoosableMyTreeItemAdapter extends AbsChoosableTreeItemAdapter<
             switch (view.getId()) {
                 case R.id.check_opened: {
                     adapter.doOpen(item, !item.isOpened());
+                    adapter.onItemOpenChanged(item.item, item.isOpened());
                     break;
                 }
                 default: {
                     adapter.toggleCheck(item);
+                    adapter.onItemCheckChanged(item.item, item.isChecked());
                     break;
                 }
             }
         }
+    }
+
+    public interface IChoosableMyTreeItemAdapterListener {
+        void onItemOpenChanged(@NonNull MyTreeItem item, boolean open);
+
+        void onItemCheckChanged(@NonNull MyTreeItem item, boolean checked);
     }
 }

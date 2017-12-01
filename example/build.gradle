@@ -1,15 +1,16 @@
 apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion 27
-    buildToolsVersion "27.0.1"
+    compileSdkVersion Integer.parseInt(project.ANDROID_BUILD_SDK_VERSION)
+    buildToolsVersion project.ANDROID_BUILD_TOOLS_VERSION
 
     defaultConfig {
         applicationId "net.cattaka.android.snippets.example"
-        minSdkVersion 15
-        targetSdkVersion 27
-        versionCode 5
-        versionName "0.1.0"
+
+        minSdkVersion Integer.parseInt(project.ANDROID_BUILD_MIN_SDK_VERSION)
+        targetSdkVersion Integer.parseInt(project.ANDROID_BUILD_TARGET_SDK_VERSION)
+        versionCode Integer.parseInt(project.APP_VERSION_CODE)
+        versionName project.APP_VERSION_NAME
 
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
@@ -31,7 +32,7 @@ repositories {
     }
 }
 
-def support_library = '27.0.2'
+def support_library = project.SUPPORT_LIBRARY_VERSION
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])

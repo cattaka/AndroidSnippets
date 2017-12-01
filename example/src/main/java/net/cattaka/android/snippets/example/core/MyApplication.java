@@ -4,6 +4,7 @@ import android.app.Application;
 import android.support.annotation.VisibleForTesting;
 
 import net.cattaka.android.snippets.example.BuildConfig;
+import net.cattaka.android.snippets.example.tracker.Tracker;
 import net.cattaka.android.snippets.issue.Issue212316Parrier;
 
 /**
@@ -23,6 +24,8 @@ public class MyApplication extends Application {
 
         mIssue212316Parrier = new Issue212316Parrier(this, BuildConfig.VERSION_NAME, BuildConfig.VERSION_CODE);
         mIssue212316Parrier.initialize();
+
+        Tracker.getInstance().initialize(this);
     }
 
     public AppComponent getAppComponent() {

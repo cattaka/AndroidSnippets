@@ -9,15 +9,15 @@ import android.support.v7.widget.RecyclerView;
 import net.cattaka.android.snippets.example.adapter.ChoosableMyTreeItemAdapter;
 import net.cattaka.android.snippets.example.data.MyTreeItem;
 import net.cattaka.android.snippets.example.tracker.IScreen;
-import net.cattaka.android.snippets.example.tracker.TrackAction;
-import net.cattaka.android.snippets.example.tracker.TrackKey;
+import net.cattaka.android.snippets.example.tracker.TrackEvent;
+import net.cattaka.android.snippets.example.tracker.TrackParam;
 import net.cattaka.android.snippets.example.tracker.Tracker;
 import net.cattaka.android.snippets.example.utils.ExampleDataGenerator;
 
 import java.util.Arrays;
 import java.util.List;
 
-import static net.cattaka.android.snippets.example.tracker.TrackParams.toParamsMap;
+import static net.cattaka.android.snippets.example.tracker.TrackParamBundle.toParamsMap;
 
 /**
  * Created by cattaka on 16/05/21.
@@ -26,12 +26,12 @@ public class ChoosableTreeItemAdapterExampleActivity extends AppCompatActivity i
     ChoosableMyTreeItemAdapter.IChoosableMyTreeItemAdapterListener mChoosableMyTreeItemAdapterListener = new ChoosableMyTreeItemAdapter.IChoosableMyTreeItemAdapterListener() {
         @Override
         public void onItemOpenChanged(@NonNull MyTreeItem item, boolean open) {
-            Tracker.getInstance().recordAction(me, TrackAction.ACTION_CLICK, toParamsMap(TrackKey.ITEM_NAME, item.getText(), TrackKey.VIEW_NAME, "open", TrackKey.VALUE, String.valueOf(open)));
+            Tracker.getInstance().recordAction(me, TrackEvent.ACTION_CLICK, toParamsMap(TrackParam.ITEM_NAME, item.getText(), TrackParam.VIEW_NAME, "open", TrackParam.VALUE, String.valueOf(open)));
         }
 
         @Override
         public void onItemCheckChanged(@NonNull MyTreeItem item, boolean checked) {
-            Tracker.getInstance().recordAction(me, TrackAction.ACTION_CLICK, toParamsMap(TrackKey.ITEM_NAME, item.getText(), TrackKey.VIEW_NAME, "check", TrackKey.VALUE, String.valueOf(checked)));
+            Tracker.getInstance().recordAction(me, TrackEvent.ACTION_CLICK, toParamsMap(TrackParam.ITEM_NAME, item.getText(), TrackParam.VIEW_NAME, "check", TrackParam.VALUE, String.valueOf(checked)));
         }
     };
 

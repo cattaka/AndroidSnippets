@@ -21,10 +21,10 @@ import net.cattaka.android.snippets.example.utils.RelayForEnterAlwaysCollapsed;
 
 import java.util.ArrayList;
 
-import static net.cattaka.android.snippets.example.tracker.TrackAction.ACTION_CLICK;
-import static net.cattaka.android.snippets.example.tracker.TrackKey.VALUE;
-import static net.cattaka.android.snippets.example.tracker.TrackKey.VIEW_NAME;
-import static net.cattaka.android.snippets.example.tracker.TrackParams.toParamsMap;
+import static net.cattaka.android.snippets.example.tracker.TrackEvent.ACTION_CLICK;
+import static net.cattaka.android.snippets.example.tracker.TrackParam.VALUE;
+import static net.cattaka.android.snippets.example.tracker.TrackParam.VIEW_NAME;
+import static net.cattaka.android.snippets.example.tracker.TrackParamBundle.toParamsMap;
 
 /**
  * Created by cattaka on 16/12/03.

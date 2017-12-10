@@ -23,15 +23,15 @@ import net.cattaka.android.snippets.example.data.MyInfo;
 import net.cattaka.android.snippets.example.data.OrdinalLabel;
 import net.cattaka.android.snippets.example.data.TextInfo;
 import net.cattaka.android.snippets.example.tracker.IScreen;
-import net.cattaka.android.snippets.example.tracker.TrackAction;
-import net.cattaka.android.snippets.example.tracker.TrackKey;
+import net.cattaka.android.snippets.example.tracker.TrackEvent;
+import net.cattaka.android.snippets.example.tracker.TrackParam;
 import net.cattaka.android.snippets.example.tracker.Tracker;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import static net.cattaka.android.snippets.example.tracker.TrackParams.toParamsMap;
+import static net.cattaka.android.snippets.example.tracker.TrackParamBundle.toParamsMap;
 
 /**
  * Created by cattaka on 16/05/15.
@@ -45,7 +45,7 @@ public class OperatableListExampleActivity extends AppCompatActivity implements 
                 if (viewHolder instanceof MyInfoViewHolderFactory.ViewHolder) {
                     MyInfo item = (MyInfo) mItemAdapter.getItemAt(la.mLocalPosition);
                     item.setChecked(isChecked);
-                    Tracker.getInstance().recordAction(me, TrackAction.CHECK_CHANGE, toParamsMap(TrackKey.INDEX, la.mLocalPosition, TrackKey.ITEM_CATEGORY, "MyInfo", TrackKey.VALUE, String.valueOf(isChecked)));
+                    Tracker.getInstance().recordAction(me, TrackEvent.CHECK_CHANGE, toParamsMap(TrackParam.INDEX, la.mLocalPosition, TrackParam.ITEM_CATEGORY, "MyInfo", TrackParam.VALUE, String.valueOf(isChecked)));
                 }
             }
         }
@@ -68,7 +68,7 @@ public class OperatableListExampleActivity extends AppCompatActivity implements 
                 if (viewHolder instanceof MyInfoViewHolderFactory.ViewHolder) {
                     MyInfo item = (MyInfo) mItemAdapter.getItemAt(la.mLocalPosition);
                     item.setOrdinalLabel((OrdinalLabel) parent.getItemAtPosition(position));
-                    Tracker.getInstance().recordAction(me, TrackAction.SELECTED, toParamsMap(TrackKey.INDEX, la.mLocalPosition, TrackKey.ITEM_CATEGORY, "MyInfo", TrackKey.VALUE, item.getOrdinalLabel()));
+                    Tracker.getInstance().recordAction(me, TrackEvent.SELECTED, toParamsMap(TrackParam.INDEX, la.mLocalPosition, TrackParam.ITEM_CATEGORY, "MyInfo", TrackParam.VALUE, item.getOrdinalLabel()));
                 }
             }
         }
@@ -103,7 +103,7 @@ public class OperatableListExampleActivity extends AppCompatActivity implements 
                 if (viewHolder instanceof TextInfoViewHolderFactory.ViewHolder) {
                     TextInfoViewHolderFactory.ViewHolder vh = (TextInfoViewHolderFactory.ViewHolder) viewHolder;
                     Snackbar.make(view, "Action button pressed : " + vh.editText.getText(), Snackbar.LENGTH_SHORT).show();
-                    Tracker.getInstance().recordAction(me, TrackAction.ACTION_CLICK, toParamsMap(TrackKey.INDEX, la.mLocalPosition, TrackKey.ITEM_CATEGORY, "MyInfo"));
+                    Tracker.getInstance().recordAction(me, TrackEvent.ACTION_CLICK, toParamsMap(TrackParam.INDEX, la.mLocalPosition, TrackParam.ITEM_CATEGORY, "MyInfo"));
                 }
             }
         }

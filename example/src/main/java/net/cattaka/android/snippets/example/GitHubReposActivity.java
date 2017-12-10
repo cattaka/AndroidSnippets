@@ -20,7 +20,7 @@ import net.cattaka.android.snippets.example.core.MyApplication;
 import net.cattaka.android.snippets.example.data.Repo;
 import net.cattaka.android.snippets.example.retrofit.GitHubService;
 import net.cattaka.android.snippets.example.tracker.IScreen;
-import net.cattaka.android.snippets.example.tracker.TrackAction;
+import net.cattaka.android.snippets.example.tracker.TrackEvent;
 import net.cattaka.android.snippets.example.tracker.Tracker;
 
 import java.util.ArrayList;
@@ -32,10 +32,10 @@ import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
 import rx.schedulers.Schedulers;
 
-import static net.cattaka.android.snippets.example.tracker.TrackKey.ITEM_ID;
-import static net.cattaka.android.snippets.example.tracker.TrackKey.ITEM_LIST;
-import static net.cattaka.android.snippets.example.tracker.TrackKey.VIEW_NAME;
-import static net.cattaka.android.snippets.example.tracker.TrackParams.toParamsMap;
+import static net.cattaka.android.snippets.example.tracker.TrackParam.ITEM_ID;
+import static net.cattaka.android.snippets.example.tracker.TrackParam.ITEM_LIST;
+import static net.cattaka.android.snippets.example.tracker.TrackParam.VIEW_NAME;
+import static net.cattaka.android.snippets.example.tracker.TrackParamBundle.toParamsMap;
 
 /**
  * Created by cattaka on 16/07/10.
@@ -47,10 +47,10 @@ public class GitHubReposActivity extends RxAppCompatActivity implements SwipeRef
             if (adapter == mAdapter) {
                 Repo repo = mAdapter.getItemAt(viewHolder.getAdapterPosition());
                 if (view.getId() == R.id.button_owner) {
-                    Tracker.getInstance().recordAction(me, TrackAction.ACTION_CLICK, toParamsMap(ITEM_ID, repo.getName(), ITEM_LIST, "git_hub_repos", VIEW_NAME, "button_owner"));
+                    Tracker.getInstance().recordAction(me, TrackEvent.ACTION_CLICK, toParamsMap(ITEM_ID, repo.getName(), ITEM_LIST, "git_hub_repos", VIEW_NAME, "button_owner"));
                     showOwner(repo);
                 } else if (view.getId() == R.id.button_open) {
-                    Tracker.getInstance().recordAction(me, TrackAction.ACTION_CLICK, toParamsMap(ITEM_ID, repo.getName(), ITEM_LIST, "git_hub_repos", VIEW_NAME, "button_open"));
+                    Tracker.getInstance().recordAction(me, TrackEvent.ACTION_CLICK, toParamsMap(ITEM_ID, repo.getName(), ITEM_LIST, "git_hub_repos", VIEW_NAME, "button_open"));
                     showUrl(repo);
                 }
             }

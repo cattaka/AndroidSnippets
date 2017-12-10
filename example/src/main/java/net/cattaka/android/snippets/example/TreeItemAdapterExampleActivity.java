@@ -12,15 +12,15 @@ import net.cattaka.android.adaptertoolbox.adapter.listener.ListenerRelay;
 import net.cattaka.android.snippets.example.adapter.MyTreeItemAdapter;
 import net.cattaka.android.snippets.example.data.MyTreeItem;
 import net.cattaka.android.snippets.example.tracker.IScreen;
-import net.cattaka.android.snippets.example.tracker.TrackAction;
-import net.cattaka.android.snippets.example.tracker.TrackKey;
+import net.cattaka.android.snippets.example.tracker.TrackEvent;
+import net.cattaka.android.snippets.example.tracker.TrackParam;
 import net.cattaka.android.snippets.example.tracker.Tracker;
 import net.cattaka.android.snippets.example.utils.ExampleDataGenerator;
 
 import java.util.Arrays;
 import java.util.List;
 
-import static net.cattaka.android.snippets.example.tracker.TrackParams.toParamsMap;
+import static net.cattaka.android.snippets.example.tracker.TrackParamBundle.toParamsMap;
 
 /**
  * Created by cattaka on 16/05/21.
@@ -31,7 +31,7 @@ public class TreeItemAdapterExampleActivity extends AppCompatActivity implements
         public void onClick(RecyclerView recyclerView, MyTreeItemAdapter adapter, MyTreeItemAdapter.ViewHolder viewHolder, View view) {
             if (recyclerView.getId() == R.id.recycler) {
                 MyTreeItem item = adapter.getItemAt(viewHolder.getAdapterPosition()).getItem();
-                Tracker.getInstance().recordAction(me, TrackAction.ACTION_CLICK, toParamsMap(TrackKey.ITEM_NAME, item.getText(), TrackKey.VIEW_NAME, "body"));
+                Tracker.getInstance().recordAction(me, TrackEvent.ACTION_CLICK, toParamsMap(TrackParam.ITEM_NAME, item.getText(), TrackParam.VIEW_NAME, "body"));
                 Snackbar.make(view, "Clicked: " + item.getText(), Snackbar.LENGTH_SHORT).show();
             }
         }
@@ -40,7 +40,7 @@ public class TreeItemAdapterExampleActivity extends AppCompatActivity implements
         public boolean onLongClick(RecyclerView recyclerView, MyTreeItemAdapter adapter, MyTreeItemAdapter.ViewHolder viewHolder, View view) {
             if (recyclerView.getId() == R.id.recycler) {
                 MyTreeItem item = adapter.getItemAt(viewHolder.getAdapterPosition()).getItem();
-                Tracker.getInstance().recordAction(me, TrackAction.ACTION_LONG_CLICK, toParamsMap(TrackKey.ITEM_NAME, item.getText(), TrackKey.VIEW_NAME, "body"));
+                Tracker.getInstance().recordAction(me, TrackEvent.ACTION_LONG_CLICK, toParamsMap(TrackParam.ITEM_NAME, item.getText(), TrackParam.VIEW_NAME, "body"));
                 Snackbar.make(view, "Long clicked: " + item.getText(), Snackbar.LENGTH_SHORT).show();
                 return true;
             }
@@ -51,7 +51,7 @@ public class TreeItemAdapterExampleActivity extends AppCompatActivity implements
     MyTreeItemAdapter.IMyTreeItemAdapterListener mMyTreeItemAdapterListener = new MyTreeItemAdapter.IMyTreeItemAdapterListener() {
         @Override
         public void onItemOpenChanged(@NonNull MyTreeItem item, boolean open) {
-            Tracker.getInstance().recordAction(me, TrackAction.ACTION_CLICK, toParamsMap(TrackKey.ITEM_NAME, item.getText(), TrackKey.VIEW_NAME, "open", TrackKey.VALUE, String.valueOf(open)));
+            Tracker.getInstance().recordAction(me, TrackEvent.ACTION_CLICK, toParamsMap(TrackParam.ITEM_NAME, item.getText(), TrackParam.VIEW_NAME, "open", TrackParam.VALUE, String.valueOf(open)));
         }
     };
 

@@ -21,11 +21,11 @@ import net.cattaka.android.snippets.util.StatusBarUtils;
 import java.util.ArrayList;
 import java.util.Random;
 
-import static net.cattaka.android.snippets.example.tracker.TrackAction.ACTION_CLICK;
-import static net.cattaka.android.snippets.example.tracker.TrackKey.INDEX;
-import static net.cattaka.android.snippets.example.tracker.TrackKey.VALUE;
-import static net.cattaka.android.snippets.example.tracker.TrackKey.VIEW_NAME;
-import static net.cattaka.android.snippets.example.tracker.TrackParams.toParamsMap;
+import static net.cattaka.android.snippets.example.tracker.TrackEvent.ACTION_CLICK;
+import static net.cattaka.android.snippets.example.tracker.TrackParam.INDEX;
+import static net.cattaka.android.snippets.example.tracker.TrackParam.VALUE;
+import static net.cattaka.android.snippets.example.tracker.TrackParam.VIEW_NAME;
+import static net.cattaka.android.snippets.example.tracker.TrackParamBundle.toParamsMap;
 
 public class ControlStatusBarColorActivity extends AppCompatActivity implements View.OnClickListener, AdapterView.OnItemClickListener, IScreen {
     private ListView mListView;

@@ -16,14 +16,14 @@ import net.cattaka.android.snippets.example.adapter.factory.SimpleStringViewHold
 import net.cattaka.android.snippets.example.data.NestedScrambleInfo;
 import net.cattaka.android.snippets.example.data.OrdinalLabel;
 import net.cattaka.android.snippets.example.tracker.IScreen;
-import net.cattaka.android.snippets.example.tracker.TrackAction;
-import net.cattaka.android.snippets.example.tracker.TrackKey;
+import net.cattaka.android.snippets.example.tracker.TrackEvent;
+import net.cattaka.android.snippets.example.tracker.TrackParam;
 import net.cattaka.android.snippets.example.tracker.Tracker;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import static net.cattaka.android.snippets.example.tracker.TrackParams.toParamsMap;
+import static net.cattaka.android.snippets.example.tracker.TrackParamBundle.toParamsMap;
 
 /**
  * Created by cattaka on 16/05/02.
@@ -100,20 +100,20 @@ public class NestedScrambleAdapterExampleActivity extends AppCompatActivity impl
                 String row = "Row=" + mAdapter.getItems().indexOf(item);
                 if (viewHolder instanceof SimpleStringViewHolderFactory.ViewHolder) {
                     String item = (String) adapter.getItemAt(viewHolder.getAdapterPosition());
-                    Tracker.getInstance().recordAction(me, TrackAction.ACTION_CLICK, toParamsMap(TrackKey.ITEM_NAME, item, TrackKey.ITEM_CATEGORY, "string"));
+                    Tracker.getInstance().recordAction(me, TrackEvent.ACTION_CLICK, toParamsMap(TrackParam.ITEM_NAME, item, TrackParam.ITEM_CATEGORY, "string"));
                     Snackbar.make(viewHolder.itemView, row + ", String " + item + " is clicked.", Snackbar.LENGTH_SHORT).show();
                 } else if (viewHolder instanceof SimpleNumberViewHolderFactory.ViewHolder) {
                     Number item = (Number) adapter.getItemAt(viewHolder.getAdapterPosition());
-                    Tracker.getInstance().recordAction(me, TrackAction.ACTION_CLICK, toParamsMap(TrackKey.ITEM_NAME, String.valueOf(item), TrackKey.ITEM_CATEGORY, "number"));
+                    Tracker.getInstance().recordAction(me, TrackEvent.ACTION_CLICK, toParamsMap(TrackParam.ITEM_NAME, String.valueOf(item), TrackParam.ITEM_CATEGORY, "number"));
                     Snackbar.make(viewHolder.itemView, row + ", Number" + item + "is clicked.", Snackbar.LENGTH_SHORT).show();
                 } else if (viewHolder instanceof CodeLableViewHolderFactory.ViewHolder) {
                     OrdinalLabel item = (OrdinalLabel) adapter.getItemAt(viewHolder.getAdapterPosition());
                     String text = item.getLabel(getResources()) + "(" + item.getCode() + ")";
                     if (view.getId() == R.id.text_code) {
-                        Tracker.getInstance().recordAction(me, TrackAction.ACTION_CLICK, toParamsMap(TrackKey.ITEM_NAME, item.getCode(), TrackKey.ITEM_CATEGORY, "code_label", TrackKey.VIEW_NAME, "text_code"));
+                        Tracker.getInstance().recordAction(me, TrackEvent.ACTION_CLICK, toParamsMap(TrackParam.ITEM_NAME, item.getCode(), TrackParam.ITEM_CATEGORY, "code_label", TrackParam.VIEW_NAME, "text_code"));
                         Snackbar.make(viewHolder.itemView, row + ", The code of " + text + " is clicked.", Snackbar.LENGTH_SHORT).show();
                     } else if (view.getId() == R.id.text_label) {
-                        Tracker.getInstance().recordAction(me, TrackAction.ACTION_CLICK, toParamsMap(TrackKey.ITEM_NAME, item.getCode(), TrackKey.ITEM_CATEGORY, "code_label", TrackKey.VIEW_NAME, "text_label"));
+                        Tracker.getInstance().recordAction(me, TrackEvent.ACTION_CLICK, toParamsMap(TrackParam.ITEM_NAME, item.getCode(), TrackParam.ITEM_CATEGORY, "code_label", TrackParam.VIEW_NAME, "text_label"));
                         Snackbar.make(viewHolder.itemView, row + ", The label of " + text + " is clicked.", Snackbar.LENGTH_SHORT).show();
                     }
                 }
@@ -126,20 +126,20 @@ public class NestedScrambleAdapterExampleActivity extends AppCompatActivity impl
                 String row = "Row=" + mAdapter.getItems().indexOf(item);
                 if (viewHolder instanceof SimpleStringViewHolderFactory.ViewHolder) {
                     String item = (String) adapter.getItemAt(viewHolder.getAdapterPosition());
-                    Tracker.getInstance().recordAction(me, TrackAction.ACTION_CLICK, toParamsMap(TrackKey.ITEM_NAME, item, TrackKey.ITEM_CATEGORY, "string"));
+                    Tracker.getInstance().recordAction(me, TrackEvent.ACTION_CLICK, toParamsMap(TrackParam.ITEM_NAME, item, TrackParam.ITEM_CATEGORY, "string"));
                     Snackbar.make(view, row + ", String " + item + " is long clicked.", Snackbar.LENGTH_SHORT).show();
                 } else if (viewHolder instanceof SimpleNumberViewHolderFactory.ViewHolder) {
                     Number item = (Number) adapter.getItemAt(viewHolder.getAdapterPosition());
-                    Tracker.getInstance().recordAction(me, TrackAction.ACTION_CLICK, toParamsMap(TrackKey.ITEM_NAME, String.valueOf(item), TrackKey.ITEM_CATEGORY, "number"));
+                    Tracker.getInstance().recordAction(me, TrackEvent.ACTION_CLICK, toParamsMap(TrackParam.ITEM_NAME, String.valueOf(item), TrackParam.ITEM_CATEGORY, "number"));
                     Snackbar.make(view, row + ", Number " + item + " is long clicked.", Snackbar.LENGTH_SHORT).show();
                 } else if (viewHolder instanceof CodeLableViewHolderFactory.ViewHolder) {
                     OrdinalLabel item = (OrdinalLabel) adapter.getItemAt(viewHolder.getAdapterPosition());
                     String text = item.getLabel(getResources()) + "(" + item.getCode() + ")";
                     if (view.getId() == R.id.text_code) {
-                        Tracker.getInstance().recordAction(me, TrackAction.ACTION_LONG_CLICK, toParamsMap(TrackKey.ITEM_NAME, item.getCode(), TrackKey.ITEM_CATEGORY, "code_label", TrackKey.VIEW_NAME, "text_code"));
+                        Tracker.getInstance().recordAction(me, TrackEvent.ACTION_LONG_CLICK, toParamsMap(TrackParam.ITEM_NAME, item.getCode(), TrackParam.ITEM_CATEGORY, "code_label", TrackParam.VIEW_NAME, "text_code"));
                         Snackbar.make(view, row + ", The code of " + text + " is long clicked.", Snackbar.LENGTH_SHORT).show();
                     } else if (view.getId() == R.id.text_label) {
-                        Tracker.getInstance().recordAction(me, TrackAction.ACTION_LONG_CLICK, toParamsMap(TrackKey.ITEM_NAME, item.getCode(), TrackKey.ITEM_CATEGORY, "code_label", TrackKey.VIEW_NAME, "text_label"));
+                        Tracker.getInstance().recordAction(me, TrackEvent.ACTION_LONG_CLICK, toParamsMap(TrackParam.ITEM_NAME, item.getCode(), TrackParam.ITEM_CATEGORY, "code_label", TrackParam.VIEW_NAME, "text_label"));
                         Snackbar.make(view, row + ", The label of " + text + " is long clicked.", Snackbar.LENGTH_SHORT).show();
                     }
                 }

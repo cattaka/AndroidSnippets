@@ -21,7 +21,7 @@ import java.util.Locale;
 
 public class Tracker {
     static final String TAG_SCREEN = "TrackScreen";
-    static final String TAG_ACTION = "TrackAction";
+    static final String TAG_ACTION = "TrackEvent";
 
 
     private static Tracker INSTANCE = new Tracker();
@@ -63,7 +63,7 @@ public class Tracker {
         }
     }
 
-    public void recordAction(@Nullable IScreen screen, @NonNull TrackAction action, @Nullable TrackParams params) {
+    public void recordAction(@Nullable IScreen screen, @NonNull TrackEvent action, @Nullable TrackParamBundle params) {
         String screenName = (screen != null) ? screen.getScreenName() : null;
         if (BuildConfig.ENABLE_GOOGLE_SERVICES) {
             Bundle event = (params != null) ? params.toFirebaseBundle() : new Bundle();

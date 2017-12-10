@@ -3,7 +3,7 @@ package net.cattaka.android.snippets.example.tracker;
 /**
  * NODE: Follow the limitation of Firebase Analytics, such as num of actions, don't use space in action name.
  */
-public enum TrackAction {
+public enum TrackEvent {
     ACTION_CLICK("action_click"),
     ACTION_LONG_CLICK("action_long_click"),
     CHECK_CHANGE("check_change"),
@@ -12,7 +12,7 @@ public enum TrackAction {
     ;
     public final String code;
 
-    TrackAction(String code) {
+    TrackEvent(String code) {
         this.code = code;
     }
 

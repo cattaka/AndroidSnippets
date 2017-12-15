@@ -40,6 +40,7 @@
             android:theme="@style/NoActionBarAppTheme" />
         <activity android:name=".CheckCameraOrientationActivity" />
         <activity android:name=".Issue212316ParrierExampleActvity" />
+        <activity android:name=".PickFromGooglePhotosActivity" />
     </application>
 
 </manifest>

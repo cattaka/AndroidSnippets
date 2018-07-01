@@ -3,14 +3,17 @@ package net.cattaka.android.snippets.example.core;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.support.annotation.NonNull;
+
 import com.google.gson.FieldNamingPolicy;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import dagger.Module;
-import dagger.Provides;
+
 import net.cattaka.android.snippets.example.Constants;
 import net.cattaka.android.snippets.example.MySQLiteOpenHelper;
 import net.cattaka.android.snippets.example.retrofit.GitHubService;
+
+import dagger.Module;
+import dagger.Provides;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;

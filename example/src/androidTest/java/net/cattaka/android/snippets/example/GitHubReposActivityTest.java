@@ -2,9 +2,10 @@ package net.cattaka.android.snippets.example;
 
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
+
 import net.cattaka.android.snippets.example.retrofit.GitHubService;
 import net.cattaka.android.snippets.example.test.IsolateEnvRule;
-import okhttp3.mockwebserver.RecordedRequest;
+
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -12,10 +13,14 @@ import org.mockito.internal.stubbing.defaultanswers.ForwardsInvocations;
 
 import java.util.concurrent.TimeUnit;
 
+import okhttp3.mockwebserver.RecordedRequest;
+
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.notNullValue;
 import static org.junit.Assert.assertThat;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.eq;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
 
 /**
  * Created by cattaka on 16/07/10.

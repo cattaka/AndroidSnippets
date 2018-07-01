@@ -4,21 +4,24 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.support.annotation.NonNull;
 import android.test.RenamingDelegatingContext;
+
 import com.google.gson.FieldNamingPolicy;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import dagger.Module;
-import dagger.Provides;
+
 import net.cattaka.android.snippets.example.Constants;
 import net.cattaka.android.snippets.example.MySQLiteOpenHelper;
 import net.cattaka.android.snippets.example.core.MyModule;
 import net.cattaka.android.snippets.example.retrofit.GitHubService;
+
+import java.io.IOException;
+
+import dagger.Module;
+import dagger.Provides;
 import okhttp3.mockwebserver.MockWebServer;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
-
-import java.io.IOException;
 
 /**
  * Created by cattaka on 16/07/10.

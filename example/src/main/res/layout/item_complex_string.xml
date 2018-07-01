@@ -20,18 +20,18 @@
             android:layout_margin="16dp"
             android:layout_weight="1"
             android:textAppearance="?android:attr/textAppearanceLarge"
-            tools:text="Large Text"/>
+            tools:text="Large Text" />
 
         <Button
             android:id="@+id/button_a"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="A"/>
+            android:text="A" />
 
         <Button
             android:id="@+id/button_b"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="B"/>
+            android:text="B" />
     </LinearLayout>
 </android.support.v7.widget.CardView>

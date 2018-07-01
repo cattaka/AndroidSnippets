@@ -1,12 +1,12 @@
 package net.cattaka.android.snippets.example.retrofit;
 
 import net.cattaka.android.snippets.example.data.Repo;
-import retrofit2.Call;
+
+import java.util.List;
+
 import retrofit2.http.GET;
 import retrofit2.http.Path;
 import rx.Observable;
-
-import java.util.List;
 
 /**
  * Created by cattaka on 16/07/10.

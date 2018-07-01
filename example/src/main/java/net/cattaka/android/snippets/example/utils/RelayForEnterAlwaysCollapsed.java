@@ -10,7 +10,7 @@ import android.support.v7.widget.RecyclerView;
  * Created by cattaka on 17/02/19.
  */
 
-    public class RelayForEnterAlwaysCollapsed {
+public class RelayForEnterAlwaysCollapsed {
     public static RecyclerView.OnScrollListener apply(@NonNull RecyclerView target, @NonNull CoordinatorLayout coordinatorLayout, @NonNull AppBarLayout appBarLayout) {
         ForRecyclerView listener = new ForRecyclerView(coordinatorLayout, appBarLayout);
         target.addOnScrollListener(listener);

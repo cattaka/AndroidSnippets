@@ -18,25 +18,25 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textAppearance="?android:textAppearanceLarge"
-            tools:text="Name"/>
+            tools:text="Name" />
 
         <TextView
             android:textAppearance="?android:textAppearanceSmall"
             android:id="@+id/text_url"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            tools:text="http://github.com/hogehoge/fuga"/>
+            tools:text="http://github.com/hogehoge/fuga" />
     </LinearLayout>
 
     <Button
         android:id="@+id/button_owner"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Owner"/>
+        android:text="Owner" />
 
     <Button
         android:id="@+id/button_open"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Open"/>
+        android:text="Open" />
 </LinearLayout>

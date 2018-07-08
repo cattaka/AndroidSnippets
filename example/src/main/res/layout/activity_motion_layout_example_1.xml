@@ -1,77 +1,51 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<android.support.constraint.motion.MotionLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/motionLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="net.cattaka.android.snippets.example.AnimateConstraintLayoutActivity">
+    app:currentState="@+id/scene_normal"
+    app:layoutDescription="@xml/activity_motion_layout_example_1_scene"
+    tools:context="net.cattaka.android.snippets.example.MotionLayoutExample1Activity">
 
-    <android.support.constraint.ConstraintLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+    <View
+        android:id="@+id/view_blue"
+        android:layout_width="64dp"
+        android:layout_height="64dp"
+        android:background="#7f7f7fff"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
-        <TextView
-            android:id="@+id/text_title"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:text="Hogehoge"
-            android:textAppearance="?android:textAppearanceLarge"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toLeftOf="@+id/space_base" />
+    <Button
+        android:id="@+id/button_normal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:text="Normal"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
-        <TextView
-            android:id="@+id/text_description"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Fugafuga"
-            android:textAppearance="?android:textAppearanceMedium"
-            app:layout_constraintTop_toBottomOf="@+id/text_title"
-            tools:layout_editor_absoluteX="0dp" />
+    <Button
+        android:id="@+id/button_vertical"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:text="Vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/button_horizontal"
+        app:layout_constraintStart_toEndOf="@+id/button_normal" />
 
-        <android.support.v4.widget.Space
-            android:id="@+id/space_base"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            app:layout_constraintBottom_toBottomOf="@+id/text_description"
-            app:layout_constraintLeft_toRightOf="@+id/text_title"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            />
-
-        <View
-            android:id="@+id/view_blue"
-            android:layout_width="@dimen/image_small"
-            android:layout_height="@dimen/image_small"
-            android:background="#7f7f7fff"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-    </android.support.constraint.ConstraintLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-        <Button
-            android:id="@+id/button_normal"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="Normal" />
-
-        <Button
-            android:id="@+id/button_vertical"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="Vertical" />
-
-        <Button
-            android:id="@+id/button_horizontal"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="Horizontal" />
-    </LinearLayout>
-</LinearLayout>
+    <Button
+        android:id="@+id/button_horizontal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:text="Horizontal"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+</android.support.constraint.motion.MotionLayout>

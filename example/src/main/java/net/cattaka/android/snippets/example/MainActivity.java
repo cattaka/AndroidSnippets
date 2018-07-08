@@ -25,6 +25,11 @@ import static net.cattaka.android.snippets.example.tracker.TrackParamBundle.toPa
 
 public class MainActivity extends AppCompatActivity implements IScreen {
     private static final List<ActivityEntry> ACTIVITY_ENTRIES = Arrays.asList(
+            new ActivityEntry("MotionLayout", null,
+                    new ActivityEntry("AppBarLayout", null,
+                            new ActivityEntry("Simple Motion", MotionLayoutExample1Activity.class, Build.VERSION_CODES.JELLY_BEAN_MR2)
+                    )
+            ),
             new ActivityEntry("Workaround of issues", null,
                     new ActivityEntry("AOSP Issue 212316", Issue212316ParrierExampleActvity.class)
             ),

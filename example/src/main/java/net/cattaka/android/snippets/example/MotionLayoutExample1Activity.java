@@ -34,18 +34,24 @@ public class MotionLayoutExample1Activity extends AppCompatActivity implements V
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.button_normal: {
-                mMotionLayout.setTransition(R.id.state_vertical, R.id.state_normal);
-                mMotionLayout.transitionToEnd();
+//                mMotionLayout.setState(R.id.state_normal, mMotionLayout.getWidth(), mMotionLayout.getHeight());
+                mMotionLayout.transitionToState(R.id.state_normal);
+//                mMotionLayout.setTransition(R.id.state_vertical, R.id.state_normal);
+//                mMotionLayout.transitionToEnd();
                 break;
             }
             case R.id.button_vertical: {
-                mMotionLayout.setTransition(R.id.state_vertical, R.id.state_normal);
-                mMotionLayout.transitionToStart();
+//                mMotionLayout.setState(R.id.state_vertical, mMotionLayout.getWidth(), mMotionLayout.getHeight());
+                mMotionLayout.transitionToState(R.id.state_vertical);
+//                mMotionLayout.setTransition(R.id.state_vertical, R.id.state_normal);
+//                mMotionLayout.transitionToStart();
                 break;
             }
             case R.id.button_horizontal: {
-                mMotionLayout.setTransition(R.id.state_vertical, R.id.state_horizontal);
-                mMotionLayout.transitionToEnd();
+//                mMotionLayout.setState(R.id.state_horizontal, mMotionLayout.getWidth(), mMotionLayout.getHeight());
+                mMotionLayout.transitionToState(R.id.state_horizontal);
+//                mMotionLayout.setTransition(R.id.state_vertical, R.id.state_horizontal);
+//                mMotionLayout.transitionToEnd();
                 break;
             }
         }

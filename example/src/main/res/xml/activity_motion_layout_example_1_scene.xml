@@ -6,13 +6,22 @@
         motion:defaultState="@+id/scene_normal">
         <State
             android:id="@+id/state_normal"
-            constraints="@+id/scene_normal" />
+            motion:constraints="@+id/scene_normal">
+            <Variant
+                motion:constraints="@+id/scene_normal" />
+        </State>
         <State
             android:id="@+id/state_vertical"
-            constraints="@+id/scene_vertical" />
+            motion:constraints="@+id/scene_vertical">
+            <Variant
+                motion:constraints="@+id/scene_normal" />
+        </State>
         <State
             android:id="@+id/state_horizontal"
-            constraints="@+id/scene_horizontal" />
+            motion:constraints="@+id/scene_horizontal">
+            <Variant
+                motion:constraints="@+id/scene_normal" />
+        </State>
     </StateSet>
 
     <Transition

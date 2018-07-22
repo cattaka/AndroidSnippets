@@ -14,7 +14,6 @@ import net.cattaka.android.snippets.example.tracker.IScreen;
 public class MotionLayoutExample1Activity extends AppCompatActivity implements View.OnClickListener, IScreen {
     private MotionLayoutExample1Activity me = this;
     private MotionLayout mMotionLayout;
-    private View mBlueView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,37 +22,24 @@ public class MotionLayoutExample1Activity extends AppCompatActivity implements V
 
         // Find views
         mMotionLayout = findViewById(R.id.motionLayout);
-        mBlueView = findViewById(R.id.view_blue);
+        findViewById(R.id.button_top).setOnClickListener(this);
+        findViewById(R.id.button_start_bottom).setOnClickListener(this);
+        findViewById(R.id.button_end_bottom).setOnClickListener(this);
 
-        findViewById(R.id.button_normal).setOnClickListener(this);
-        findViewById(R.id.button_vertical).setOnClickListener(this);
-        findViewById(R.id.button_horizontal).setOnClickListener(this);
+        mMotionLayout.setShowPaths(true);
     }
 
     @Override
     public void onClick(View view) {
-        switch (view.getId()) {
-            case R.id.button_normal: {
-//                mMotionLayout.setState(R.id.state_normal, mMotionLayout.getWidth(), mMotionLayout.getHeight());
-                mMotionLayout.transitionToState(R.id.state_normal);
-//                mMotionLayout.setTransition(R.id.state_vertical, R.id.state_normal);
-//                mMotionLayout.transitionToEnd();
-                break;
-            }
-            case R.id.button_vertical: {
-//                mMotionLayout.setState(R.id.state_vertical, mMotionLayout.getWidth(), mMotionLayout.getHeight());
-                mMotionLayout.transitionToState(R.id.state_vertical);
-//                mMotionLayout.setTransition(R.id.state_vertical, R.id.state_normal);
-//                mMotionLayout.transitionToStart();
-                break;
-            }
-            case R.id.button_horizontal: {
-//                mMotionLayout.setState(R.id.state_horizontal, mMotionLayout.getWidth(), mMotionLayout.getHeight());
-                mMotionLayout.transitionToState(R.id.state_horizontal);
-//                mMotionLayout.setTransition(R.id.state_vertical, R.id.state_horizontal);
-//                mMotionLayout.transitionToEnd();
-                break;
-            }
+        if (view.getId() == R.id.button_top) {
+            mMotionLayout.setTransition(R.id.scene_center, R.id.scene_top);
+            mMotionLayout.setProgress(0);
+        } else if (view.getId() == R.id.button_start_bottom) {
+            mMotionLayout.setTransition(R.id.scene_center, R.id.scene_start_bottom);
+            mMotionLayout.setProgress(0);
+        } else if (view.getId() == R.id.button_end_bottom) {
+            mMotionLayout.setTransition(R.id.scene_center, R.id.scene_end_bottom);
+            mMotionLayout.setProgress(0);
         }
     }
 }

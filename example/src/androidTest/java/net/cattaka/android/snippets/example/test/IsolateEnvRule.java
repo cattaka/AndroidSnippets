@@ -1,9 +1,11 @@
 package net.cattaka.android.snippets.example.test;
 
 import android.support.test.InstrumentationRegistry;
+
 import net.cattaka.android.snippets.example.core.AppComponent;
 import net.cattaka.android.snippets.example.core.DaggerAppComponent;
 import net.cattaka.android.snippets.example.core.MyApplication;
+
 import org.junit.rules.TestRule;
 import org.junit.runner.Description;
 import org.junit.runners.model.Statement;

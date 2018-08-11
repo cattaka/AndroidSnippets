@@ -19,7 +19,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Input here"
-                android:textAppearance="?android:textAppearanceLarge"/>
+                android:textAppearance="?android:textAppearanceLarge" />
 
             <EditText
                 android:id="@+id/edit_text"
@@ -29,13 +29,13 @@
                 android:layout_weight="1"
                 android:imeOptions="actionGo"
                 android:inputType="text"
-                android:max="100"/>
+                android:max="100" />
 
             <Button
                 android:id="@+id/button_go"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="GO"/>
+                android:text="GO" />
         </LinearLayout>
     </android.support.design.widget.CoordinatorLayout>
 

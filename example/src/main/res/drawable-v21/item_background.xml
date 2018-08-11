@@ -3,7 +3,7 @@
     <item>
         <ripple xmlns:android="http://schemas.android.com/apk/res/android"
                 android:color="?colorControlHighlight">
-            <item android:drawable="@android:color/white"/>
+            <item android:drawable="@android:color/white" />
         </ripple>
     </item>
 </layer-list>

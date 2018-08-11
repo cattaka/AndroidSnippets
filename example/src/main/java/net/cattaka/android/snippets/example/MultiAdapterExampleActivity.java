@@ -8,7 +8,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
 import net.cattaka.android.adaptertoolbox.adapter.ScrambleAdapter;
-import net.cattaka.android.adaptertoolbox.adapter.SingleViewAdapter;
+import net.cattaka.android.adaptertoolbox.adapter.SingleViewAdapter2;
 import net.cattaka.android.adaptertoolbox.adapter.listener.ListenerRelay;
 import net.cattaka.android.adaptertoolbox.thirdparty.MergeRecyclerAdapter;
 import net.cattaka.android.snippets.example.adapter.SimpleNumberAdapter;
@@ -64,9 +64,9 @@ public class MultiAdapterExampleActivity extends AppCompatActivity implements IS
         }
     };
 
-    ListenerRelay<SingleViewAdapter, RecyclerView.ViewHolder> mHeaderListenerRelay = new ListenerRelay<SingleViewAdapter, RecyclerView.ViewHolder>() {
+    ListenerRelay<SingleViewAdapter2, SingleViewAdapter2.ViewHolder> mHeaderListenerRelay = new ListenerRelay<SingleViewAdapter2, SingleViewAdapter2.ViewHolder>() {
         @Override
-        public void onClick(RecyclerView recyclerView, SingleViewAdapter adapter, RecyclerView.ViewHolder viewHolder, View view) {
+        public void onClick(RecyclerView recyclerView, SingleViewAdapter2 adapter, SingleViewAdapter2.ViewHolder viewHolder, View view) {
             if (recyclerView.getId() == R.id.recycler) {
                 MergeRecyclerAdapter.LocalAdapter la = mMergeRecyclerAdapter.getAdapterOffsetForItem(viewHolder.getAdapterPosition());
                 if (la.mAdapter == mStringsHeaderAdapter) {
@@ -80,7 +80,7 @@ public class MultiAdapterExampleActivity extends AppCompatActivity implements IS
         }
 
         @Override
-        public boolean onLongClick(RecyclerView recyclerView, SingleViewAdapter adapter, RecyclerView.ViewHolder viewHolder, View view) {
+        public boolean onLongClick(RecyclerView recyclerView, SingleViewAdapter2 adapter, SingleViewAdapter2.ViewHolder viewHolder, View view) {
             if (recyclerView.getId() == R.id.recycler) {
                 MergeRecyclerAdapter.LocalAdapter la = mMergeRecyclerAdapter.getAdapterOffsetForItem(viewHolder.getAdapterPosition());
                 if (la.mAdapter == mStringsHeaderAdapter) {
@@ -99,9 +99,9 @@ public class MultiAdapterExampleActivity extends AppCompatActivity implements IS
     MultiAdapterExampleActivity me = this;
     RecyclerView mRecyclerView;
     MergeRecyclerAdapter<RecyclerView.Adapter> mMergeRecyclerAdapter;
-    SingleViewAdapter mStringsHeaderAdapter;
+    SingleViewAdapter2 mStringsHeaderAdapter;
     SimpleStringAdapter mStringsAdapter;
-    SingleViewAdapter mNumbersHeaderAdapter;
+    SingleViewAdapter2 mNumbersHeaderAdapter;
     SimpleNumberAdapter mNumbersAdapter;
 
     @Override
@@ -115,7 +115,7 @@ public class MultiAdapterExampleActivity extends AppCompatActivity implements IS
         {   // prepare adapters
             mMergeRecyclerAdapter = new MergeRecyclerAdapter<>(this);
             {   // create strings header adapter
-                mStringsHeaderAdapter = new SingleViewAdapter(this, R.layout.view_header_string);
+                mStringsHeaderAdapter = new SingleViewAdapter2(this, R.layout.view_header_string);
                 mStringsHeaderAdapter.setListenerRelay(mHeaderListenerRelay);
                 mMergeRecyclerAdapter.addAdapter(mStringsHeaderAdapter);
             }
@@ -129,7 +129,7 @@ public class MultiAdapterExampleActivity extends AppCompatActivity implements IS
                 mMergeRecyclerAdapter.addAdapter(mStringsAdapter);
             }
             {   // create numbers header adapter
-                mNumbersHeaderAdapter = new SingleViewAdapter(this, R.layout.view_header_number);
+                mNumbersHeaderAdapter = new SingleViewAdapter2(this, R.layout.view_header_number);
                 mNumbersHeaderAdapter.setListenerRelay(mHeaderListenerRelay);
                 mMergeRecyclerAdapter.addAdapter(mNumbersHeaderAdapter);
             }

@@ -2,13 +2,14 @@ package net.cattaka.android.snippets.example.test;
 
 import android.content.res.AssetManager;
 import android.support.test.InstrumentationRegistry;
-import okhttp3.mockwebserver.Dispatcher;
-import okhttp3.mockwebserver.MockResponse;
-import okhttp3.mockwebserver.RecordedRequest;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+
+import okhttp3.mockwebserver.Dispatcher;
+import okhttp3.mockwebserver.MockResponse;
+import okhttp3.mockwebserver.RecordedRequest;
 
 /**
  * Created by cattaka on 16/07/10.

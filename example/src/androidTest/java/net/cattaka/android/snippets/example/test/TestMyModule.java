@@ -3,7 +3,6 @@ package net.cattaka.android.snippets.example.test;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.support.annotation.NonNull;
-import android.test.RenamingDelegatingContext;
 
 import com.google.gson.FieldNamingPolicy;
 import com.google.gson.Gson;
@@ -28,9 +27,11 @@ import retrofit2.converter.gson.GsonConverterFactory;
  */
 @Module
 public class TestMyModule extends MyModule {
+    public static final String TEST_PREF_NAME = "test_" + Constants.PREF_NAME;
+    public static final String TEST_DB_NAME = "test_" + Constants.DB_NAME;
+
     private Context mContext;
     // テスト時にアクセスできるようにpublicにしておく
-    public RenamingDelegatingContext mRenamingDelegatingContext;
     public MockWebServer mMockWebServer;
 
     public SharedPreferences mSharedPreferences;
@@ -41,12 +42,11 @@ public class TestMyModule extends MyModule {
     public TestMyModule(@NonNull Context context) {
         super(context);
         mContext = context;
-        mRenamingDelegatingContext = new RenamingDelegatingContext(mContext, "test_");
         mMockWebServer = new MockWebServer();
         mMockWebServer.setDispatcher(new AssetsDispatcher());
 
-        mSharedPreferences = mContext.getSharedPreferences("test_" + Constants.PREF_NAME, Context.MODE_PRIVATE);
-        mMySQLiteOpenHelper = new MySQLiteOpenHelper(mRenamingDelegatingContext, Constants.DB_NAME, null, Constants.DB_VERSION);
+        mSharedPreferences = mContext.getSharedPreferences(TEST_PREF_NAME, Context.MODE_PRIVATE);
+        mMySQLiteOpenHelper = new MySQLiteOpenHelper(mContext, TEST_DB_NAME, null, Constants.DB_VERSION);
         Gson gson = new GsonBuilder()
                 .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
                 .create();
@@ -60,7 +60,7 @@ public class TestMyModule extends MyModule {
     public void reset() {
         // 手段を問わず、保存されているデータを消す
         createSharedPreferences().edit().clear().apply();
-        mRenamingDelegatingContext.deleteDatabase(Constants.DB_NAME);
+        mContext.deleteDatabase(TEST_DB_NAME);
     }
 
     public void shutdown() throws IOException {

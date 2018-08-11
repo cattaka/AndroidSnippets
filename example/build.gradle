@@ -42,7 +42,7 @@ repositories {
     }
 }
 
-def play_services = '11.4.2'
+def play_services = '16.0.1'
 def support_library = project.SUPPORT_LIBRARY_VERSION
 
 dependencies {

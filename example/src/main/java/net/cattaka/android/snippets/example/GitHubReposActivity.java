@@ -104,9 +104,9 @@ public class GitHubReposActivity extends RxAppCompatActivity implements SwipeRef
 
     private void requestRepos() {
         mGitHubService.listRepos("cattaka")
-                .compose(this.<List<Repo>>bindToLifecycle())
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
+                .compose(this.<List<Repo>>bindToLifecycle())
                 .subscribe(new Action1<List<Repo>>() {
                     @Override
                     public void call(List<Repo> repos) {

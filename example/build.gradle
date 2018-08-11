@@ -55,7 +55,7 @@ dependencies {
 
     implementation "com.google.firebase:firebase-core:$play_services"
 
-    implementation 'net.cattaka:adapter-toolbox:0.5.2@aar'
+    implementation 'net.cattaka:adapter-toolbox:0.6.0@aar'
     implementation 'net.cattaka:cathandsgendroid-core:0.5.1'
     annotationProcessor 'net.cattaka:cathandsgendroid-apt:0.5.1'
 

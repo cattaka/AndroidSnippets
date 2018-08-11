@@ -74,7 +74,7 @@ dependencies {
     implementation 'com.trello:rxlifecycle:0.6.1'
     implementation 'com.trello:rxlifecycle-components:0.6.1'
 
-    androidTestImplementation 'com.squareup.okhttp3:mockwebserver:3.3.0'
+    androidTestImplementation 'com.squareup.okhttp3:mockwebserver:3.4.2'
     androidTestImplementation 'junit:junit:4.12'
     androidTestImplementation('com.android.support.test:runner:0.5') {
         exclude group: 'com.android.support', module: 'support-annotations'

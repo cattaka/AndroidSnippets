@@ -6,4 +6,5 @@
     <string name="ordinal_label_second">ふたつめ</string>
     <string name="ordinal_label_third">みっつめ</string>
     <string name="ordinal_label_fourth">よっつめ</string>
+    <string name="cover_image">cover image</string>
 </resources>

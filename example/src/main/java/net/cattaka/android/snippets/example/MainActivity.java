@@ -25,6 +25,9 @@ import static net.cattaka.android.snippets.example.tracker.TrackParamBundle.toPa
 
 public class MainActivity extends AppCompatActivity implements IScreen {
     private static final List<ActivityEntry> ACTIVITY_ENTRIES = Arrays.asList(
+            new ActivityEntry("MotionLayout", null,
+                    new ActivityEntry("Stretchable Surfaces", MotionLayoutStretchableSurfacesActivity.class)
+            ),
             new ActivityEntry("With Google Applications", null,
                     new ActivityEntry("Pick from Google Photos", PickFromGooglePhotosActivity.class)
             ),

@@ -7,8 +7,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    app:layoutDescription="@xml/activity_motion_layout_example_1_scene"
-    tools:context="net.cattaka.android.snippets.example.MotionLayoutExample1Activity">
+    app:layoutDescription="@xml/activity_motion_layout_switch_scene"
+    tools:context="net.cattaka.android.snippets.example.MotionLayoutSwitchSceneActivity">
 
     <ImageView
         android:id="@+id/image"

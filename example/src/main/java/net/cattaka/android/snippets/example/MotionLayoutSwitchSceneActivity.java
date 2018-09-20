@@ -11,14 +11,14 @@ import net.cattaka.android.snippets.example.tracker.IScreen;
  * Created by takao on 2016/10/28.
  */
 
-public class MotionLayoutExample1Activity extends AppCompatActivity implements View.OnClickListener, IScreen {
-    private MotionLayoutExample1Activity me = this;
+public class MotionLayoutSwitchSceneActivity extends AppCompatActivity implements View.OnClickListener, IScreen {
+    private MotionLayoutSwitchSceneActivity me = this;
     private MotionLayout mMotionLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_motion_layout_example_1);
+        setContentView(R.layout.activity_motion_layout_switch_scene);
 
         // Find views
         mMotionLayout = findViewById(R.id.motionLayout);

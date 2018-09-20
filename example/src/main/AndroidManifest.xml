@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-          package="net.cattaka.android.snippets.example">
+    package="net.cattaka.android.snippets.example">
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.CAMERA" />
@@ -41,6 +41,7 @@
         <activity android:name=".CheckCameraOrientationActivity" />
         <activity android:name=".Issue212316ParrierExampleActvity" />
         <activity android:name=".PickFromGooglePhotosActivity" />
+        <activity android:name=".MotionLayoutExample1Activity" />
         <activity android:name=".MotionLayoutStretchableSurfacesActivity" />
     </application>
 

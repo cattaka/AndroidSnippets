@@ -17,31 +17,62 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <LinearLayout
-        android:id="@+id/layout_info_1"
+    <TextView
+        android:id="@+id/layout_info"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
         android:background="@color/colorPrimary"
-        android:orientation="vertical"
-        android:padding="@dimen/element_spacing_xxlarge"
         app:layout_constraintBottom_toTopOf="@+id/layout_control_1"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent">
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/space_info_top" />
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Fude-chan"
-            android:textAppearance="?android:textAppearanceLarge"
-            android:textColor="@android:color/white" />
+    <Space
+        android:id="@+id/space_info_top"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/element_spacing_large"
+        app:layout_constraintBottom_toTopOf="@+id/text_name"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Tortoiseshell cat"
-            android:textAppearance="?android:textAppearanceMedium"
-            android:textColor="@android:color/white" />
-    </LinearLayout>
+    <TextView
+        android:id="@+id/text_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/element_spacing_large"
+        android:layout_marginEnd="@dimen/element_spacing_large"
+        android:text="Fude-chan"
+        android:textAppearance="?android:textAppearanceLarge"
+        android:textColor="@android:color/white"
+        app:layout_constraintBottom_toTopOf="@+id/text_kind"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/text_kind"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/element_spacing_large"
+        android:layout_marginEnd="@dimen/element_spacing_large"
+        android:layout_marginBottom="@dimen/element_spacing_large"
+        android:text="Tortoiseshell cat"
+        android:textAppearance="?android:textAppearanceMedium"
+        android:textColor="@android:color/white"
+        app:layout_constraintBottom_toTopOf="@+id/text_short"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/text_short"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/element_spacing_large"
+        android:text="Fude-chan / Tortoiseshell cat"
+        android:textAppearance="?android:textAppearanceMedium"
+        android:textColor="@android:color/white"
+        app:layout_constraintBottom_toTopOf="@+id/layout_control_1"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
     <LinearLayout
         android:id="@+id/layout_control_1"
@@ -80,36 +111,6 @@
             android:text="0:37" />
     </LinearLayout>
 
-    <android.support.design.widget.FloatingActionButton
-        android:id="@+id/button_play"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="@dimen/element_spacing_large"
-        android:layout_marginRight="@dimen/element_spacing_large"
-        android:src="@android:drawable/ic_media_play"
-        app:layout_constraintBottom_toTopOf="@+id/layout_info_1"
-        app:layout_constraintEnd_toEndOf="@+id/layout_info_1"
-        app:layout_constraintTop_toTopOf="@+id/layout_info_1" />
-
-    <LinearLayout
-        android:id="@+id/layout_info_2"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:background="@color/colorPrimary"
-        android:orientation="vertical"
-        android:padding="@dimen/element_spacing_xlarge"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent">
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Fude-chan / Tortoiseshell cat"
-            android:textAppearance="?android:textAppearanceMedium"
-            android:textColor="@android:color/white" />
-    </LinearLayout>
-
     <LinearLayout
         android:id="@+id/layout_control_2"
         android:layout_width="0dp"
@@ -117,7 +118,7 @@
         android:background="@android:color/black"
         android:gravity="center_vertical"
         android:orientation="vertical"
-        app:layout_constraintBottom_toTopOf="@+id/layout_info_2"
+        app:layout_constraintBottom_toTopOf="@+id/layout_info"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent">
 
@@ -179,5 +180,22 @@
         </LinearLayout>
 
     </LinearLayout>
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/fab_play"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/element_spacing_large"
+        android:layout_marginRight="@dimen/element_spacing_large"
+        android:src="@android:drawable/ic_media_play"
+        app:layout_constraintBottom_toTopOf="@+id/layout_info"
+        app:layout_constraintEnd_toEndOf="@+id/layout_info"
+        app:layout_constraintTop_toTopOf="@+id/layout_info" />
+
+    <View
+        android:id="@+id/fab_shadow"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="@android:color/white"/>
 
 </android.support.constraint.motion.MotionLayout>

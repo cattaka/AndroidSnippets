@@ -195,10 +195,10 @@
         app:layout_constraintEnd_toEndOf="@+id/layout_info"
         app:layout_constraintTop_toTopOf="@+id/layout_info" />
 
-    <View
+    <net.cattaka.android.snippets.example.view.RoundView
         android:id="@+id/fab_shadow"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:background="@android:color/white" />
+        android:background="@color/colorAccent" />
 
 </android.support.constraint.motion.MotionLayout>

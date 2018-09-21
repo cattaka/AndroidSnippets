@@ -18,7 +18,7 @@
     <Transition
         motion:constraintSetEnd="@+id/motion_end"
         motion:constraintSetStart="@+id/motion_start"
-        motion:duration="1000">
+        motion:duration="600">
         <OnSwipe
             motion:dragDirection="dragUp"
             motion:touchAnchorId="@+id/layout_info"
@@ -29,6 +29,76 @@
         <OnClick
             motion:mode="toggle"
             motion:target="@+id/button_pause" />
+
+        <KeyFrameSet>
+            <KeyPosition
+                motion:framePosition="60"
+                motion:keyPositionType="deltaRelative"
+                motion:percentX="1.0"
+                motion:percentY="1.0"
+                motion:sizePercent="1.0"
+                motion:target="@id/fab_shadow" />
+            <KeyAttribute
+                android:alpha="1"
+                motion:framePosition="20"
+                motion:progress="0"
+                motion:target="@id/fab_shadow" />
+            <KeyAttribute
+                android:alpha="1"
+                motion:framePosition="60"
+                motion:progress="1"
+                motion:target="@id/fab_shadow" />
+            <KeyAttribute
+                android:alpha="0"
+                motion:framePosition="20"
+                motion:target="@id/fab_play" />
+            <KeyAttribute
+                android:alpha="0"
+                motion:framePosition="60"
+                motion:target="@id/layout_control_2" />
+            <KeyPosition
+                motion:framePosition="60"
+                motion:keyPositionType="deltaRelative"
+                motion:percentX="1.0"
+                motion:percentY="1.0"
+                motion:sizePercent="1.0"
+                motion:target="@id/layout_control_1" />
+            <KeyPosition
+                motion:framePosition="60"
+                motion:keyPositionType="deltaRelative"
+                motion:percentX="1.0"
+                motion:percentY="1.0"
+                motion:sizePercent="1.0"
+                motion:target="@id/layout_control_2" />
+            <KeyPosition
+                motion:framePosition="60"
+                motion:keyPositionType="deltaRelative"
+                motion:percentX="1.0"
+                motion:percentY="1.0"
+                motion:sizePercent="1.0"
+                motion:target="@id/layout_info" />
+            <KeyPosition
+                motion:framePosition="60"
+                motion:keyPositionType="deltaRelative"
+                motion:percentX="1.0"
+                motion:percentY="1.0"
+                motion:sizePercent="1.0"
+                motion:target="@id/text_name" />
+            <KeyPosition
+                motion:framePosition="60"
+                motion:keyPositionType="deltaRelative"
+                motion:percentX="1.0"
+                motion:percentY="1.0"
+                motion:sizePercent="1.0"
+                motion:target="@id/text_kind" />
+            <KeyPosition
+                motion:framePosition="60"
+                motion:keyPositionType="deltaRelative"
+                motion:percentX="1.0"
+                motion:percentY="1.0"
+                motion:sizePercent="1.0"
+                motion:target="@id/text_short" />
+        </KeyFrameSet>
     </Transition>
 
     <ConstraintSet android:id="@+id/motion_start">
@@ -104,6 +174,17 @@
             motion:layout_constraintStart_toStartOf="parent" />
 
         <Constraint
+            android:id="@+id/fab_play"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/element_spacing_large"
+            android:layout_marginRight="@dimen/element_spacing_large"
+            android:visibility="visible"
+            motion:layout_constraintBottom_toTopOf="@+id/layout_info"
+            motion:layout_constraintEnd_toEndOf="@+id/layout_info"
+            motion:layout_constraintTop_toTopOf="@+id/layout_info" />
+
+        <Constraint
             android:id="@+id/fab_shadow"
             android:layout_width="0dp"
             android:layout_height="0dp"
@@ -111,7 +192,8 @@
             motion:layout_constraintBottom_toBottomOf="@+id/fab_play"
             motion:layout_constraintEnd_toEndOf="@+id/fab_play"
             motion:layout_constraintStart_toStartOf="@+id/fab_play"
-            motion:layout_constraintTop_toTopOf="@+id/fab_play" />
+            motion:layout_constraintTop_toTopOf="@+id/fab_play"
+            motion:progress="0" />
     </ConstraintSet>
 
     <ConstraintSet android:id="@+id/motion_end">
@@ -186,6 +268,17 @@
             motion:layout_constraintStart_toStartOf="parent" />
 
         <Constraint
+            android:id="@+id/fab_play"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/element_spacing_large"
+            android:layout_marginRight="@dimen/element_spacing_large"
+            android:visibility="gone"
+            motion:layout_constraintBottom_toTopOf="@+id/layout_info"
+            motion:layout_constraintEnd_toEndOf="@+id/layout_info"
+            motion:layout_constraintTop_toTopOf="@+id/layout_info" />
+
+        <Constraint
             android:id="@+id/fab_shadow"
             android:layout_width="0dp"
             android:layout_height="0dp"
@@ -193,7 +286,8 @@
             motion:layout_constraintBottom_toBottomOf="@+id/layout_control_2"
             motion:layout_constraintEnd_toEndOf="@+id/layout_control_2"
             motion:layout_constraintStart_toStartOf="@+id/layout_control_2"
-            motion:layout_constraintTop_toTopOf="@+id/layout_control_2" />
+            motion:layout_constraintTop_toTopOf="@+id/layout_control_2"
+            motion:progress="1" />
 
     </ConstraintSet>
 

@@ -16,12 +16,19 @@
     xmlns:motion="http://schemas.android.com/apk/res-auto">
 
     <Transition
-        motion:constraintSetEnd="@+id/motion_start"
-        motion:constraintSetStart="@+id/motion_end"
+        motion:constraintSetEnd="@+id/motion_end"
+        motion:constraintSetStart="@+id/motion_start"
         motion:duration="1000">
+        <OnSwipe
+            motion:dragDirection="dragUp"
+            motion:touchAnchorId="@+id/layout_info"
+            motion:touchAnchorSide="top" />
         <OnClick
             motion:mode="toggle"
             motion:target="@+id/fab_play" />
+        <OnClick
+            motion:mode="toggle"
+            motion:target="@+id/button_pause" />
     </Transition>
 
     <ConstraintSet android:id="@+id/motion_start">

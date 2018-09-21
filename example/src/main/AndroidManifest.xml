@@ -43,6 +43,7 @@
         <activity android:name=".PickFromGooglePhotosActivity" />
         <activity android:name=".MotionLayoutSwitchSceneActivity" />
         <activity android:name=".MotionLayoutStretchableSurfacesActivity" />
+        <activity android:name=".MotionLayoutMorphActivity" />
     </application>
 
 </manifest>

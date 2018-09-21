@@ -27,7 +27,8 @@ public class MainActivity extends AppCompatActivity implements IScreen {
     private static final List<ActivityEntry> ACTIVITY_ENTRIES = Arrays.asList(
             new ActivityEntry("MotionLayout", null,
                     new ActivityEntry("Stretchable Surfaces", MotionLayoutStretchableSurfacesActivity.class, Build.VERSION_CODES.JELLY_BEAN_MR2),
-                    new ActivityEntry("Switch Scene", MotionLayoutSwitchSceneActivity.class, Build.VERSION_CODES.JELLY_BEAN_MR2)
+                    new ActivityEntry("Switch Scene", MotionLayoutSwitchSceneActivity.class, Build.VERSION_CODES.JELLY_BEAN_MR2),
+                    new ActivityEntry("Morph", MotionLayoutMorphActivity.class, Build.VERSION_CODES.JELLY_BEAN_MR2)
             ),
             new ActivityEntry("With Google Applications", null,
                     new ActivityEntry("Pick from Google Photos", PickFromGooglePhotosActivity.class)

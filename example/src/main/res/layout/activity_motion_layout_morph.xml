@@ -3,7 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/motionLayout"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    app:layoutDescription="@xml/activity_motion_layout_morph">
 
     <ImageView
         android:id="@+id/cover_image"
@@ -11,7 +12,7 @@
         android:layout_height="0dp"
         android:scaleType="centerCrop"
         android:src="@drawable/cover_image"
-        app:layout_constraintBottom_toTopOf="@+id/layout_info_1"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -86,9 +87,9 @@
         android:layout_marginEnd="@dimen/element_spacing_large"
         android:layout_marginRight="@dimen/element_spacing_large"
         android:src="@android:drawable/ic_media_play"
-        app:layout_constraintBottom_toBottomOf="@+id/cover_image"
-        app:layout_constraintEnd_toEndOf="@+id/cover_image"
-        app:layout_constraintTop_toBottomOf="@+id/cover_image" />
+        app:layout_constraintBottom_toTopOf="@+id/layout_info_1"
+        app:layout_constraintEnd_toEndOf="@+id/layout_info_1"
+        app:layout_constraintTop_toTopOf="@+id/layout_info_1" />
 
     <LinearLayout
         android:id="@+id/layout_info_2"

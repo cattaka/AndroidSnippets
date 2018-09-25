@@ -48,6 +48,9 @@ public class RoundView extends View {
     }
 
     public void setProgress(float progress) {
-        mProgress = progress;
+        if (mProgress != progress) {
+            mProgress = progress;
+            invalidate();
+        }
     }
 }

@@ -44,6 +44,7 @@
         <activity android:name=".MotionLayoutSwitchSceneActivity" />
         <activity android:name=".MotionLayoutStretchableSurfacesActivity" />
         <activity android:name=".MotionLayoutMorphActivity" />
+        <activity android:name=".MotionLayoutProgressActivity" />
     </application>
 
 </manifest>

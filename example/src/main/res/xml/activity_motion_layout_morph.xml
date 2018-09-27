@@ -40,11 +40,6 @@
                 motion:target="@id/fab_shadow" />
             <KeyAttribute
                 android:alpha="1"
-                motion:framePosition="20"
-                motion:progress="0"
-                motion:target="@id/fab_shadow" />
-            <KeyAttribute
-                android:alpha="1"
                 motion:framePosition="60"
                 motion:progress="1"
                 motion:target="@id/fab_shadow" />

@@ -37,7 +37,12 @@ public class RoundView extends View {
 
         Path clipPath = new Path();
         canvas.save();
-        clipPath.addRoundRect(new RectF(0, 0, w, h), radius, radius, Path.Direction.CW);
+        clipPath.addRoundRect(
+                new RectF(0, 0, w, h),
+                radius,
+                radius,
+                Path.Direction.CW
+        );
         canvas.clipPath(clipPath);
         super.draw(canvas);
         canvas.restore();

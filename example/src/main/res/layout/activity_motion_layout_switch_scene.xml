@@ -10,10 +10,21 @@
     app:layoutDescription="@xml/activity_motion_layout_switch_scene"
     tools:context="net.cattaka.android.snippets.example.MotionLayoutSwitchSceneActivity">
 
+    <Button
+        android:id="@+id/button_center"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Center"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <ImageView
         android:id="@+id/image"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:elevation="4dp"
         android:src="@mipmap/ic_launcher" />
 
     <Button

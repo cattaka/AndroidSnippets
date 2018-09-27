@@ -19,7 +19,8 @@
             android:text="Hogehoge"
             android:textAppearance="?android:textAppearanceLarge"
             app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toLeftOf="@+id/space_base" />
+            app:layout_constraintRight_toLeftOf="@+id/space_base"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/text_description"
@@ -27,6 +28,7 @@
             android:layout_height="wrap_content"
             android:text="Fugafuga"
             android:textAppearance="?android:textAppearanceMedium"
+            app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/text_title"
             tools:layout_editor_absoluteX="0dp" />
 

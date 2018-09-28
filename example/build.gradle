@@ -17,6 +17,8 @@ android {
         versionCode Integer.parseInt(project.APP_VERSION_CODE)
         versionName project.APP_VERSION_NAME
 
+        vectorDrawables.useSupportLibrary = true
+
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
 
         buildConfigField "boolean", "ENABLE_GOOGLE_SERVICES", String.valueOf(enable_google_services)

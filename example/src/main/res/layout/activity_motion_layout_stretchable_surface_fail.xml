@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/darker_gray">
+
+    <android.support.constraint.motion.MotionLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_margin="@dimen/element_spacing_large"
+        android:background="@android:color/white"
+        android:elevation="2dp"
+        app:layoutDescription="@xml/activity_motion_layout_stretchable_surface">
+
+        <ImageView
+            android:id="@+id/image_cover"
+            android:layout_width="match_parent"
+            android:layout_height="160dp"
+            android:contentDescription="@string/cover_image"
+            android:scaleType="fitXY"
+            android:src="@drawable/bg_grad"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/image_avatar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/element_spacing_large"
+            android:background="@drawable/circle_gray250"
+            android:padding="@dimen/element_spacing_large"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/image_cover"
+            app:srcCompat="@drawable/ic_android_black_24dp" />
+
+        <TextView
+            android:id="@+id/text_title"
+            style="?android:textAppearanceLarge"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/element_spacing_large"
+            android:layout_marginLeft="@dimen/element_spacing_large"
+            android:text="Title goes here"
+            app:layout_constraintBottom_toTopOf="@+id/text_description"
+            app:layout_constraintStart_toEndOf="@+id/image_avatar"
+            app:layout_constraintTop_toTopOf="@+id/image_avatar" />
+
+        <TextView
+            android:id="@+id/text_description"
+            style="?android:textAppearanceMedium"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/element_spacing_large"
+            android:layout_marginLeft="@dimen/element_spacing_large"
+            android:layout_marginTop="@dimen/element_spacing_small"
+            android:text="Secondary text"
+            app:layout_constraintBottom_toBottomOf="@+id/image_avatar"
+            app:layout_constraintStart_toEndOf="@+id/image_avatar"
+            app:layout_constraintTop_toBottomOf="@+id/text_title" />
+
+        <ImageView
+            android:id="@+id/button_expand"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/element_spacing_large"
+            android:padding="@dimen/element_spacing_large"
+            android:src="@android:drawable/arrow_down_float" />
+
+        <TextView
+            android:id="@+id/text_detail"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/element_spacing_large"
+            android:text="Greyhound divisively hello coldly wonderfully marginally far upon excluding."
+            android:textAppearance="?android:textAppearanceMedium"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/image_avatar" />
+
+        <Button
+            android:id="@+id/button_action_1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Action 1" />
+
+        <Button
+            android:id="@+id/button_action_2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Action 2" />
+
+    </android.support.constraint.motion.MotionLayout>
+
+</FrameLayout>

@@ -7,12 +7,18 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
+import net.cattaka.android.adaptertoolbox.adapter.ScrambleAdapter;
+import net.cattaka.android.snippets.example.adapter.factory.AccountViewHolderFactory;
 import net.cattaka.android.snippets.example.databinding.ActivityAccountsListBinding;
 import net.cattaka.android.snippets.example.dialog.AccountEditDialog;
 import net.cattaka.android.snippets.example.tracker.IScreen;
+
+import java.util.ArrayList;
+import java.util.Arrays;
 
 public class AccountsListActivity extends AppCompatActivity implements
         IScreen,
@@ -23,12 +29,18 @@ public class AccountsListActivity extends AppCompatActivity implements
     ActivityAccountsListBinding mBinding;
     AccountManager mAccountManager;
 
+    ScrambleAdapter<Account> mAdapter;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mBinding = DataBindingUtil.setContentView(this, R.layout.activity_accounts_list);
 
         mBinding.buttonAdd.setOnClickListener(this);
+
+        mAdapter = new ScrambleAdapter<>(this, new ArrayList<>(), null, new AccountViewHolderFactory());
+        mBinding.recycler.setLayoutManager(new LinearLayoutManager(this, RecyclerView.VERTICAL, false));
+        mBinding.recycler.setAdapter(mAdapter);
 
         mAccountManager = (AccountManager) getSystemService(ACCOUNT_SERVICE);
     }
@@ -50,8 +62,9 @@ public class AccountsListActivity extends AppCompatActivity implements
     private void reloadAccounts() {
         Account[] accounts = mAccountManager.getAccountsByType(Constants.ACCOUNT_TYPE);
 
-        Log.d("test", String.valueOf(accounts));
-
+        mAdapter.getItems().clear();
+        mAdapter.getItems().addAll(Arrays.asList(accounts));
+        mAdapter.notifyDataSetChanged();
     }
 
     @Override

@@ -69,21 +69,26 @@ public class AccountEditActivity extends AppCompatActivity implements View.OnCli
             mAccountManager.removeAccount(mOrigAccount, future -> {
                 Account account = new Account(name, Constants.ACCOUNT_TYPE);
                 mAccountManager.addAccountExplicitly(account, null, null);
+                mAccountManager.setAuthToken(account, Constants.AUTH_TOKEN_TYPE, authToken);
                 finish();
             }, null);
         } else {
             Account account = new Account(name, Constants.ACCOUNT_TYPE);
             mAccountManager.addAccountExplicitly(account, null, null);
+            mAccountManager.setAuthToken(account, Constants.AUTH_TOKEN_TYPE, authToken);
             finish();
         }
     }
 
     private void onClickRemove() {
         if (mOrigAccount != null) {
-            mAccountManager.removeAccountExplicitly(mOrigAccount);
+            // TODO: Show block
+            mAccountManager.removeAccount(mOrigAccount, future -> {
+                finish();
+            }, null);
         } else {
             // error case
+            finish();
         }
-        finish();
     }
 }

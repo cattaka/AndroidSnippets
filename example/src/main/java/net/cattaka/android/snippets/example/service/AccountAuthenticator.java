@@ -7,7 +7,6 @@ import android.accounts.AccountManager;
 import android.accounts.NetworkErrorException;
 import android.content.Context;
 import android.os.Bundle;
-import android.text.TextUtils;
 
 import net.cattaka.android.snippets.example.Constants;
 
@@ -49,17 +48,15 @@ public class AccountAuthenticator extends AbstractAccountAuthenticator {
 
     @Override
     public Bundle getAuthToken(AccountAuthenticatorResponse response, Account account, String authTokenType, Bundle options) throws NetworkErrorException {
-        final AccountManager manager = AccountManager.get(mContext);
-        final String authToken = manager.peekAuthToken(account, Constants.AUTH_TOKEN_TYPE);
+        AccountManager manager = AccountManager.get(mContext);
+        String authToken = manager.peekAuthToken(account, Constants.AUTH_TOKEN_TYPE);
 
-        if (TextUtils.isEmpty(authToken)) {
-            return null;
-        }
-
-        final Bundle result = new Bundle();
+        Bundle result = new Bundle();
         result.putString(AccountManager.KEY_ACCOUNT_NAME, account.name);
-        result.putString(AccountManager.KEY_ACCOUNT_TYPE, Constants.ACCOUNT_TYPE);
-        result.putString(AccountManager.KEY_AUTHTOKEN, authToken);
+        result.putString(AccountManager.KEY_ACCOUNT_TYPE, authTokenType);
+        if (Constants.AUTH_TOKEN_TYPE.equals(authTokenType)) {
+            result.putString(AccountManager.KEY_AUTHTOKEN, authToken);
+        }
         return result;
     }
 

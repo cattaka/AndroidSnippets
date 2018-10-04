@@ -18,6 +18,8 @@ public class AccountViewHolderFactory extends ScrambleAdapter.AbsViewHolderFacto
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_account, parent, false);
         ViewHolder vh = new ViewHolder(view);
         view.setOnClickListener(forwardingListener);
+        vh.buttonEdit.setOnClickListener(forwardingListener);
+        vh.buttonInfo.setOnClickListener(forwardingListener);
         return vh;
     }
 
@@ -34,10 +36,14 @@ public class AccountViewHolderFactory extends ScrambleAdapter.AbsViewHolderFacto
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
         TextView textLabel;
+        View buttonEdit;
+        View buttonInfo;
 
         public ViewHolder(View itemView) {
             super(itemView);
-            textLabel = (TextView) itemView.findViewById(R.id.text_label);
+            textLabel = itemView.findViewById(R.id.text_label);
+            buttonEdit = itemView.findViewById(R.id.button_edit);
+            buttonInfo = itemView.findViewById(R.id.button_info);
         }
     }
 }

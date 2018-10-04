@@ -5,6 +5,7 @@ import android.accounts.AccountManager;
 import android.content.Context;
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -68,12 +69,19 @@ public class AccountEditActivity extends AppCompatActivity implements View.OnCli
         String authToken = String.valueOf(mBinding.editAuthToken.getText());
         if (mOrigAccountContainer.getAccount() != null) {
             // TODO: Show block
-            mAccountManager.removeAccount(mOrigAccountContainer.getAccount(), future -> {
-                Account account = new Account(name, accountType);
-                mAccountManager.addAccountExplicitly(account, null, null);
-                mAccountManager.setAuthToken(account, Constants.AUTH_TOKEN_TYPE, authToken);
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                mAccountManager.renameAccount(mOrigAccountContainer.getAccount(), name, null, null);
+                mAccountManager.setAuthToken(mOrigAccountContainer.getAccount(), Constants.AUTH_TOKEN_TYPE, authToken);
                 finish();
-            }, null);
+            } else {
+                // FIXME: Can not rename correctly with older devices
+                mAccountManager.removeAccount(mOrigAccountContainer.getAccount(), future -> {
+                    Account account = new Account(name, accountType);
+                    mAccountManager.addAccountExplicitly(account, null, null);
+                    mAccountManager.setAuthToken(account, Constants.AUTH_TOKEN_TYPE, authToken);
+                    finish();
+                }, null);
+            }
         } else {
             Account account = new Account(name, accountType);
             mAccountManager.addAccountExplicitly(account, null, null);

@@ -2,7 +2,6 @@ package net.cattaka.android.snippets.example;
 
 import android.accounts.Account;
 import android.accounts.AccountManager;
-import android.accounts.AccountManagerFuture;
 import android.accounts.AuthenticatorException;
 import android.accounts.OperationCanceledException;
 import android.databinding.DataBindingUtil;
@@ -18,6 +17,7 @@ import android.widget.Toast;
 import net.cattaka.android.adaptertoolbox.adapter.ScrambleAdapter;
 import net.cattaka.android.adaptertoolbox.adapter.listener.ListenerRelay;
 import net.cattaka.android.snippets.example.adapter.factory.AccountViewHolderFactory;
+import net.cattaka.android.snippets.example.data.AccountContainer;
 import net.cattaka.android.snippets.example.databinding.ActivityAccountsListBinding;
 import net.cattaka.android.snippets.example.tracker.IScreen;
 
@@ -38,7 +38,9 @@ public class AccountsListActivity extends AppCompatActivity implements
                 if (view.getId() == R.id.button_info) {
                     onClickButtonInfo(account);
                 } else {
-                    startActivity(AccountEditActivity.createIntent(me, account));
+                    obtainAccountContainer(account, arg -> {
+                        startActivity(AccountEditActivity.createIntent(me, arg));
+                    });
                 }
             }
         }
@@ -87,7 +89,18 @@ public class AccountsListActivity extends AppCompatActivity implements
     }
 
     private void onClickButtonInfo(@NonNull Account account) {
-        AccountManagerFuture<Bundle> future1 = mAccountManager.getAuthToken(
+        obtainAccountContainer(account, arg -> {
+                    String name = arg.getAccount().name;
+                    String accountType = arg.getAccount().type;
+                    String authToken = arg.getAuthToken();
+                    String text = String.format(Locale.ROOT, "name = %s\naccountType = %s\nauthToken = %s\n", name, accountType, authToken);
+                    Toast.makeText(me, text, Toast.LENGTH_SHORT).show();
+                }
+        );
+    }
+
+    private void obtainAccountContainer(@NonNull Account account, @NonNull Consumer<AccountContainer> consumer) {
+        mAccountManager.getAuthToken(
                 account,
                 Constants.AUTH_TOKEN_TYPE,
                 true,
@@ -95,12 +108,12 @@ public class AccountsListActivity extends AppCompatActivity implements
                     if (future.isDone()) {
                         try {
                             Bundle bundle = future.getResult();
-                            String name = bundle.getString(AccountManager.KEY_ACCOUNT_NAME);
-                            String accountType = bundle.getString(AccountManager.KEY_ACCOUNT_TYPE);
                             String authToken = bundle.getString(AccountManager.KEY_AUTHTOKEN);
 
-                            String text = String.format(Locale.ROOT, "name = %s\naccountType = %s\nauthToken = %s\n", name, accountType, authToken);
-                            Toast.makeText(me, text, Toast.LENGTH_SHORT).show();
+                            AccountContainer container = new AccountContainer();
+                            container.setAccount(account);
+                            container.setAuthToken(authToken);
+                            consumer.accept(container);
                         } catch (IOException e) {
                             // ignore
                         } catch (OperationCanceledException e) {
@@ -110,5 +123,9 @@ public class AccountsListActivity extends AppCompatActivity implements
                         }
                     }
                 }, null);
+    }
+
+    private interface Consumer<T> {
+        void accept(T arg);
     }
 }

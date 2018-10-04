@@ -11,19 +11,20 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 
+import net.cattaka.android.snippets.example.data.AccountContainer;
 import net.cattaka.android.snippets.example.databinding.ActivityAccountEditBinding;
 
 public class AccountEditActivity extends AppCompatActivity implements View.OnClickListener {
     public static final String KEY_ORIG_ACCOUNT = "et.cattaka.android.snippets.example.AccountEditActivity.ORIG_ACCOUNT";
 
-    public static Intent createIntent(@NonNull Context context, @Nullable Account origAccount) {
+    public static Intent createIntent(@NonNull Context context, @NonNull AccountContainer origAccountContainer) {
         Intent intent = new Intent(context, AccountEditActivity.class);
-        intent.putExtra(KEY_ORIG_ACCOUNT, origAccount);
+        intent.putExtra(KEY_ORIG_ACCOUNT, origAccountContainer);
         return intent;
     }
 
     ActivityAccountEditBinding mBinding;
-    Account mOrigAccount;
+    AccountContainer mOrigAccountContainer;
 
     AccountManager mAccountManager;
 
@@ -32,16 +33,18 @@ public class AccountEditActivity extends AppCompatActivity implements View.OnCli
         super.onCreate(savedInstanceState);
         mBinding = DataBindingUtil.setContentView(this, R.layout.activity_account_edit);
 
-        mOrigAccount = getIntent().getParcelableExtra(KEY_ORIG_ACCOUNT);
+        mOrigAccountContainer = getIntent().getParcelableExtra(KEY_ORIG_ACCOUNT);
 
         mBinding.buttonCancel.setOnClickListener(this);
         mBinding.buttonRemove.setOnClickListener(this);
         mBinding.buttonOk.setOnClickListener(this);
 
-        if (mOrigAccount != null) {
-            mBinding.editAccountName.setText(mOrigAccount.name);
+        if (mOrigAccountContainer != null) {
+            mBinding.editAccountName.setText(mOrigAccountContainer.getAccount().name);
+            mBinding.editAuthToken.setText(mOrigAccountContainer.getAuthToken());
             mBinding.buttonRemove.setVisibility(View.VISIBLE);
         } else {
+            mOrigAccountContainer = new AccountContainer();
             mBinding.buttonRemove.setVisibility(View.INVISIBLE);
         }
 
@@ -63,9 +66,9 @@ public class AccountEditActivity extends AppCompatActivity implements View.OnCli
         String accountType = getString(R.string.account_manager_account_type);
         String name = String.valueOf(mBinding.editAccountName.getText());
         String authToken = String.valueOf(mBinding.editAuthToken.getText());
-        if (mOrigAccount != null) {
+        if (mOrigAccountContainer.getAccount() != null) {
             // TODO: Show block
-            mAccountManager.removeAccount(mOrigAccount, future -> {
+            mAccountManager.removeAccount(mOrigAccountContainer.getAccount(), future -> {
                 Account account = new Account(name, accountType);
                 mAccountManager.addAccountExplicitly(account, null, null);
                 mAccountManager.setAuthToken(account, Constants.AUTH_TOKEN_TYPE, authToken);
@@ -80,9 +83,9 @@ public class AccountEditActivity extends AppCompatActivity implements View.OnCli
     }
 
     private void onClickRemove() {
-        if (mOrigAccount != null) {
+        if (mOrigAccountContainer.getAccount() != null) {
             // TODO: Show block
-            mAccountManager.removeAccount(mOrigAccount, future -> {
+            mAccountManager.removeAccount(mOrigAccountContainer.getAccount(), future -> {
                 finish();
             }, null);
         } else {

@@ -56,6 +56,7 @@
         <activity android:name=".MotionLayoutMorphActivity" />
         <activity android:name=".MotionLayoutProgressActivity" />
         <activity android:name=".AccountsListActivity" />
+        <activity android:name=".dialog.AccountEditActivity" />
 
         <service android:name=".service.AuthenticatorService">
             <intent-filter>

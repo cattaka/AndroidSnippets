@@ -21,6 +21,7 @@ public class AccountsListActivity extends AppCompatActivity implements
     static final String TAG_DIALOG_ACCOUNT_EDIT = "DIALOG_ACCOUNT_EDIT";
 
     ActivityAccountsListBinding mBinding;
+    AccountManager mAccountManager;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -28,12 +29,14 @@ public class AccountsListActivity extends AppCompatActivity implements
         mBinding = DataBindingUtil.setContentView(this, R.layout.activity_accounts_list);
 
         mBinding.buttonAdd.setOnClickListener(this);
+
+        mAccountManager = (AccountManager) getSystemService(ACCOUNT_SERVICE);
     }
 
     @Override
     protected void onStart() {
         super.onStart();
-        loadAccounts();
+        reloadAccounts();
     }
 
     @Override
@@ -44,26 +47,33 @@ public class AccountsListActivity extends AppCompatActivity implements
         }
     }
 
-    private void loadAccounts() {
-        AccountManager accountManager = (AccountManager) getSystemService(ACCOUNT_SERVICE);
-        Account[] accounts = accountManager.getAccountsByType(Constants.ACCOUNT_TYPE);
+    private void reloadAccounts() {
+        Account[] accounts = mAccountManager.getAccountsByType(Constants.ACCOUNT_TYPE);
 
         Log.d("test", String.valueOf(accounts));
 
     }
 
     @Override
-    public void onClickAccountEditDialogCancel(@Nullable Account origAccount) {
-        // no-op
-    }
-
-    @Override
     public void onClickAccountEditDialogRemove(@Nullable Account origAccount) {
-        // TODO
+        mAccountManager.removeAccount(origAccount, future -> {
+            reloadAccounts();
+        }, null);
     }
 
     @Override
     public void onClickAccountEditDialogOk(@Nullable Account origAccount, @NonNull String name, @NonNull String authToken) {
-        // TODO
+        if (origAccount != null) {
+            mAccountManager.removeAccount(origAccount, future -> {
+                Account account = new Account(name, Constants.ACCOUNT_TYPE);
+                mAccountManager.addAccountExplicitly(account, null, null);
+                reloadAccounts();
+            }, null);
+        } else {
+            Account account = new Account(name, Constants.ACCOUNT_TYPE);
+            mAccountManager.addAccountExplicitly(account, null, null);
+            reloadAccounts();
+        }
+
     }
 }

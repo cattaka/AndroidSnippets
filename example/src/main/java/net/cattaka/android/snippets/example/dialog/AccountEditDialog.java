@@ -82,7 +82,6 @@ public class AccountEditDialog extends DialogFragment implements View.OnClickLis
         }
 
         if (v.getId() == R.id.button_cancel) {
-            listener.onClickAccountEditDialogCancel(mOrigAccount);
             dismiss();
         } else if (v.getId() == R.id.button_remove) {
             listener.onClickAccountEditDialogRemove(mOrigAccount);
@@ -109,8 +108,6 @@ public class AccountEditDialog extends DialogFragment implements View.OnClickLis
     }
 
     public interface IAccountEditDialogListener {
-        void onClickAccountEditDialogCancel(@Nullable Account origAccount);
-
         void onClickAccountEditDialogRemove(@Nullable Account origAccount);
 
         void onClickAccountEditDialogOk(@Nullable Account origAccount, @NonNull String name, @NonNull String authToken);

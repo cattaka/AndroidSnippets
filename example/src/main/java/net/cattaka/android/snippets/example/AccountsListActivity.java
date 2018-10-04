@@ -42,7 +42,7 @@ public class AccountsListActivity extends AppCompatActivity implements
         mBinding.recycler.setLayoutManager(new LinearLayoutManager(this, RecyclerView.VERTICAL, false));
         mBinding.recycler.setAdapter(mAdapter);
 
-        mAccountManager = (AccountManager) getSystemService(ACCOUNT_SERVICE);
+        mAccountManager = AccountManager.get(this);
     }
 
     @Override

@@ -56,6 +56,15 @@
         <activity android:name=".MotionLayoutMorphActivity" />
         <activity android:name=".MotionLayoutProgressActivity" />
         <activity android:name=".AccountsListActivity" />
+
+        <service android:name=".service.AuthenticatorService">
+            <intent-filter>
+                <action android:name="android.accounts.AccountAuthenticator" />
+            </intent-filter>
+            <meta-data
+                android:name="android.accounts.AccountAuthenticator"
+                android:resource="@xml/authenticator" />
+        </service>
     </application>
 
 </manifest>

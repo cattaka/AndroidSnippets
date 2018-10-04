@@ -1,5 +1,6 @@
 <resources>
     <string name="app_name">Snippets Example</string>
+    <string name="account_manager_account_type">net.cattaka.android.snippets</string>
 
     <string name="ordinal_label_first">First</string>
     <string name="ordinal_label_second">Second</string>

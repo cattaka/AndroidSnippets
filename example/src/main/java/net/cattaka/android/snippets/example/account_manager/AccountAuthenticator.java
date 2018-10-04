@@ -9,6 +9,7 @@ import android.content.Context;
 import android.os.Bundle;
 
 import net.cattaka.android.snippets.example.Constants;
+import net.cattaka.android.snippets.example.R;
 
 public class AccountAuthenticator extends AbstractAccountAuthenticator {
     Context mContext;
@@ -26,7 +27,7 @@ public class AccountAuthenticator extends AbstractAccountAuthenticator {
     @Override
     public Bundle addAccount(AccountAuthenticatorResponse response, String accountType, String authTokenType, String[] requiredFeatures, Bundle options) throws NetworkErrorException {
         String name = "Test";
-        String type = Constants.ACCOUNT_TYPE;
+        String type = mContext.getString(R.string.account_manager_account_type);
         String token = "fuga";
 
         final Account account = new Account(name, type);

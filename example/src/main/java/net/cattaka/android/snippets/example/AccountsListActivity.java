@@ -78,7 +78,8 @@ public class AccountsListActivity extends AppCompatActivity implements
     }
 
     private void reloadAccounts() {
-        Account[] accounts = mAccountManager.getAccountsByType(Constants.ACCOUNT_TYPE);
+        String accountType = getString(R.string.account_manager_account_type);
+        Account[] accounts = mAccountManager.getAccountsByType(accountType);
 
         mAdapter.getItems().clear();
         mAdapter.getItems().addAll(Arrays.asList(accounts));

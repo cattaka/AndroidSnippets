@@ -8,6 +8,5 @@ public class Constants {
     public static final int DB_VERSION = 1;
     public static final String PREF_NAME = "pref";
 
-    public static final String ACCOUNT_TYPE = "net.cattaka.android.snippets";
     public static final String AUTH_TOKEN_TYPE = "my_auth_token_type";
 }

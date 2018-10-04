@@ -60,18 +60,19 @@ public class AccountEditActivity extends AppCompatActivity implements View.OnCli
     }
 
     private void onClickOk() {
+        String accountType = getString(R.string.account_manager_account_type);
         String name = String.valueOf(mBinding.editAccountName.getText());
         String authToken = String.valueOf(mBinding.editAuthToken.getText());
         if (mOrigAccount != null) {
             // TODO: Show block
             mAccountManager.removeAccount(mOrigAccount, future -> {
-                Account account = new Account(name, Constants.ACCOUNT_TYPE);
+                Account account = new Account(name, accountType);
                 mAccountManager.addAccountExplicitly(account, null, null);
                 mAccountManager.setAuthToken(account, Constants.AUTH_TOKEN_TYPE, authToken);
                 finish();
             }, null);
         } else {
-            Account account = new Account(name, Constants.ACCOUNT_TYPE);
+            Account account = new Account(name, accountType);
             mAccountManager.addAccountExplicitly(account, null, null);
             mAccountManager.setAuthToken(account, Constants.AUTH_TOKEN_TYPE, authToken);
             finish();

@@ -1,4 +1,4 @@
-package net.cattaka.android.snippets.example.service;
+package net.cattaka.android.snippets.example.account_manager;
 
 import android.accounts.AbstractAccountAuthenticator;
 import android.accounts.Account;
@@ -53,7 +53,7 @@ public class AccountAuthenticator extends AbstractAccountAuthenticator {
 
         Bundle result = new Bundle();
         result.putString(AccountManager.KEY_ACCOUNT_NAME, account.name);
-        result.putString(AccountManager.KEY_ACCOUNT_TYPE, authTokenType);
+        result.putString(AccountManager.KEY_ACCOUNT_TYPE, account.type);
         if (Constants.AUTH_TOKEN_TYPE.equals(authTokenType)) {
             result.putString(AccountManager.KEY_AUTHTOKEN, authToken);
         }

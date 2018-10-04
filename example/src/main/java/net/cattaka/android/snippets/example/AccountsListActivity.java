@@ -19,7 +19,6 @@ import net.cattaka.android.adaptertoolbox.adapter.ScrambleAdapter;
 import net.cattaka.android.adaptertoolbox.adapter.listener.ListenerRelay;
 import net.cattaka.android.snippets.example.adapter.factory.AccountViewHolderFactory;
 import net.cattaka.android.snippets.example.databinding.ActivityAccountsListBinding;
-import net.cattaka.android.snippets.example.dialog.AccountEditActivity;
 import net.cattaka.android.snippets.example.tracker.IScreen;
 
 import java.io.IOException;
@@ -96,10 +95,10 @@ public class AccountsListActivity extends AppCompatActivity implements
                         try {
                             Bundle bundle = future.getResult();
                             String name = bundle.getString(AccountManager.KEY_ACCOUNT_NAME);
-                            String authTokenType = bundle.getString(AccountManager.KEY_ACCOUNT_TYPE);
+                            String accountType = bundle.getString(AccountManager.KEY_ACCOUNT_TYPE);
                             String authToken = bundle.getString(AccountManager.KEY_AUTHTOKEN);
 
-                            String text = String.format(Locale.ROOT, "name = %s\nauthTokenType = %s\nauthToken = %s\n", name, authTokenType, authToken);
+                            String text = String.format(Locale.ROOT, "name = %s\naccountType = %s\nauthToken = %s\n", name, accountType, authToken);
                             Toast.makeText(me, text, Toast.LENGTH_SHORT).show();
                         } catch (IOException e) {
                             // ignore

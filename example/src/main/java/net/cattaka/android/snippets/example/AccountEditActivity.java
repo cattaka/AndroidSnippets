@@ -1,4 +1,4 @@
-package net.cattaka.android.snippets.example.dialog;
+package net.cattaka.android.snippets.example;
 
 import android.accounts.Account;
 import android.accounts.AccountManager;
@@ -11,8 +11,6 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 
-import net.cattaka.android.snippets.example.Constants;
-import net.cattaka.android.snippets.example.R;
 import net.cattaka.android.snippets.example.databinding.ActivityAccountEditBinding;
 
 public class AccountEditActivity extends AppCompatActivity implements View.OnClickListener {

@@ -1,4 +1,4 @@
-package net.cattaka.android.snippets.example.service;
+package net.cattaka.android.snippets.example.account_manager;
 
 import android.app.Service;
 import android.content.Intent;

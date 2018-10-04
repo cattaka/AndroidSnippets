@@ -60,9 +60,9 @@
         <activity android:name=".MotionLayoutMorphActivity" />
         <activity android:name=".MotionLayoutProgressActivity" />
         <activity android:name=".AccountsListActivity" />
-        <activity android:name=".dialog.AccountEditActivity" />
+        <activity android:name=".AccountEditActivity" />
 
-        <service android:name=".service.AuthenticatorService">
+        <service android:name=".account_manager.AuthenticatorService">
             <intent-filter>
                 <action android:name="android.accounts.AccountAuthenticator" />
             </intent-filter>

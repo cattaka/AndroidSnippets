@@ -31,6 +31,9 @@ public class MainActivity extends AppCompatActivity implements IScreen {
                     new ActivityEntry("Progress", MotionLayoutProgressActivity.class, Build.VERSION_CODES.JELLY_BEAN_MR2),
                     new ActivityEntry("Morph", MotionLayoutMorphActivity.class, Build.VERSION_CODES.JELLY_BEAN_MR2)
             ),
+            new ActivityEntry("AccountManager", null,
+                    new ActivityEntry("Accounts List", AccountsListActivity.class)
+            ),
             new ActivityEntry("With Google Applications", null,
                     new ActivityEntry("Pick from Google Photos", PickFromGooglePhotosActivity.class)
             ),

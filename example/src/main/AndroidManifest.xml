@@ -2,8 +2,22 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="net.cattaka.android.snippets.example">
 
+    <uses-permission
+        android:name="android.permission.AUTHENTICATE_ACCOUNTS"
+        android:maxSdkVersion="22" />
+    <uses-permission
+        android:name="android.permission.GET_ACCOUNTS"
+        android:maxSdkVersion="22" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.CAMERA" />
+
+    <uses-permission
+        android:name="android.permission.MANAGE_ACCOUNTS"
+        android:maxSdkVersion="22" />
+
+    <uses-permission
+        android:name="android.permission.USE_CREDENTIALS"
+        android:maxSdkVersion="22" />
 
     <application
         android:name=".core.MyApplication"
@@ -45,6 +59,17 @@
         <activity android:name=".MotionLayoutStretchableSurfacesActivity" />
         <activity android:name=".MotionLayoutMorphActivity" />
         <activity android:name=".MotionLayoutProgressActivity" />
+        <activity android:name=".AccountsListActivity" />
+        <activity android:name=".AccountEditActivity" />
+
+        <service android:name=".account_manager.AuthenticatorService">
+            <intent-filter>
+                <action android:name="android.accounts.AccountAuthenticator" />
+            </intent-filter>
+            <meta-data
+                android:name="android.accounts.AccountAuthenticator"
+                android:resource="@xml/authenticator" />
+        </service>
     </application>
 
 </manifest>

@@ -1,9 +1,14 @@
 <resources>
     <string name="app_name">Snippets Example</string>
+    <string name="account_manager_account_type">net.cattaka.android.snippets</string>
 
     <string name="ordinal_label_first">First</string>
     <string name="ordinal_label_second">Second</string>
     <string name="ordinal_label_third">Third</string>
     <string name="ordinal_label_fourth">Fourth</string>
     <string name="cover_image">cover image</string>
+    <string name="title_account">Account</string>
+    <string name="hint_account_name">Account name</string>
+    <string name="hint_auth_token">Auth token</string>
+    <string name="button_remove">Remove</string>
 </resources>

@@ -5,11 +5,18 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Only RecyclerView -> OK
+CoordinatorLayout -> NG
+SwipeRefreshLayout -> NG" />
+
     <Button
         android:id="@+id/button_show_bottom_sheet"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="top|end"
+        android:layout_gravity="bottom|end"
         android:text="Show BottomSheet" />
 
     <android.support.v4.view.ViewPager

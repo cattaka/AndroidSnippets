@@ -10,6 +10,9 @@ import android.view.View;
 import net.cattaka.android.snippets.example.adapter.SimpleViewsPagerAdapter;
 import net.cattaka.android.snippets.example.tracker.IScreen;
 
+import biz.laenger.android.vpbs.BottomSheetUtils;
+import biz.laenger.android.vpbs.ViewPagerBottomSheetBehavior;
+
 /**
  * Created by cattaka on 2018/12/03
  */
@@ -18,7 +21,7 @@ public class ViewPagerInBottomSheetExampleActivity extends AppCompatActivity imp
 
     ViewPager mViewPager;
     SimpleViewsPagerAdapter mAdapter;
-    BottomSheetBehavior mBottomSheetBehavior;
+    ViewPagerBottomSheetBehavior mBottomSheetBehavior;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -30,11 +33,13 @@ public class ViewPagerInBottomSheetExampleActivity extends AppCompatActivity imp
 
         findViewById(R.id.button_show_bottom_sheet).setOnClickListener(this);
 
-        mBottomSheetBehavior = BottomSheetBehavior.from(mViewPager);
+        mBottomSheetBehavior = ViewPagerBottomSheetBehavior.from(mViewPager);
         mBottomSheetBehavior.setHideable(true);
 
         mAdapter = new SimpleViewsPagerAdapter(getSupportFragmentManager(), 3);
         mViewPager.setAdapter(mAdapter);
+
+        BottomSheetUtils.setupViewPager(mViewPager);
     }
 
     @Override

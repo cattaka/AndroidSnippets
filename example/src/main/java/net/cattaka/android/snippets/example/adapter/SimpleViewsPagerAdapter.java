@@ -29,6 +29,7 @@ public class SimpleViewsPagerAdapter extends FragmentPagerAdapter {
             default: {
                 return new SimpleAppBarLayoutFragment();
             }
+
         }
     }
 

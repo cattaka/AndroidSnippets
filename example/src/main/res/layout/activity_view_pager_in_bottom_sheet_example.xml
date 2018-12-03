@@ -5,12 +5,23 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <TextView
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Only RecyclerView -> OK
-CoordinatorLayout -> NG
-SwipeRefreshLayout -> NG" />
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="&lt;- swipe left and right  -&gt;"
+            android:textAppearance="?android:textAppearanceLarge" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Only RecyclerView -> OK\nCoordinatorLayout -> NG\nSwipeRefreshLayout -> NG" />
+    </LinearLayout>
 
     <Button
         android:id="@+id/button_show_bottom_sheet"

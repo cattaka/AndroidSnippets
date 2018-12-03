@@ -43,7 +43,8 @@ public class MainActivity extends AppCompatActivity implements IScreen {
                             new ActivityEntry("With RecyclerView", AppBarLayoutExample2Activity.class, Build.VERSION_CODES.LOLLIPOP)
                     ),
                     new ActivityEntry("BottomSheetBehavior", null,
-                            new ActivityEntry("With simple view", BottomSheetBehaviorExampleActivity.class, Build.VERSION_CODES.LOLLIPOP)
+                            new ActivityEntry("With simple view", BottomSheetBehaviorExampleActivity.class, Build.VERSION_CODES.LOLLIPOP),
+                            new ActivityEntry("ViewPager in BottomSheet", ViewPagerInBottomSheetExampleActivity.class, Build.VERSION_CODES.LOLLIPOP)
                     )
             ),
             new ActivityEntry("Status Bar", null,

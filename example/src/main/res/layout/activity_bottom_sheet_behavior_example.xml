@@ -19,11 +19,16 @@
             android:background="@drawable/bg_grad"
             app:layout_scrollFlags="scroll|exitUntilCollapsed" />
 
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/view_recycler"
+        <android.support.design.widget.CoordinatorLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:layout_behavior="@string/bottom_sheet_behavior" />
+            android:layout_height="match_parent">
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/view_recycler"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:layout_behavior="@string/bottom_sheet_behavior" />
+        </android.support.design.widget.CoordinatorLayout>
     </android.support.design.widget.CoordinatorLayout>
 
     <LinearLayout

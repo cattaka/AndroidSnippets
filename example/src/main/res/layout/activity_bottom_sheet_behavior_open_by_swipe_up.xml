@@ -8,6 +8,11 @@
     android:background="@android:color/darker_gray"
     android:orientation="vertical">
 
+    <View
+        android:id="@+id/touch_delegate"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+
     <LinearLayout
         android:id="@+id/view_bottom_sheet"
         android:layout_width="match_parent"

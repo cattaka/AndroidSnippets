@@ -44,7 +44,8 @@ public class MainActivity extends AppCompatActivity implements IScreen {
                     ),
                     new ActivityEntry("BottomSheetBehavior", null,
                             new ActivityEntry("With simple view", BottomSheetBehaviorExampleActivity.class, Build.VERSION_CODES.LOLLIPOP),
-                            new ActivityEntry("ViewPager in BottomSheet", ViewPagerInBottomSheetExampleActivity.class, Build.VERSION_CODES.LOLLIPOP)
+                            new ActivityEntry("ViewPager in BottomSheet", ViewPagerInBottomSheetExampleActivity.class, Build.VERSION_CODES.LOLLIPOP),
+                            new ActivityEntry("Open by swipe up", BottomSheetBehaviorOpenBySwipeUpActivity.class, Build.VERSION_CODES.LOLLIPOP)
                     )
             ),
             new ActivityEntry("Status Bar", null,

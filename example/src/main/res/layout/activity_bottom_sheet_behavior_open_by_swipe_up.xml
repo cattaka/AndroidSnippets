@@ -11,20 +11,25 @@
     <View
         android:id="@+id/touch_delegate"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="match_parent" />
 
-    <LinearLayout
+    <android.support.v4.widget.NestedScrollView
         android:id="@+id/view_bottom_sheet"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@android:color/white"
-        android:orientation="vertical"
         app:layout_behavior="@string/bottom_sheet_behavior">
 
-        <TextView
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="This is BottomSheet"
-            android:textAppearance="?android:textAppearanceLarge" />
-    </LinearLayout>
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="This is BottomSheet"
+                android:textAppearance="?android:textAppearanceLarge" />
+        </LinearLayout>
+    </android.support.v4.widget.NestedScrollView>
 </android.support.design.widget.CoordinatorLayout>

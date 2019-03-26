@@ -2,7 +2,6 @@ package net.cattaka.android.snippets.example;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.design.widget.BottomSheetBehavior;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -45,7 +44,7 @@ public class ViewPagerInBottomSheetExampleActivity extends AppCompatActivity imp
     @Override
     public void onClick(View v) {
         if (v.getId() == R.id.button_show_bottom_sheet) {
-            mBottomSheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
+            mBottomSheetBehavior.setState(ViewPagerBottomSheetBehavior.STATE_EXPANDED);
         }
     }
 }

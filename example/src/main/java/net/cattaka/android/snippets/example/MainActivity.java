@@ -25,6 +25,9 @@ import static net.cattaka.android.snippets.example.tracker.TrackParamBundle.toPa
 
 public class MainActivity extends AppCompatActivity implements IScreen {
     private static final List<ActivityEntry> ACTIVITY_ENTRIES = Arrays.asList(
+            new ActivityEntry("Custom Drawable", null,
+                    new ActivityEntry("GradientOvalDrawable", GradientOvalDrawableActivity.class)
+            ),
             new ActivityEntry("MotionLayout", null,
                     new ActivityEntry("Stretchable Surfaces", MotionLayoutStretchableSurfacesActivity.class, Build.VERSION_CODES.JELLY_BEAN_MR2),
                     new ActivityEntry("Switch Scene", MotionLayoutSwitchSceneActivity.class, Build.VERSION_CODES.JELLY_BEAN_MR2),

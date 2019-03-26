@@ -10,7 +10,7 @@ import android.util.AttributeSet;
 import android.widget.LinearLayout;
 
 public class NestedScrollLinearLayout extends LinearLayout implements NestedScrollingChild {
-    NestedScrollingChildHelper mNestedScrollingChildHelper = new NestedScrollingChildHelper(this);
+    NestedScrollingChildHelper mNestedScrollingChildHelper;
 
     public NestedScrollLinearLayout(Context context) {
         super(context);

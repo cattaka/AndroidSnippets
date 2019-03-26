@@ -45,6 +45,9 @@
         <activity android:name=".MotionLayoutStretchableSurfacesActivity" />
         <activity android:name=".MotionLayoutMorphActivity" />
         <activity android:name=".MotionLayoutProgressActivity" />
+        <activity android:name=".BottomSheetBehaviorExampleActivity" />
+        <activity android:name=".ViewPagerInBottomSheetExampleActivity" />
+        <activity android:name=".BottomSheetBehaviorOpenBySwipeUpActivity" />
     </application>
 
 </manifest>

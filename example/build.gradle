@@ -39,9 +39,8 @@ android {
 }
 
 repositories {
-    maven {
-        url "http://dl.bintray.com/cattaka/maven"
-    }
+    maven { url "http://dl.bintray.com/cattaka/maven" }
+    maven { url "https://raw.github.com/laenger/maven-releases/master/releases" }
 }
 
 def play_services = '16.0.2'
@@ -78,6 +77,8 @@ dependencies {
     implementation 'io.reactivex:rxandroid:1.2.1'
     implementation 'com.trello:rxlifecycle:0.8.0'
     implementation 'com.trello:rxlifecycle-components:0.8.0'
+
+    implementation "biz.laenger.android:vpbs:0.0.5"
 
     androidTestImplementation 'com.squareup.okhttp3:mockwebserver:3.4.2'
     androidTestImplementation 'junit:junit:4.12'

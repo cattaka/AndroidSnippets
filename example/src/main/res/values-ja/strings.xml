@@ -7,4 +7,5 @@
     <string name="ordinal_label_third">みっつめ</string>
     <string name="ordinal_label_fourth">よっつめ</string>
     <string name="cover_image">cover image</string>
+    <string name="dummy_text_bottom_sheet">BottomSheetBehavior is applied to a child of CoordinatorLayout to make that child a persistent bottom sheet. Persistent bottom sheets are views that come up from the bottom of the screen, elevated over the main content. They can be dragged vertically to expose more or less of their content. Note: If you want to use Bottom Sheets that are modal (dialogs), use BottomSheetDialogFragment.</string>
 </resources>

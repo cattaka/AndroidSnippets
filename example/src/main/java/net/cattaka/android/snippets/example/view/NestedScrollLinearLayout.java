@@ -10,7 +10,7 @@ import android.util.AttributeSet;
 import android.widget.LinearLayout;
 
 public class NestedScrollLinearLayout extends LinearLayout implements NestedScrollingChild {
-    NestedScrollingChildHelper mNestedScrollingParentHelper;
+    NestedScrollingChildHelper mNestedScrollingChildHelper;
 
     public NestedScrollLinearLayout(Context context) {
         super(context);
@@ -34,43 +34,43 @@ public class NestedScrollLinearLayout extends LinearLayout implements NestedScro
     }
 
     private void init() {
-        mNestedScrollingParentHelper = new NestedScrollingChildHelper(this);
+        mNestedScrollingChildHelper = new NestedScrollingChildHelper(this);
         setNestedScrollingEnabled(true);
     }
 
     public void setNestedScrollingEnabled(boolean enabled) {
-        mNestedScrollingParentHelper.setNestedScrollingEnabled(enabled);
+        mNestedScrollingChildHelper.setNestedScrollingEnabled(enabled);
     }
 
     public boolean isNestedScrollingEnabled() {
-        return mNestedScrollingParentHelper.isNestedScrollingEnabled();
+        return mNestedScrollingChildHelper.isNestedScrollingEnabled();
     }
 
     public boolean startNestedScroll(int axes) {
-        return mNestedScrollingParentHelper.startNestedScroll(axes);
+        return mNestedScrollingChildHelper.startNestedScroll(axes);
     }
 
     public void stopNestedScroll() {
-        mNestedScrollingParentHelper.stopNestedScroll();
+        mNestedScrollingChildHelper.stopNestedScroll();
     }
 
     public boolean hasNestedScrollingParent() {
-        return mNestedScrollingParentHelper.hasNestedScrollingParent();
+        return mNestedScrollingChildHelper.hasNestedScrollingParent();
     }
 
     public boolean dispatchNestedScroll(int dxConsumed, int dyConsumed, int dxUnconsumed, int dyUnconsumed, @Nullable int[] offsetInWindow) {
-        return mNestedScrollingParentHelper.dispatchNestedScroll(dxConsumed, dyConsumed, dxUnconsumed, dyUnconsumed, offsetInWindow);
+        return mNestedScrollingChildHelper.dispatchNestedScroll(dxConsumed, dyConsumed, dxUnconsumed, dyUnconsumed, offsetInWindow);
     }
 
     public boolean dispatchNestedPreScroll(int dx, int dy, @Nullable int[] consumed, @Nullable int[] offsetInWindow) {
-        return mNestedScrollingParentHelper.dispatchNestedPreScroll(dx, dy, consumed, offsetInWindow);
+        return mNestedScrollingChildHelper.dispatchNestedPreScroll(dx, dy, consumed, offsetInWindow);
     }
 
     public boolean dispatchNestedFling(float velocityX, float velocityY, boolean consumed) {
-        return mNestedScrollingParentHelper.dispatchNestedFling(velocityX, velocityY, consumed);
+        return mNestedScrollingChildHelper.dispatchNestedFling(velocityX, velocityY, consumed);
     }
 
     public boolean dispatchNestedPreFling(float velocityX, float velocityY) {
-        return mNestedScrollingParentHelper.dispatchNestedPreFling(velocityX, velocityY);
+        return mNestedScrollingChildHelper.dispatchNestedPreFling(velocityX, velocityY);
     }
 }

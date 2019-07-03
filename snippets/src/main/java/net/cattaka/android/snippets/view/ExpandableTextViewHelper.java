@@ -6,19 +6,15 @@ import android.text.Editable;
 import android.text.Layout;
 import android.text.TextWatcher;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.CompoundButton;
 import android.widget.TextView;
 
 import net.cattaka.android.snippets.animator.LayoutAnimatorHelper;
 
 public class ExpandableTextViewHelper {
-    public static void apply(@NonNull ViewGroup parentView, @NonNull final TextView textView, @NonNull final CompoundButton expandButton, final int shrinkLines) {
-        if (textView.getParent() != parentView) {
-            throw new IllegalArgumentException("The given parentView is not parent of textView");
-        } else if (expandButton.getParent() != parentView) {
-            throw new IllegalArgumentException("The given parentView is not parent of expandButton");
-        }
+    public static void apply(@NonNull final TextView textView, @NonNull final CompoundButton expandButton, final int shrinkLines) {
+        int lineHeight = (int) (textView.getPaint().getFontMetrics().bottom - textView.getPaint().getFontMetrics().top);
+        LayoutAnimatorHelper.obtain(expandButton).setHeight(lineHeight);
 
         final CompoundButton.OnCheckedChangeListener onCheckedChangeListener = new CompoundButton.OnCheckedChangeListener() {
             @Override

@@ -6,7 +6,6 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.CompoundButton;
-import android.widget.FrameLayout;
 import android.widget.TextView;
 
 import net.cattaka.android.snippets.view.ExpandableTextViewHelper;
@@ -25,7 +24,6 @@ public class ExpandableTextViewActivity extends AppCompatActivity implements Vie
         findViewById(R.id.button_set_long_text).setOnClickListener(this);
 
         ExpandableTextViewHelper.apply(
-                (FrameLayout) findViewById(R.id.parent),
                 (TextView) findViewById(R.id.text),
                 (CompoundButton) findViewById(R.id.button),
                 3

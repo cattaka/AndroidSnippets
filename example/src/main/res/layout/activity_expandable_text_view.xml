@@ -50,10 +50,8 @@
                 android:background="@drawable/bg_expand_button"
                 android:paddingStart="160dp"
                 android:paddingLeft="160dp"
-                android:paddingTop="24dp"
                 android:paddingEnd="16dp"
                 android:paddingRight="16dp"
-                android:paddingBottom="16dp"
                 android:textColor="@color/colorAccent"
                 android:textOff="Expand"
                 android:textOn="Shrink" />

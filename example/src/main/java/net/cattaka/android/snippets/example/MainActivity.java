@@ -25,6 +25,9 @@ import static net.cattaka.android.snippets.example.tracker.TrackParamBundle.toPa
 
 public class MainActivity extends AppCompatActivity implements IScreen {
     private static final List<ActivityEntry> ACTIVITY_ENTRIES = Arrays.asList(
+            new ActivityEntry("Custom View", null,
+                    new ActivityEntry("ExpandableTextView", ExpandableTextViewActivity.class)
+            ),
             new ActivityEntry("Custom Drawable", null,
                     new ActivityEntry("GradientOvalDrawable", GradientOvalDrawableActivity.class)
             ),

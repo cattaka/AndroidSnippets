@@ -49,6 +49,7 @@
         <activity android:name=".ViewPagerInBottomSheetExampleActivity" />
         <activity android:name=".BottomSheetBehaviorOpenBySwipeUpActivity" />
         <activity android:name=".GradientOvalDrawableActivity" />
+        <activity android:name=".ExpandableTextViewActivity" />
     </application>
 
 </manifest>

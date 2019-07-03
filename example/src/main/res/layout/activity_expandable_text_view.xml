@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <Button
+            android:id="@+id/button_set_short_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Set short text" />
+
+        <Button
+            android:id="@+id/button_set_long_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Set long text" />
+
+        <TextView
+            android:id="@+id/anchor_top"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/colorPrimary"
+            android:text="Top"
+            android:textColor="@android:color/white" />
+
+        <FrameLayout
+            android:id="@+id/parent"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@android:color/white"
+                android:text="hoge hoge hoge hoge hoge hoge hoge hoge hoge hoge hoge hoge hoge hoge hoge hoge hoge hoge hoge hoge hoge hoge"
+                android:textAppearance="@style/TextAppearance.AppCompat.Large"
+                android:textSize="56dp" />
+
+            <ToggleButton
+                android:id="@+id/button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom|end"
+                android:background="@drawable/bg_expand_button"
+                android:paddingStart="160dp"
+                android:paddingLeft="160dp"
+                android:paddingTop="24dp"
+                android:paddingEnd="16dp"
+                android:paddingRight="16dp"
+                android:paddingBottom="16dp"
+                android:textColor="@color/colorAccent"
+                android:textOff="Expand"
+                android:textOn="Shrink" />
+        </FrameLayout>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/colorPrimary"
+            android:text="Bottom"
+            android:textColor="@android:color/white" />
+
+    </LinearLayout>
+</ScrollView>

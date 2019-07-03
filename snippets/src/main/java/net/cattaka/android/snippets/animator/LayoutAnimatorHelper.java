@@ -1,9 +1,12 @@
 package net.cattaka.android.snippets.animator;
 
 import android.support.annotation.Keep;
+import android.support.annotation.NonNull;
 import android.util.Property;
 import android.view.View;
 import android.view.ViewGroup;
+
+import net.cattaka.android.snippets.R;
 
 /**
  * Save all methods from proguard!!
@@ -18,6 +21,18 @@ public class LayoutAnimatorHelper {
     public static final Property<LayoutAnimatorHelper, Integer> LEFT_MARGIN = Property.of(LayoutAnimatorHelper.class, int.class, "leftMargin");
     public static final Property<LayoutAnimatorHelper, Integer> WIDTH = Property.of(LayoutAnimatorHelper.class, int.class, "width");
     public static final Property<LayoutAnimatorHelper, Integer> HEIGHT = Property.of(LayoutAnimatorHelper.class, int.class, "height");
+
+    @NonNull
+    public static LayoutAnimatorHelper obtain(@NonNull View view) {
+        Object obj = view.getTag(R.id.layout_animator_helper);
+        if (obj instanceof LayoutAnimatorHelper) {
+            return (LayoutAnimatorHelper) obj;
+        } else {
+            LayoutAnimatorHelper item = new LayoutAnimatorHelper(view);
+            view.setTag(R.id.layout_animator_helper, item);
+            return item;
+        }
+    }
 
     private View mView;
 
